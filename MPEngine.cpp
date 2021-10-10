@@ -131,6 +131,12 @@ void MPEngine::_setupBuffers() {
 
     CSCI441::setVertexAttributeLocations(shaderAttributeLocations.vPos, shaderAttributeLocations.vNormal);
 
+    _car = new eeyore(_shaderProgram->getShaderProgramHandle(),
+                      shaderUniformLocations.mvpMatrix,
+                      shaderUniformLocations.normalMat,
+                      shaderUniformLocations.materialColor,
+                      WORLD_SIZE);
+
     ModelShaderLocations modelLocations = {_shaderProgram->getShaderProgramHandle(),
                                            shaderUniformLocations.mvpMatrix, shaderUniformLocations.normalMat,
                                            shaderUniformLocations.materialColor };
@@ -301,7 +307,7 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
         CSCI441::drawSolidCube(1.0);
     }
     //// END DRAWING THE BUILDINGS ////
-    //Draw Car
+    //Draw eeyore
     glUniform1f(shaderUniformLocations.materialShininess, 1);
     _car->drawCar(viewMtx, projMtx);
 

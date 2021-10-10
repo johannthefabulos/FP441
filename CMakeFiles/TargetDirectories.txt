@@ -1,3 +1,0 @@
-/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Assignments/A3/CMakeFiles/rebuild_cache.dir
-/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Assignments/A3/CMakeFiles/edit_cache.dir
-/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Assignments/A3/CMakeFiles/A3.dir

@@ -72,7 +72,7 @@ private:
     /// \desc the static fixed camera in our world
     CSCI441::ArcballCam* _arcballCam;
 
-    Car* _car;
+    eeyore* _car;
 
     TheWarrior* _warrior;
 
