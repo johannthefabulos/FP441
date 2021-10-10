@@ -6,10 +6,10 @@
 #define MP_SHADERLOCATIONS_H
 
 struct ShaderLocations{
-    GLuint shaderHandle;
-    GLint mvpMatUniformLoc;
-    GLint normalMatUniformLoc;
-    GLint matColorUniformLoc;
+    GLuint shaderProgramHandle;
+    GLint mvpMatUniformLocation;
+    GLint normalMatUniformLocation;
+    GLint matColorUniformLocation;
 };
 
 #endif //MP_SHADERLOCATIONS_H
