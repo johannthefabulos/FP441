@@ -68,7 +68,7 @@ private:
     /// \desc the static fixed camera in our world
     CSCI441::ArcballCam* _arcballCam;
 
-    Car* _car;
+    eeyore* _car;
 
     /// \desc the size of the world (controls the ground size and locations of buildings)
     static constexpr GLfloat WORLD_SIZE = 55.0f;

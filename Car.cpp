@@ -7,7 +7,7 @@
 #include <CSCI441/SimpleShader.hpp>
 #include <stdio.h>
 
-Car::Car(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH) {
+eeyore::eeyore(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH) {
     this->shaderProgramHandle = shaderHandle;
     this->mvpMatrixUniformLocation = mvpMatUniformLoc;
     this->normalMatrixUniformLocation = normalMatUniformLoc;
@@ -18,7 +18,7 @@ Car::Car(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc,
     this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(0, this->carYPosition, 0));
 }
 
-void Car::drawCar(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
+void eeyore::drawCar(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
     glUseProgram(this->shaderProgramHandle);
     //Front wheels
     this->drawWheel(true, true, this->currentModelMatrix, viewMatrix, projMatrix);
@@ -33,7 +33,7 @@ void Car::drawCar(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
     this->drawBody(this->currentModelMatrix, viewMatrix, projMatrix);
 }
 
-void Car::drawWheel(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
+void eeyore::drawWheel(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
     glm::mat4 wheelModelMat = modelMtx;
     if (isFront){
         wheelModelMat = glm::translate(wheelModelMat, this->wheelFBTranslation);
@@ -59,7 +59,7 @@ void Car::drawWheel(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 vi
 
 }
 
-void Car::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
+void eeyore::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
     // precompute the Model-View-Projection matrix on the CPU
     glm::mat4 mvpMtx = projMtx * viewMtx * modelMtx;
     // then send it to the shader on the GPU to apply to every vertex
@@ -69,7 +69,7 @@ void Car::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::
     glProgramUniformMatrix3fv( this->shaderProgramHandle, this->normalMatrixUniformLocation, 1, GL_FALSE, &normalMtx[0][0] );
 }
 
-void Car::drawAxel(bool isFront, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
+void eeyore::drawAxel(bool isFront, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
     glm::mat4 axelModelMat = modelMtx;
     if (isFront){
         axelModelMat = glm::translate(axelModelMat, this->wheelFBTranslation);
@@ -93,7 +93,7 @@ void Car::drawAxel(bool isFront, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat
 
 }
 
-void Car::drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
+void eeyore::drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
 
     glm::mat4 teapotModelMat = glm::scale(modelMtx, glm::vec3(0.4, 0.4, 0.4));
     teapotModelMat = glm::translate(teapotModelMat, glm::vec3(0, 0, -this->wheelFBTranslation.z));
@@ -115,11 +115,11 @@ void Car::drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
     CSCI441::drawSolidCubeFlat(this->wheelInnerRadius);
 }
 
-glm::vec3 Car::getCurrentPosition() {
+glm::vec3 eeyore::getCurrentPosition() {
     return this->currentWorldPosition;
 }
 
-void Car::driveForward() {
+void eeyore::driveForward() {
 
     if (!this->testCarShouldMove(-this->moveSpeed)){
         return;
@@ -131,7 +131,7 @@ void Car::driveForward() {
     this->updateCurrentPosition();
 }
 
-void Car::driveBackward() {
+void eeyore::driveBackward() {
 
     if (!this->testCarShouldMove(this->moveSpeed)){
         return;
@@ -143,15 +143,15 @@ void Car::driveBackward() {
     this->updateCurrentPosition();
 }
 
-void Car::updateCurrentPosition() {
+void eeyore::updateCurrentPosition() {
     this->currentWorldPosition = this->currentModelMatrix * glm::vec4(0, 0, 0, 1);
 }
 
-void Car::turnCar(GLfloat theta) {
+void eeyore::turnCar(GLfloat theta) {
     this->currentModelMatrix = glm::rotate(this->currentModelMatrix, theta, glm::vec3(0, 1, 0));
 }
 
-bool Car::testCarShouldMove(GLfloat testMoveSpeed) {
+bool eeyore::testCarShouldMove(GLfloat testMoveSpeed) {
     glm::mat4 testModelMat = glm::translate(this->currentModelMatrix, glm::vec3(0, 0, testMoveSpeed));
     glm::vec3 testWorldPos = testModelMat * glm::vec4(0, 0, 0, 1);
 
@@ -165,7 +165,7 @@ bool Car::testCarShouldMove(GLfloat testMoveSpeed) {
     return true;
 }
 
-void Car::updateWheelRotation(bool isMovingForward) {
+void eeyore::updateWheelRotation(bool isMovingForward) {
     GLfloat wheelAngleDelta = glm::pi<GLfloat>() /128.0f;
     if (isMovingForward){
         wheelAngleDelta *= -1;
