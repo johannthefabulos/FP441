@@ -94,7 +94,16 @@
 		<Unit filename="D:/CSCI441/Labs/MP/CSCI446MP/MPEngine.hpp">
 			<Option target="MP"/>
 		</Unit>
+		<Unit filename="D:/CSCI441/Labs/MP/CSCI446MP/ShaderLocations.h">
+			<Option target="MP"/>
+		</Unit>
 		<Unit filename="D:/CSCI441/Labs/MP/CSCI446MP/main.cpp">
+			<Option target="MP"/>
+		</Unit>
+		<Unit filename="D:/CSCI441/Labs/MP/CSCI446MP/the_warrior/TheWarrior.cpp">
+			<Option target="MP"/>
+		</Unit>
+		<Unit filename="D:/CSCI441/Labs/MP/CSCI446MP/the_warrior/TheWarrior.hpp">
 			<Option target="MP"/>
 		</Unit>
 		<Unit filename="D:/CSCI441/Labs/MP/CSCI446MP/CMakeLists.txt">

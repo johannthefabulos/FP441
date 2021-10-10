@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "D:/CSCI441/Labs/MP/CSCI446MP/Car.cpp" "D:/CSCI441/Labs/MP/CSCI446MP/cmake-build-debug/CMakeFiles/MP.dir/Car.cpp.obj"
   "D:/CSCI441/Labs/MP/CSCI446MP/MPEngine.cpp" "D:/CSCI441/Labs/MP/CSCI446MP/cmake-build-debug/CMakeFiles/MP.dir/MPEngine.cpp.obj"
   "D:/CSCI441/Labs/MP/CSCI446MP/main.cpp" "D:/CSCI441/Labs/MP/CSCI446MP/cmake-build-debug/CMakeFiles/MP.dir/main.cpp.obj"
+  "D:/CSCI441/Labs/MP/CSCI446MP/the_warrior/TheWarrior.cpp" "D:/CSCI441/Labs/MP/CSCI446MP/cmake-build-debug/CMakeFiles/MP.dir/the_warrior/TheWarrior.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
