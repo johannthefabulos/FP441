@@ -8,13 +8,15 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "../ShaderLocations.h"
+#include "../ShaderLocations.hpp"
 
 class TheWarrior {
-    TheWarrior(ShaderLocations* locations);
+
+public:
+    TheWarrior(ModelShaderLocations* locations);
 
 private:
-    ShaderLocations* shaderLocations;
+    ModelShaderLocations* shaderLocations;
 };
 
 

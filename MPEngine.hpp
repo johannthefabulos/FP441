@@ -6,6 +6,8 @@
 #include <CSCI441/ShaderProgram.hpp>
 
 #include "Car.hpp"
+#include "ShaderLocations.hpp"
+#include "the_warrior/TheWarrior.hpp"
 
 #include <vector>
 
@@ -65,11 +67,16 @@ private:
     /// \desc current state of the left mouse button
     GLint _leftMouseButtonState;
 
+    //Begin Models
+
     /// \desc the static fixed camera in our world
     CSCI441::ArcballCam* _arcballCam;
 
     Car* _car;
 
+    TheWarrior* _warrior;
+
+    //End Models
     /// \desc the size of the world (controls the ground size and locations of buildings)
     static constexpr GLfloat WORLD_SIZE = 55.0f;
     /// \desc VAO for our ground
@@ -96,31 +103,10 @@ private:
     /// \desc shader program
     CSCI441::ShaderProgram* _shaderProgram = nullptr;   // the wrapper for our shader program
     /// \desc stores the locations of all of our shader uniforms
-    struct ShaderUniformLocations {
-        /// \desc precomputed MVP matrix location
-        GLint mvpMatrix;
-        /// \desc material diffuse color location
-        GLint materialColor;
 
-        GLint normalMat;
+    ShaderUniformLocations shaderUniformLocations;
 
-        GLint lightColor;
-
-        GLint lightPos;
-
-        GLint cameraPos;
-
-        GLint materialShininess;
-
-    } shaderUniformLocations;
-    /// \desc stores the locations of all of our shader attributes
-    struct ShaderAttributeLocations {
-        /// \desc vertex position location
-        GLint vPos;
-
-        GLint vNormal;
-
-    } shaderAttributeLocations;
+    ShaderAttributeLocations shaderAttributeLocations;
 
     /// \desc precomputes the matrix uniforms CPU-side and then sends them
     /// to the GPU to be used in the shader for each vertex.  It is more efficient

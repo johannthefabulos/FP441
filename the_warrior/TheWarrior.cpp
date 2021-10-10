@@ -4,7 +4,7 @@
 
 #include "TheWarrior.hpp"
 
-TheWarrior::TheWarrior(ShaderLocations* locations) {
+TheWarrior::TheWarrior(ModelShaderLocations* locations) {
     this->shaderLocations = locations;
 }
 
