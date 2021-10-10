@@ -109,6 +109,8 @@ void Car::drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
     GLfloat bodyWidthScale = bodyWidth/this->wheelInnerRadius;
     GLfloat bodyLengthScale = bodyLength/this->wheelInnerRadius;
 
+
+
     glm::mat4 flatBodyModelMat = glm::scale(modelMtx, glm::vec3(bodyWidthScale, 1, bodyLengthScale));
     this->computeAndSendMatUniforms(flatBodyModelMat, viewMtx, projMtx);
     glUniform3fv(this->materialColorUniformLocation, 1, &this->bodyColor[0]);

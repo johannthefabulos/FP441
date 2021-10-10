@@ -201,6 +201,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+the_warrior/TheWarrior.o: the_warrior/TheWarrior.cpp.o
+.PHONY : the_warrior/TheWarrior.o
+
+# target to build an object file
+the_warrior/TheWarrior.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/the_warrior/TheWarrior.cpp.o
+.PHONY : the_warrior/TheWarrior.cpp.o
+
+the_warrior/TheWarrior.i: the_warrior/TheWarrior.cpp.i
+.PHONY : the_warrior/TheWarrior.i
+
+# target to preprocess a source file
+the_warrior/TheWarrior.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/the_warrior/TheWarrior.cpp.i
+.PHONY : the_warrior/TheWarrior.cpp.i
+
+the_warrior/TheWarrior.s: the_warrior/TheWarrior.cpp.s
+.PHONY : the_warrior/TheWarrior.s
+
+# target to generate assembly for a file
+the_warrior/TheWarrior.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/the_warrior/TheWarrior.cpp.s
+.PHONY : the_warrior/TheWarrior.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -219,6 +243,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... the_warrior/TheWarrior.o"
+	@echo "... the_warrior/TheWarrior.i"
+	@echo "... the_warrior/TheWarrior.s"
 .PHONY : help
 
 
