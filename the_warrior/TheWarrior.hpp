@@ -22,6 +22,8 @@ public:
 private:
     ModelShaderLocations* shaderLocations;
 
+    const glm::vec3 skinColor = {1, 1, 1};
+
     void drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 
     void computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);

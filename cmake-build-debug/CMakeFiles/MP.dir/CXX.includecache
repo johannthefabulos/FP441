@@ -6,58 +6,6 @@
 
 #IncludeRegexTransform: 
 
-../include/CSCI441/ArcballCam.hpp
-Camera.hpp
-../include/CSCI441/Camera.hpp
-
-../include/CSCI441/Camera.hpp
-GL/glew.h
--
-glm/glm.hpp
--
-glm/gtc/matrix_transform.hpp
--
-
-../include/CSCI441/FreeCam.hpp
-Camera.hpp
-../include/CSCI441/Camera.hpp
-cmath
--
-
-../include/CSCI441/OpenGLEngine.hpp
-GL/glew.h
--
-GLFW/glfw3.h
--
-OpenGLUtils.hpp
-../include/CSCI441/OpenGLUtils.hpp
-cstdio
--
-cstring
--
-
-../include/CSCI441/OpenGLUtils.hpp
-GL/glew.h
--
-glm/glm.hpp
--
-cstdio
--
-cstdlib
--
-
-../include/CSCI441/ShaderProgram.hpp
-ShaderUtils.hpp
-../include/CSCI441/ShaderUtils.hpp
-glm/glm.hpp
--
-stdlib.h
--
-map
--
-string
--
-
 ../include/CSCI441/ShaderUtils.hpp
 GL/glew.h
 -
@@ -69,6 +17,20 @@ fstream
 -
 string
 -
+
+../include/CSCI441/SimpleShader.hpp
+GL/glew.h
+-
+glm/glm.hpp
+-
+string
+-
+vector
+-
+objects.hpp
+../include/CSCI441/objects.hpp
+ShaderUtils.hpp
+../include/CSCI441/ShaderUtils.hpp
 
 ../include/CSCI441/objects.hpp
 GL/glew.h
@@ -92,41 +54,15 @@ cmath
 GL/glew.h
 -
 
-/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/Car.hpp
-GL/glew.h
--
-glm/glm.hpp
--
-
-/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/MPEngine.cpp
-MPEngine.hpp
-/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/MPEngine.hpp
-CSCI441/objects.hpp
--
-CSCI441/FreeCam.hpp
--
-ShaderLocations.hpp
 /Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/ShaderLocations.hpp
-stdio.h
--
 
-/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/MPEngine.hpp
-CSCI441/ArcballCam.hpp
--
-CSCI441/OpenGLEngine.hpp
--
-CSCI441/ShaderProgram.hpp
--
-Car.hpp
-/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/Car.hpp
-ShaderLocations.hpp
-/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/ShaderLocations.hpp
-the_warrior/TheWarrior.hpp
+/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/the_warrior/TheWarrior.cpp
+TheWarrior.hpp
 /Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/the_warrior/TheWarrior.hpp
-vector
+glm/gtc/matrix_transform.hpp
 -
-
-/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/ShaderLocations.hpp
+CSCI441/SimpleShader.hpp
+-
 
 /Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/the_warrior/TheWarrior.hpp
 GL/glew.h
@@ -135,12 +71,6 @@ glm/glm.hpp
 -
 ../ShaderLocations.hpp
 /Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/ShaderLocations.hpp
-
-/usr/local/include/GL/gl.h
-windows.h
--
-stddef.h
--
 
 /usr/local/include/GL/glew.h
 stddef.h
@@ -154,46 +84,6 @@ inttypes.h
 Availability.h
 -
 OpenGL/glu.h
--
-GL/glu.h
--
-
-/usr/local/include/GLFW/glfw3.h
-stddef.h
--
-stdint.h
--
-OpenGL/gl3.h
--
-OpenGL/gl3ext.h
--
-OpenGL/gl.h
--
-OpenGL/glu.h
--
-GL/glcorearb.h
--
-GLES/gl.h
--
-GLES/glext.h
--
-GLES2/gl2.h
--
-GLES2/gl2ext.h
--
-GLES3/gl3.h
--
-GLES2/gl2ext.h
--
-GLES3/gl31.h
--
-GLES2/gl2ext.h
--
-vulkan/vulkan.h
--
-GL/gl.h
--
-GL/glext.h
 -
 GL/glu.h
 -
