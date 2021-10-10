@@ -1,4 +1,4 @@
-#include "A3Engine.hpp"
+#include "MPEngine.hpp"
 
 #include <CSCI441/objects.hpp>
 #include <CSCI441/FreeCam.hpp>
@@ -14,7 +14,7 @@ GLfloat getRand() {
 //
 // Public Interface
 
-A3Engine::A3Engine(int OPENGL_MAJOR_VERSION, int OPENGL_MINOR_VERSION,
+MPEngine::MPEngine(int OPENGL_MAJOR_VERSION, int OPENGL_MINOR_VERSION,
                          int WINDOW_WIDTH, int WINDOW_HEIGHT, const char* WINDOW_TITLE)
          : CSCI441::OpenGLEngine(OPENGL_MAJOR_VERSION, OPENGL_MINOR_VERSION, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE) {
 
@@ -24,11 +24,11 @@ A3Engine::A3Engine(int OPENGL_MAJOR_VERSION, int OPENGL_MINOR_VERSION,
     _leftMouseButtonState = GLFW_RELEASE;
 }
 
-A3Engine::~A3Engine() {
+MPEngine::~MPEngine() {
     delete _arcballCam;
 }
 
-void A3Engine::handleKeyEvent(GLint key, GLint action) {
+void MPEngine::handleKeyEvent(GLint key, GLint action) {
     if(key != GLFW_KEY_UNKNOWN)
         _keys[key] = ((action == GLFW_PRESS) || (action == GLFW_REPEAT));
 
@@ -45,7 +45,7 @@ void A3Engine::handleKeyEvent(GLint key, GLint action) {
     }
 }
 
-void A3Engine::handleMouseButtonEvent(GLint button, GLint action) {
+void MPEngine::handleMouseButtonEvent(GLint button, GLint action) {
     // if the event is for the left mouse button
     if( button == GLFW_MOUSE_BUTTON_LEFT ) {
         // update the left mouse button's state
@@ -53,7 +53,7 @@ void A3Engine::handleMouseButtonEvent(GLint button, GLint action) {
     }
 }
 
-void A3Engine::handleCursorPositionEvent(glm::vec2 currMousePosition) {
+void MPEngine::handleCursorPositionEvent(glm::vec2 currMousePosition) {
     // if mouse hasn't moved in the window, prevent camera from flipping out
     if(fabs(_mousePosition.x - MOUSE_UNINITIALIZED) <= 0.000001f) {
         _mousePosition = currMousePosition;
@@ -86,7 +86,7 @@ void A3Engine::handleCursorPositionEvent(glm::vec2 currMousePosition) {
 //
 // Engine Setup
 
-void A3Engine::_setupGLFW() {
+void MPEngine::_setupGLFW() {
     CSCI441::OpenGLEngine::_setupGLFW();
 
     // set our callbacks
@@ -96,7 +96,7 @@ void A3Engine::_setupGLFW() {
     glfwSetScrollCallback(_window, a3_scroll_callback);
 }
 
-void A3Engine::_setupOpenGL() {
+void MPEngine::_setupOpenGL() {
     glEnable( GL_DEPTH_TEST );					                    // enable depth testing
     glDepthFunc( GL_LESS );							                // use less than depth test
 
@@ -106,7 +106,7 @@ void A3Engine::_setupOpenGL() {
     glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );	// clear the frame buffer to black
 }
 
-void A3Engine::_setupShaders() {
+void MPEngine::_setupShaders() {
     _shaderProgram = new CSCI441::ShaderProgram("shaders/a3.v.glsl", "shaders/a3.f.glsl" );
     shaderUniformLocations.mvpMatrix      = _shaderProgram->getUniformLocation("mvpMatrix");
 
@@ -125,7 +125,7 @@ void A3Engine::_setupShaders() {
 
 }
 
-void A3Engine::_setupBuffers() {
+void MPEngine::_setupBuffers() {
 
     CSCI441::setVertexAttributeLocations(shaderAttributeLocations.vPos, shaderAttributeLocations.vNormal);
 
@@ -139,7 +139,7 @@ void A3Engine::_setupBuffers() {
     _generateEnvironment();
 }
 
-void A3Engine::_createGroundBuffers() {
+void MPEngine::_createGroundBuffers() {
 
     struct Vertex {
         GLfloat x, y, z;
@@ -176,7 +176,7 @@ void A3Engine::_createGroundBuffers() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 }
 
-void A3Engine::_generateEnvironment() {
+void MPEngine::_generateEnvironment() {
     //******************************************************************
     // parameters to make up our grid size and spacing, feel free to
     // play around with this
@@ -222,7 +222,7 @@ void A3Engine::_generateEnvironment() {
     }
 }
 
-void A3Engine::_setupScene() {
+void MPEngine::_setupScene() {
     _arcballCam = new CSCI441::ArcballCam();
     _arcballCam->setLookAtPoint(glm::vec3(0.0f, 2.1f, 0.0f) );
     _arcballCam->setTheta(3.52f );
@@ -245,12 +245,12 @@ void A3Engine::_setupScene() {
 //
 // Engine Cleanup
 
-void A3Engine::_cleanupShaders() {
+void MPEngine::_cleanupShaders() {
     fprintf( stdout, "[INFO]: ...deleting Shaders.\n" );
     delete _shaderProgram;
 }
 
-void A3Engine::_cleanupBuffers() {
+void MPEngine::_cleanupBuffers() {
     fprintf( stdout, "[INFO]: ...deleting VAOs....\n" );
     CSCI441::deleteObjectVAOs();
     glDeleteVertexArrays( 1, &_groundVAO );
@@ -266,7 +266,7 @@ void A3Engine::_cleanupBuffers() {
 //
 // Rendering / Drawing Functions - this is where the magic happens!
 
-void A3Engine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
+void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 
     _shaderProgram->useProgram();
 
@@ -303,7 +303,7 @@ void A3Engine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     glUniform3fv(shaderUniformLocations.cameraPos, 1, &this->_arcballCam->getPosition()[0]);
 }
 
-void A3Engine::_updateScene() {
+void MPEngine::_updateScene() {
     // turn right
     if( _keys[GLFW_KEY_D] ) {
         _car->turnCar(-glm::pi<GLfloat>() / 128.0f);
@@ -322,7 +322,7 @@ void A3Engine::_updateScene() {
     }
 }
 
-void A3Engine::run() {
+void MPEngine::run() {
     //  This is our draw loop - all rendering is done here.  We use a loop to keep the window open
     //	until the user decides to close the window and quit the program.  Without a loop, the
     //	window will display once and then the program exits.
@@ -389,7 +389,7 @@ void A3Engine::run() {
 //
 // Private Helper FUnctions
 
-void A3Engine::_computeAndSendMatrixUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const {
+void MPEngine::_computeAndSendMatrixUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const {
     // precompute the Model-View-Projection matrix on the CPU
     glm::mat4 mvpMtx = projMtx * viewMtx * modelMtx;
     // then send it to the shader on the GPU to apply to every vertex
@@ -402,7 +402,7 @@ void A3Engine::_computeAndSendMatrixUniforms(glm::mat4 modelMtx, glm::mat4 viewM
 
 }
 
-void A3Engine::handleScrollEvent(glm::vec2 offset) {
+void MPEngine::handleScrollEvent(glm::vec2 offset) {
     // update the camera radius in/out
     GLfloat totChgSq = offset.y;
     _arcballCam->moveForward( totChgSq * 0.2f );
@@ -413,28 +413,28 @@ void A3Engine::handleScrollEvent(glm::vec2 offset) {
 // Callbacks
 
 void a3_keyboard_callback(GLFWwindow *window, int key, int scancode, int action, int mods ) {
-    auto engine = (A3Engine*) glfwGetWindowUserPointer(window);
+    auto engine = (MPEngine*) glfwGetWindowUserPointer(window);
 
     // pass the key and action through to the engine
     engine->handleKeyEvent(key, action);
 }
 
 void a3_cursor_callback(GLFWwindow *window, double x, double y ) {
-    auto engine = (A3Engine*) glfwGetWindowUserPointer(window);
+    auto engine = (MPEngine*) glfwGetWindowUserPointer(window);
 
     // pass the cursor position through to the engine
     engine->handleCursorPositionEvent(glm::vec2(x, y));
 }
 
 void a3_mouse_button_callback(GLFWwindow *window, int button, int action, int mods ) {
-    auto engine = (A3Engine*) glfwGetWindowUserPointer(window);
+    auto engine = (MPEngine*) glfwGetWindowUserPointer(window);
 
     // pass the mouse button and action through to the engine
     engine->handleMouseButtonEvent(button, action);
 }
 
 void a3_scroll_callback(GLFWwindow *window, double xOffset, double yOffset) {
-    auto engine = (A3Engine*) glfwGetWindowUserPointer(window);
+    auto engine = (MPEngine*) glfwGetWindowUserPointer(window);
 
     // pass the scroll offset through to the engine
     engine->handleScrollEvent(glm::vec2(xOffset, yOffset));

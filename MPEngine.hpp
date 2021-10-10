@@ -9,12 +9,12 @@
 
 #include <vector>
 
-class A3Engine : public CSCI441::OpenGLEngine {
+class MPEngine : public CSCI441::OpenGLEngine {
 public:
-    A3Engine(int OPENGL_MAJOR_VERSION, int OPENGL_MINOR_VERSION,
+    MPEngine(int OPENGL_MAJOR_VERSION, int OPENGL_MINOR_VERSION,
                 int WINDOW_WIDTH, int WINDOW_HEIGHT,
                 const char* WINDOW_TITLE);
-    ~A3Engine();
+    ~MPEngine();
 
     void run() final;
 
