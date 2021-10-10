@@ -15,8 +15,16 @@ class TheWarrior {
 public:
     TheWarrior(ModelShaderLocations* locations);
 
+    void drawWarrior(glm::mat4 viewMatrix, glm::mat4 projMatrix);
+
+    glm::mat4 currentModelMatrix = glm::mat4(1.0f);
+
 private:
     ModelShaderLocations* shaderLocations;
+
+    void drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+
+    void computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 };
 
 

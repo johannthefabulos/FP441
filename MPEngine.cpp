@@ -142,7 +142,7 @@ void MPEngine::_setupBuffers() {
                                            shaderUniformLocations.materialColor };
 
     _warrior = new TheWarrior(&modelLocations);
-    _car = new Car(_shaderProgram->getShaderProgramHandle(),
+    _car = new eeyore(_shaderProgram->getShaderProgramHandle(),
                    shaderUniformLocations.mvpMatrix,
                    shaderUniformLocations.normalMat,
                    shaderUniformLocations.materialColor,
