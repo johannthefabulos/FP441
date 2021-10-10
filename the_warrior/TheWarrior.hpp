@@ -8,13 +8,15 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
+#include "../ShaderLocations.hpp"
+
 class TheWarrior {
-    TheWarrior(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc);
+
+public:
+    TheWarrior(ModelShaderLocations* locations);
 
 private:
-    GLuint shaderProgramHandle;
-    GLint mvpMatUniformLo
-
+    ModelShaderLocations* shaderLocations;
 };
 
 

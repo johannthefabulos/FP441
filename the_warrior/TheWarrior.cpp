@@ -4,7 +4,7 @@
 
 #include "TheWarrior.hpp"
 
-TheWarrior::TheWarrior(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc,
-                       GLint matColorUniformLoc) {
-
+TheWarrior::TheWarrior(ModelShaderLocations* locations) {
+    this->shaderLocations = locations;
 }
+

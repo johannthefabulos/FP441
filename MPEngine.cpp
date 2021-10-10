@@ -3,6 +3,8 @@
 #include <CSCI441/objects.hpp>
 #include <CSCI441/FreeCam.hpp>
 
+#include "ShaderLocations.hpp"
+
 #include <stdio.h>
 
 /// \desc Simple helper function to return a random number between 0.0f and 1.0f.
@@ -134,6 +136,17 @@ void MPEngine::_setupBuffers() {
                       shaderUniformLocations.normalMat,
                       shaderUniformLocations.materialColor,
                       WORLD_SIZE);
+
+    ModelShaderLocations modelLocations = {_shaderProgram->getShaderProgramHandle(),
+                                           shaderUniformLocations.mvpMatrix, shaderUniformLocations.normalMat,
+                                           shaderUniformLocations.materialColor };
+
+    _warrior = new TheWarrior(&modelLocations);
+    _car = new Car(_shaderProgram->getShaderProgramHandle(),
+                   shaderUniformLocations.mvpMatrix,
+                   shaderUniformLocations.normalMat,
+                   shaderUniformLocations.materialColor,
+                   WORLD_SIZE);
 
     _createGroundBuffers();
     _generateEnvironment();
