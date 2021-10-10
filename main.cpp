@@ -1,30 +1,33 @@
 /*
  *  CSCI 441, Computer Graphics, Fall 2021
  *
- *  Project: A2
+ *  Project: lab04
  *  File: main.cpp
  *
- *      Author: Dr. Jeffrey Paone
- *
  *  Description:
- *      Contains the shell code for moving an animated character across a world map.
+ *      This file contains the basic setup to work with GLSL shaders.
+ *
+ *  Author: Dr. Paone, Colorado School of Mines, 2021
+ *
  */
 
-#include "A2Engine.hpp"
+#include "A3Engine.hpp"
 
-//*************************************************************************************
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
+///*****************************************************************************
 //
 // Our main function
-
 int main() {
 
-    auto a2Engine = new A2Engine(4, 1, 512, 512, "A2: An Unexpected Journey");
-    a2Engine->initialize();
-    if( a2Engine->getError() == CSCI441::OpenGLEngine::OPENGL_ENGINE_ERROR_NO_ERROR ) {
-        a2Engine->run();
+    auto labEngine = new A3Engine(4, 1, 853, 640, "A3: Character Vehicle");
+    labEngine->initialize();
+    if (labEngine->getError() == CSCI441::OpenGLEngine::OPENGL_ENGINE_ERROR_NO_ERROR) {
+        labEngine->run();
     }
-    a2Engine->shutdown();
-    delete a2Engine;
+    labEngine->shutdown();
+    delete labEngine;
 
-    return EXIT_SUCCESS;                            // exit our program successfully!
+	return EXIT_SUCCESS;
 }

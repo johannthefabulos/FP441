@@ -57,10 +57,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Assignments/A2"
+CMAKE_SOURCE_DIR = "/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Assignments/A2/cmake-build-debug"
+CMAKE_BINARY_DIR = "/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/cmake-build-debug"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Assignments/A2/cmake-build-debug/CMakeFiles" "/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Assignments/A2/cmake-build-debug//CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/cmake-build-debug/CMakeFiles" "/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/cmake-build-debug//CMakeFiles/progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Assignments/A2/cmake-build-debug/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/cmake-build-debug/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -117,96 +117,72 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named a2
+# Target rules for targets named A3
 
 # Build rule for target.
-a2: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 a2
-.PHONY : a2
+A3: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 A3
+.PHONY : A3
 
 # fast build rule for target.
-a2/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/build
-.PHONY : a2/fast
+A3/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/build
+.PHONY : A3/fast
 
-A2Engine.o: A2Engine.cpp.o
-.PHONY : A2Engine.o
-
-# target to build an object file
-A2Engine.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/A2Engine.cpp.o
-.PHONY : A2Engine.cpp.o
-
-A2Engine.i: A2Engine.cpp.i
-.PHONY : A2Engine.i
-
-# target to preprocess a source file
-A2Engine.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/A2Engine.cpp.i
-.PHONY : A2Engine.cpp.i
-
-A2Engine.s: A2Engine.cpp.s
-.PHONY : A2Engine.s
-
-# target to generate assembly for a file
-A2Engine.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/A2Engine.cpp.s
-.PHONY : A2Engine.cpp.s
-
-WorldMapEngine.o: WorldMapEngine.cpp.o
-.PHONY : WorldMapEngine.o
+A3Engine.o: A3Engine.cpp.o
+.PHONY : A3Engine.o
 
 # target to build an object file
-WorldMapEngine.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/WorldMapEngine.cpp.o
-.PHONY : WorldMapEngine.cpp.o
+A3Engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/A3Engine.cpp.o
+.PHONY : A3Engine.cpp.o
 
-WorldMapEngine.i: WorldMapEngine.cpp.i
-.PHONY : WorldMapEngine.i
+A3Engine.i: A3Engine.cpp.i
+.PHONY : A3Engine.i
 
 # target to preprocess a source file
-WorldMapEngine.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/WorldMapEngine.cpp.i
-.PHONY : WorldMapEngine.cpp.i
+A3Engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/A3Engine.cpp.i
+.PHONY : A3Engine.cpp.i
 
-WorldMapEngine.s: WorldMapEngine.cpp.s
-.PHONY : WorldMapEngine.s
+A3Engine.s: A3Engine.cpp.s
+.PHONY : A3Engine.s
 
 # target to generate assembly for a file
-WorldMapEngine.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/WorldMapEngine.cpp.s
-.PHONY : WorldMapEngine.cpp.s
+A3Engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/A3Engine.cpp.s
+.PHONY : A3Engine.cpp.s
 
-laser/Laser.o: laser/Laser.cpp.o
-.PHONY : laser/Laser.o
+Car.o: Car.cpp.o
+.PHONY : Car.o
 
 # target to build an object file
-laser/Laser.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/laser/Laser.cpp.o
-.PHONY : laser/Laser.cpp.o
+Car.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/Car.cpp.o
+.PHONY : Car.cpp.o
 
-laser/Laser.i: laser/Laser.cpp.i
-.PHONY : laser/Laser.i
+Car.i: Car.cpp.i
+.PHONY : Car.i
 
 # target to preprocess a source file
-laser/Laser.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/laser/Laser.cpp.i
-.PHONY : laser/Laser.cpp.i
+Car.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/Car.cpp.i
+.PHONY : Car.cpp.i
 
-laser/Laser.s: laser/Laser.cpp.s
-.PHONY : laser/Laser.s
+Car.s: Car.cpp.s
+.PHONY : Car.s
 
 # target to generate assembly for a file
-laser/Laser.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/laser/Laser.cpp.s
-.PHONY : laser/Laser.cpp.s
+Car.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/Car.cpp.s
+.PHONY : Car.cpp.s
 
 main.o: main.cpp.o
 .PHONY : main.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -214,7 +190,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -222,32 +198,8 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/main.cpp.s
 .PHONY : main.cpp.s
-
-player/Player.o: player/Player.cpp.o
-.PHONY : player/Player.o
-
-# target to build an object file
-player/Player.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/player/Player.cpp.o
-.PHONY : player/Player.cpp.o
-
-player/Player.i: player/Player.cpp.i
-.PHONY : player/Player.i
-
-# target to preprocess a source file
-player/Player.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/player/Player.cpp.i
-.PHONY : player/Player.cpp.i
-
-player/Player.s: player/Player.cpp.s
-.PHONY : player/Player.s
-
-# target to generate assembly for a file
-player/Player.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/a2.dir/build.make CMakeFiles/a2.dir/player/Player.cpp.s
-.PHONY : player/Player.cpp.s
 
 # Help Target
 help:
@@ -257,22 +209,16 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... a2"
-	@echo "... A2Engine.o"
-	@echo "... A2Engine.i"
-	@echo "... A2Engine.s"
-	@echo "... WorldMapEngine.o"
-	@echo "... WorldMapEngine.i"
-	@echo "... WorldMapEngine.s"
-	@echo "... laser/Laser.o"
-	@echo "... laser/Laser.i"
-	@echo "... laser/Laser.s"
+	@echo "... A3"
+	@echo "... A3Engine.o"
+	@echo "... A3Engine.i"
+	@echo "... A3Engine.s"
+	@echo "... Car.o"
+	@echo "... Car.i"
+	@echo "... Car.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... player/Player.o"
-	@echo "... player/Player.i"
-	@echo "... player/Player.s"
 .PHONY : help
 
 
