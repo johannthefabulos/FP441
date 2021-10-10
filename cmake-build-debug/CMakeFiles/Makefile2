@@ -63,7 +63,7 @@ CMAKE_BINARY_DIR = "/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/P
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/A3.dir/all
+all: CMakeFiles/MP.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +71,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/A3.dir/clean
+clean: CMakeFiles/MP.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/A3.dir
+# Target rules for target CMakeFiles/MP.dir
 
 # All Build rule for target.
-CMakeFiles/A3.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/cmake-build-debug/CMakeFiles" --progress-num=1,2,3,4 "Built target A3"
-.PHONY : CMakeFiles/A3.dir/all
+CMakeFiles/MP.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/cmake-build-debug/CMakeFiles" --progress-num=1,2,3,4 "Built target MP"
+.PHONY : CMakeFiles/MP.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/A3.dir/rule: cmake_check_build_system
+CMakeFiles/MP.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/cmake-build-debug/CMakeFiles" 4
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/A3.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/MP.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/cmake-build-debug/CMakeFiles" 0
-.PHONY : CMakeFiles/A3.dir/rule
+.PHONY : CMakeFiles/MP.dir/rule
 
 # Convenience name for target.
-A3: CMakeFiles/A3.dir/rule
-.PHONY : A3
+MP: CMakeFiles/MP.dir/rule
+.PHONY : MP
 
 # clean rule for target.
-CMakeFiles/A3.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/clean
-.PHONY : CMakeFiles/A3.dir/clean
+CMakeFiles/MP.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/clean
+.PHONY : CMakeFiles/MP.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -117,48 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named A3
+# Target rules for targets named MP
 
 # Build rule for target.
-A3: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 A3
-.PHONY : A3
+MP: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MP
+.PHONY : MP
 
 # fast build rule for target.
-A3/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/build
-.PHONY : A3/fast
-
-A3Engine.o: A3Engine.cpp.o
-.PHONY : A3Engine.o
-
-# target to build an object file
-A3Engine.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/A3Engine.cpp.o
-.PHONY : A3Engine.cpp.o
-
-A3Engine.i: A3Engine.cpp.i
-.PHONY : A3Engine.i
-
-# target to preprocess a source file
-A3Engine.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/A3Engine.cpp.i
-.PHONY : A3Engine.cpp.i
-
-A3Engine.s: A3Engine.cpp.s
-.PHONY : A3Engine.s
-
-# target to generate assembly for a file
-A3Engine.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/A3Engine.cpp.s
-.PHONY : A3Engine.cpp.s
+MP/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/build
+.PHONY : MP/fast
 
 Car.o: Car.cpp.o
 .PHONY : Car.o
 
 # target to build an object file
 Car.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/Car.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/Car.cpp.o
 .PHONY : Car.cpp.o
 
 Car.i: Car.cpp.i
@@ -166,7 +142,7 @@ Car.i: Car.cpp.i
 
 # target to preprocess a source file
 Car.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/Car.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/Car.cpp.i
 .PHONY : Car.cpp.i
 
 Car.s: Car.cpp.s
@@ -174,15 +150,39 @@ Car.s: Car.cpp.s
 
 # target to generate assembly for a file
 Car.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/Car.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/Car.cpp.s
 .PHONY : Car.cpp.s
+
+MPEngine.o: MPEngine.cpp.o
+.PHONY : MPEngine.o
+
+# target to build an object file
+MPEngine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/MPEngine.cpp.o
+.PHONY : MPEngine.cpp.o
+
+MPEngine.i: MPEngine.cpp.i
+.PHONY : MPEngine.i
+
+# target to preprocess a source file
+MPEngine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/MPEngine.cpp.i
+.PHONY : MPEngine.cpp.i
+
+MPEngine.s: MPEngine.cpp.s
+.PHONY : MPEngine.s
+
+# target to generate assembly for a file
+MPEngine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/MPEngine.cpp.s
+.PHONY : MPEngine.cpp.s
 
 main.o: main.cpp.o
 .PHONY : main.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -190,7 +190,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -198,7 +198,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/A3.dir/build.make CMakeFiles/A3.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -209,13 +209,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... A3"
-	@echo "... A3Engine.o"
-	@echo "... A3Engine.i"
-	@echo "... A3Engine.s"
+	@echo "... MP"
 	@echo "... Car.o"
 	@echo "... Car.i"
 	@echo "... Car.s"
+	@echo "... MPEngine.o"
+	@echo "... MPEngine.i"
+	@echo "... MPEngine.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
