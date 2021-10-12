@@ -7,70 +7,59 @@
 
 class eeyore {
 public:
-    /// \desc creates a simple plane that gives the appearance of flight
-    /// \param shaderProgramHandle shader program handle that the plane should be drawn using
-    /// \param mvpMtxUniformLocation uniform location for the full precomputed MVP matrix
-    /// \param normalMtxUniformLocation uniform location for the precomputed Normal matrix
-    /// \param materialColorUniformLocation uniform location for the material diffuse color
-    car( GLuint shaderProgramHandle, GLint mvpMtxUniformLocation, GLint normalMtxUniformLocation, GLint materialColorUniformLocation );
+    eeyore(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH);
 
-    /// \desc draws the model plane for a given MVP matrix
-    /// \param modelMtx existing model matrix to apply to plane
-    /// \param viewMtx camera view matrix to apply to plane
-    /// \param projMtx camera projection matrix to apply to plane
-    /// \note internally uses the provided shader program and sets the necessary uniforms
-    /// for the MVP and Normal Matrices as well as the material diffuse color
-    void drawCar(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx );
+    void drawEeyore(glm::mat4 viewMatrix, glm::mat4 projMatrix);
+
+    glm::vec3 getCurrentPosition();
+
+    void driveForward();
+    void driveBackward();
+    void turnCar(GLfloat theta);
 
 
-
-    glm::vec3 direc = glm::vec3(0,.4,0);
-    float theta = 0;
-    float phi = 0;
-
-    void rotateX(int x);
-
-    void move(int x);
-
+    glm::mat4 currentModelMatrix = glm::mat4(1.0f);
 private:
-    GLuint _shaderProgramHandle;
-    /// \desc stores the uniform locations needed for the plan information
-    struct ShaderProgramUniformLocations {
-        /// \desc location of the precomputed ModelViewProjection matrix
-        GLint mvpMtx;
-        GLint normalMtx;
-        GLint materialColor;
-    } _shaderProgramUniformLocations;
+    GLuint shaderProgramHandle;
+    GLint mvpMatrixUniformLocation;
+    GLint normalMatrixUniformLocation;
+    GLint materialColorUniformLocation;
 
+    GLfloat WORLD_SIDE_LENGTH;
 
-    glm::vec3 _colorSeat;
-    glm::vec3 _scaleSeat;
-    glm::vec3 _colorBar;
-    glm::vec3 _scaleBar;
-    glm::vec3 _transBar[4];
-    glm::vec3 _transBar1;
-    glm::vec3 _transBar2;
-    glm::vec3 _transBar3;
-    glm::vec3 _transBar4;
-    glm::vec3 _colorWheel;
-    GLfloat _rotateWheel;
+    GLfloat wheelAngle = 0.0f;
 
-    glm::vec3 _scaleWheel;
-    glm::vec3 _transWheel;
-    float _angleAni = 0;
+    glm::vec3 currentWorldPosition = {0, 0, 0};
 
+    const glm::vec3 wheelColor = {0.0f, 0.0f, 1.0f};
+    const glm::vec3 bodyColor = {0.0f, 0.0f, 1.0f};
+    const glm::vec3 tailColor = {0, 0, 0};
+    const glm::vec3 axelColor = {0.5, 0.5, 0.5};
 
-    /// \desc draws just the plane's body
-    /// \param modelMtx existing model matrix to apply to plane
-    /// \param viewMtx camera view matrix to apply to plane
-    /// \param projMtx camera projection matrix to apply to plane
-    void _drawCarSeat(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx ) const;
+    const GLfloat wheelInnerRadius = 0.25;
+    const GLfloat wheelOuterRadius = 0.5;
+    const GLfloat carYPosition = wheelOuterRadius+wheelInnerRadius;
 
-    void _computeAndSendMatrixUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const;
+    const GLfloat moveSpeed = 0.1;
 
-    void _drawBar(int ind, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const;
+    //The left/right translation for the wheels, original state is right wheel
+    const glm::vec3 wheelLRTranslation = {1.2, 0, 0};
+    //The front/back translation for the wheels, original state is front wheel
+    const glm::vec3 wheelFBTranslation = {0, 0, 1.6};
 
-    void _drawWheel(bool leftWheel, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const;
+    void drawLeg(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+
+    void drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+
+    void drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+
+    void computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+
+    void updateCurrentPosition();
+
+    void updateWheelRotation(bool isMovingForward);
+
+    bool testCarShouldMove(GLfloat testMoveSpeed);
 };
 
 
