@@ -8,6 +8,7 @@
 #include "Car.hpp"
 #include "ShaderLocations.hpp"
 #include "the_warrior/TheWarrior.hpp"
+#include "Eeyore/eeyore.hpp"
 
 #include <vector>
 
@@ -78,7 +79,9 @@ private:
     /// \desc the static fixed camera in our world
     CSCI441::ArcballCam* _arcballCam;
 
-    eeyore* _car;
+    Car* _car;
+
+    eeyore* _eeyore;
 
     TheWarrior* _warrior;
 

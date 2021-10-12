@@ -136,7 +136,12 @@ void MPEngine::_setupBuffers() {
                                            shaderUniformLocations.materialColor };
 
     _warrior = new TheWarrior(modelLocations, WORLD_SIZE);
-    _car = new eeyore(_shaderProgram->getShaderProgramHandle(),
+    _car = new Car(_shaderProgram->getShaderProgramHandle(),
+                   shaderUniformLocations.mvpMatrix,
+                   shaderUniformLocations.normalMat,
+                   shaderUniformLocations.materialColor,
+                   WORLD_SIZE);
+    _eeyore = new eeyore(_shaderProgram->getShaderProgramHandle(),
                    shaderUniformLocations.mvpMatrix,
                    shaderUniformLocations.normalMat,
                    shaderUniformLocations.materialColor,
@@ -306,21 +311,26 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     //// END DRAWING THE BUILDINGS ////
     //Draw eeyore
 
-
     glUniform1f(shaderUniformLocations.materialShininess, 1);
     _car->drawCar(viewMtx, projMtx);
 
     glUniform1f(shaderUniformLocations.materialShininess, 1);
     _warrior->drawWarrior(viewMtx, projMtx);
 
-    this->_arcballCam->setLookAtPoint(_car->getCurrentPosition());
-    this->_arcballCam->recomputeOrientation();
-    glUniform3fv(shaderUniformLocations.cameraPos, 1, &this->_arcballCam->getPosition()[0]);
+    glUniform1f(shaderUniformLocations.materialShininess, 1);
+    _eeyore->drawEeyore(viewMtx, projMtx);
 
     //// START DRAWING THE CHAIR ////
     _computeAndSendMatrixUniforms(chairModelMatrix, viewMtx, projMtx);
     drawChair(chairModelMatrix, viewMtx, projMtx);
     //// END DRAWING THE CHAIR ////
+
+
+    this->_arcballCam->setLookAtPoint(_car->getCurrentPosition());
+    this->_arcballCam->recomputeOrientation();
+    glUniform3fv(shaderUniformLocations.cameraPos, 1, &this->_arcballCam->getPosition()[0]);
+
+
 }
 void MPEngine::drawChair( glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx ) {
     modelMtx = glm::translate( modelMtx, glm::vec3( cos(animationAngle), 0, sin(animationAngle) ));
