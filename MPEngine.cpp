@@ -131,23 +131,16 @@ void MPEngine::_setupBuffers() {
 
     CSCI441::setVertexAttributeLocations(shaderAttributeLocations.vPos, shaderAttributeLocations.vNormal);
 
-    _car = new eeyore(_shaderProgram->getShaderProgramHandle(),
-                      shaderUniformLocations.mvpMatrix,
-                      shaderUniformLocations.normalMat,
-                      shaderUniformLocations.materialColor,
-                      WORLD_SIZE);
-
     ModelShaderLocations modelLocations = {_shaderProgram->getShaderProgramHandle(),
                                            shaderUniformLocations.mvpMatrix, shaderUniformLocations.normalMat,
                                            shaderUniformLocations.materialColor };
 
-    _warrior = new TheWarrior(&modelLocations);
-    /*_car = new Car(_shaderProgram->getShaderProgramHandle(),
+    _warrior = new TheWarrior(modelLocations, WORLD_SIZE);
+    _car = new eeyore(_shaderProgram->getShaderProgramHandle(),
                    shaderUniformLocations.mvpMatrix,
                    shaderUniformLocations.normalMat,
                    shaderUniformLocations.materialColor,
                    WORLD_SIZE);
-    */
     _createGroundBuffers();
     _generateEnvironment();
 }
@@ -276,6 +269,7 @@ void MPEngine::_cleanupBuffers() {
 
     fprintf( stdout, "[INFO]: ...deleting models..\n" );
     delete _car;
+    delete _warrior;
 }
 
 //*************************************************************************************
@@ -307,14 +301,19 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 
         glUniform3fv(shaderUniformLocations.materialColor, 1, &currentBuilding.color[0]);
 
-        CSCI441::drawSolidCube(1.0);
+        //CSCI441::drawSolidCube(1.0);
     }
     //// END DRAWING THE BUILDINGS ////
     //Draw eeyore
+
+
     glUniform1f(shaderUniformLocations.materialShininess, 1);
     _car->drawCar(viewMtx, projMtx);
 
-    this->_arcballCam->setLookAtPoint(this->_car->getCurrentPosition());
+    glUniform1f(shaderUniformLocations.materialShininess, 1);
+    _warrior->drawWarrior(viewMtx, projMtx);
+
+    this->_arcballCam->setLookAtPoint(_car->getCurrentPosition());
     this->_arcballCam->recomputeOrientation();
     glUniform3fv(shaderUniformLocations.cameraPos, 1, &this->_arcballCam->getPosition()[0]);
 
