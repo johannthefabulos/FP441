@@ -59,15 +59,17 @@ GL/glew.h
 /Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/the_warrior/TheWarrior.cpp
 TheWarrior.hpp
 /Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/the_warrior/TheWarrior.hpp
-glm/gtc/matrix_transform.hpp
--
 CSCI441/SimpleShader.hpp
+-
+stdio.h
 -
 
 /Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/the_warrior/TheWarrior.hpp
 GL/glew.h
 -
 glm/glm.hpp
+-
+glm/gtc/matrix_transform.hpp
 -
 ../ShaderLocations.hpp
 /Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/ShaderLocations.hpp

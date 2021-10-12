@@ -131,17 +131,11 @@ void MPEngine::_setupBuffers() {
 
     CSCI441::setVertexAttributeLocations(shaderAttributeLocations.vPos, shaderAttributeLocations.vNormal);
 
-//    _car = new eeyore(_shaderProgram->getShaderProgramHandle(),
-//                      shaderUniformLocations.mvpMatrix,
-//                      shaderUniformLocations.normalMat,
-//                      shaderUniformLocations.materialColor,
-//                      WORLD_SIZE);
-
     ModelShaderLocations modelLocations = {_shaderProgram->getShaderProgramHandle(),
                                            shaderUniformLocations.mvpMatrix, shaderUniformLocations.normalMat,
                                            shaderUniformLocations.materialColor };
 
-    _warrior = new TheWarrior(&modelLocations);
+    _warrior = new TheWarrior(modelLocations, WORLD_SIZE);
     _car = new eeyore(_shaderProgram->getShaderProgramHandle(),
                    shaderUniformLocations.mvpMatrix,
                    shaderUniformLocations.normalMat,
@@ -305,7 +299,7 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 
         glUniform3fv(shaderUniformLocations.materialColor, 1, &currentBuilding.color[0]);
 
-        //CSCI441::drawSolidCube(1.0);er
+        //CSCI441::drawSolidCube(1.0);
     }
     //// END DRAWING THE BUILDINGS ////
     //Draw eeyore
