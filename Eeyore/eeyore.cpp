@@ -38,6 +38,7 @@ void eeyore::drawEeyore(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
 void eeyore::drawLeg(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
     glm::mat4 wheelModelMat = modelMtx;
     wheelModelMat = glm::scale(wheelModelMat,glm::vec3(1,5,1));
+
     if (isFront){
         wheelModelMat = glm::translate(wheelModelMat, this->wheelFBTranslation);
     }else{
@@ -48,10 +49,11 @@ void eeyore::drawLeg(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 v
     }else{
         wheelModelMat = glm::translate(wheelModelMat, -this->wheelLRTranslation);
     }
+    wheelModelMat = glm::rotate(wheelModelMat, wheelAngle, CSCI441::X_AXIS);
 
 //    wheelModelMat = glm::rotate(wheelModelMat, glm::half_pi<GLfloat>(), glm::vec3(0, 1, 0));
 
-    //wheelModelMat = glm::rotate(wheelModelMat, wheelAngle, glm::vec3(0, 0, 1));
+
 
     this->computeAndSendMatUniforms(wheelModelMat, viewMtx, projMtx);
 
@@ -90,7 +92,7 @@ void eeyore::drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) 
     glm::mat4 noseModelMat = modelMtx;
     noseModelMat = glm::translate(noseModelMat, glm::vec3(0, 2, -3));
     this->computeAndSendMatUniforms(noseModelMat, viewMtx, projMtx);
-    glUniform3fv(this->materialColorUniformLocation, 1, &this->bodyColor[0]);
+    glUniform3fv(this->materialColorUniformLocation, 1, &this->noseColor[0]);
     CSCI441::drawSolidCube(1);
 
 }
@@ -177,15 +179,24 @@ bool eeyore::testCarShouldMove(GLfloat testMoveSpeed) {
 }
 
 void eeyore::updateWheelRotation(bool isMovingForward) {
-    GLfloat wheelAngleDelta = glm::pi<GLfloat>() /128.0f;
-    if (isMovingForward){
-        wheelAngleDelta *= -1;
+    GLfloat wheelAngleDelta = glm::pi<GLfloat>() /256.0f;
+//    if (isMovingForward){
+//        wheelAngleDelta *= -1;
+//    }
+
+    if (direction) {
+        this->wheelAngle += wheelAngleDelta;
+        if (wheelAngle > M_PI / 4) {
+            direction = false;
+        }
+    }else{
+        this->wheelAngle -= wheelAngleDelta;
+        if (wheelAngle < -M_PI / 4) {
+            direction = true;
+        }
     }
-    this->wheelAngle += wheelAngleDelta;
-    if (this->wheelAngle < 0){
-        this->wheelAngle += glm::two_pi<GLfloat>();
-    }
-    if (this->wheelAngle > glm::two_pi<GLfloat>()){
-        this->wheelAngle -= glm::two_pi<GLfloat>();
-    }
+//    if (this->wheelAngle > glm::two_pi<GLfloat>()){
+//        this->wheelAngle -= glm::two_pi<GLfloat>();
+//    }
+
 }

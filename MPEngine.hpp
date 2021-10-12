@@ -8,6 +8,7 @@
 #include "Car.hpp"
 #include "ShaderLocations.hpp"
 #include "the_warrior/TheWarrior.hpp"
+#include "Eeyore/eeyore.hpp"
 
 #include <vector>
 

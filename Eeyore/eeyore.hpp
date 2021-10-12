@@ -34,8 +34,8 @@ private:
     const glm::vec3 wheelColor = {0.0f, 0.0f, 1.0f};
     const glm::vec3 bodyColor = {0.0f, 0.0f, 1.0f};
     const glm::vec3 tailColor = {0, 0, 0};
-    const glm::vec3 axelColor = {0.5, 0.5, 0.5};
-
+    const glm::vec3 noseColor = {0.98, 0.81, 0.69};
+    bool direction = true;
     const GLfloat wheelInnerRadius = 0.25;
     const GLfloat wheelOuterRadius = 0.5;
     const GLfloat carYPosition = wheelOuterRadius+wheelInnerRadius;

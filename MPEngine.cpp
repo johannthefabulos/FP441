@@ -6,6 +6,8 @@
 #include "ShaderLocations.hpp"
 
 #include <stdio.h>
+#include "time.h"
+#include "Eeyore/eeyore.hpp"
 
 /// \desc Simple helper function to return a random number between 0.0f and 1.0f.
 GLfloat getRand() {
@@ -131,22 +133,24 @@ void MPEngine::_setupBuffers() {
 
     CSCI441::setVertexAttributeLocations(shaderAttributeLocations.vPos, shaderAttributeLocations.vNormal);
 
-    _car = new eeyore(_shaderProgram->getShaderProgramHandle(),
-                      shaderUniformLocations.mvpMatrix,
-                      shaderUniformLocations.normalMat,
-                      shaderUniformLocations.materialColor,
-                      WORLD_SIZE);
+//    _car = new car(_shaderProgram->getShaderProgramHandle(),
+//                   shaderUniformLocations.mvpMatrix,
+//                   shaderUniformLocations.normalMat,
+//                   shaderUniformLocations.materialColor,
+//                   WORLD_SIZE);
 
     ModelShaderLocations modelLocations = {_shaderProgram->getShaderProgramHandle(),
                                            shaderUniformLocations.mvpMatrix, shaderUniformLocations.normalMat,
                                            shaderUniformLocations.materialColor };
 
     _warrior = new TheWarrior(&modelLocations);
-    _car = new Car(_shaderProgram->getShaderProgramHandle(),
-                   shaderUniformLocations.mvpMatrix,
-                   shaderUniformLocations.normalMat,
-                   shaderUniformLocations.materialColor,
-                   WORLD_SIZE);
+//    _car = new car(_shaderProgram->getShaderProgramHandle(),
+//                   shaderUniformLocations.mvpMatrix,
+//                   shaderUniformLocations.normalMat,
+//                   shaderUniformLocations.materialColor,
+//                   WORLD_SIZE);
+    _car = new eeyore(_shaderProgram->getShaderProgramHandle(),shaderUniformLocations.mvpMatrix,shaderUniformLocations.normalMat,shaderUniformLocations.materialColor,WORLD_SIZE);
+
 
     _createGroundBuffers();
     _generateEnvironment();
@@ -307,9 +311,9 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
         CSCI441::drawSolidCube(1.0);
     }
     //// END DRAWING THE BUILDINGS ////
-    //Draw eeyore
+    //Draw car
     glUniform1f(shaderUniformLocations.materialShininess, 1);
-    _car->drawCar(viewMtx, projMtx);
+    _car->drawEeyore(viewMtx, projMtx);
 
     this->_arcballCam->setLookAtPoint(this->_car->getCurrentPosition());
     this->_arcballCam->recomputeOrientation();
