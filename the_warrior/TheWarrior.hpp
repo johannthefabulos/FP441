@@ -29,21 +29,61 @@ private:
     glm::vec3 currentWorldPosition = {0, 0, 0};
 
     const glm::vec3 bodyColor = {1.0, 223.0f/255.0f, 196.0f/255.0f};
-    const GLfloat bodyWidth = 0.6;
-    const GLfloat bodyHeight = 5;
+    const glm::vec3 shieldColor = {0.06f, 0.42f, 0.99f};
+
+    const bool drawWireframe = false;
+
+    //Body Constants
+    const GLfloat bodyTopWidth = 0.6;
+    const GLfloat bodyCenterWidth = 1.05;
+    const GLfloat bodyBottomWidth = 0.85;
+    const GLfloat bodyHeight = 3.5;
+
+    const GLfloat neckTopWidth = 0.2;
+    const GLfloat neckHeight = 0.3;
 
     const GLfloat bodyY = 1.5;
 
-    const GLfloat legInitialRotation = glm::two_pi<GLfloat>()/12.0f;
-    const GLfloat legLeftOffset = 1;
+    //Leg Constants
+    const GLfloat legLeftOffset = 0.45;
     const GLfloat legLength = 2;
-    const GLfloat legWidth = 0.2;
+    const GLfloat legWidthTop = 0.4;
+    const GLfloat legWidthBottom = 0.2;
+
+    //Foot Constants
+    const GLfloat footLength = 0.8;
+    const GLfloat footWidth = 0.4;
+    const GLfloat footHeight = 0.3;
+
+    //Arm constants
+    const GLfloat armInitialRotation = glm::two_pi<GLfloat>()/3.0f;
+    const GLfloat armLeftOffset = 0.3;
+    const GLfloat armLength = 2;
+    const GLfloat armStartWidth = 0.2;
+    const GLfloat armEndWidth = 0.1;
+
+    // Shield constants
+    const GLfloat shieldRectWidth = 1.5;
+    const GLfloat shieldRectHeight = 1;
+    const GLfloat shieldDepth = 0.2;
+
+    const GLfloat headRadius = 1;
 
     void drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 
+    void drawNeck(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+
     void drawLeg(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 
-    void computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+    void drawFoot(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+
+    void drawArm(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+
+    void drawShield(glm::mat4 armEndModelMtx, GLfloat armRotation, glm::mat4 viewMtx, glm::mat4 projMtx);
+
+    void drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+
+    void computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const;
 };
 
 

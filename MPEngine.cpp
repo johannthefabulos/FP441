@@ -317,12 +317,12 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     glUniform1f(shaderUniformLocations.materialShininess, 1);
     _warrior->drawWarrior(viewMtx, projMtx);
 
-    glUniform1f(shaderUniformLocations.materialShininess, 1);
-    _eeyore->drawEeyore(viewMtx, projMtx);
-
-    //// START DRAWING THE CHAIR ////
-    _computeAndSendMatrixUniforms(chairModelMatrix, viewMtx, projMtx);
-    drawChair(chairModelMatrix, viewMtx, projMtx);
+//    glUniform1f(shaderUniformLocations.materialShininess, 1);
+//    _eeyore->drawEeyore(viewMtx, projMtx);
+//
+//    //// START DRAWING THE CHAIR ////
+//    _computeAndSendMatrixUniforms(chairModelMatrix, viewMtx, projMtx);
+//    drawChair(chairModelMatrix, viewMtx, projMtx);
     //// END DRAWING THE CHAIR ////
 
 
