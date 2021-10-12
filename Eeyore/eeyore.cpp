@@ -29,7 +29,7 @@ void eeyore::drawEeyore(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
     this->drawLeg(false, true, this->currentModelMatrix, viewMatrix, projMatrix);
     this->drawLeg(false, false, this->currentModelMatrix, viewMatrix, projMatrix);
 
-//    this->drawAxel(true, this->currentModelMatrix, viewMatrix, projMatrix);
+    this->drawHead( this->currentModelMatrix, viewMatrix, projMatrix);
 //    this->drawAxel(false, this->currentModelMatrix, viewMatrix, projMatrix);
 
     this->drawBody(this->currentModelMatrix, viewMatrix, projMatrix);
@@ -72,29 +72,28 @@ void eeyore::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, gl
     glProgramUniformMatrix3fv( this->shaderProgramHandle, this->normalMatrixUniformLocation, 1, GL_FALSE, &normalMtx[0][0] );
 }
 
-//void eeyore::drawAxel(bool isFront, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
-//    glm::mat4 axelModelMat = modelMtx;
-//    if (isFront){
-//        axelModelMat = glm::translate(axelModelMat, this->wheelFBTranslation);
-//    }else{
-//        axelModelMat = glm::translate(axelModelMat, -this->wheelFBTranslation);
-//    }
-//
-//    GLfloat axelWidth = this->wheelLRTranslation.x * 2;
-//
-//    axelModelMat = glm::translate(axelModelMat, glm::vec3(axelWidth/2, 0, 0));
-//
+void eeyore::drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
+    glm::mat4 axelModelMat = modelMtx;
+    //GLfloat axelWidth = this->wheelLRTranslation.x;
+//    axelModelMat = glm::scale(axelModelMat, glm::vec3(axelWidth, axelWidth, axelWidth));
+
+
+    axelModelMat = glm::translate(axelModelMat, glm::vec3(0, 2, -2));
+
 //    axelModelMat = glm::rotate(axelModelMat, glm::half_pi<GLfloat>(), glm::vec3(0, 0, 1));
 //
 //    axelModelMat = glm::rotate(axelModelMat, wheelAngle, glm::vec3(0, 1, 0));
-//
-//    this->computeAndSendMatUniforms(axelModelMat, viewMtx, projMtx);
-//
-//    glUniform3fv(this->materialColorUniformLocation, 1, &this->axelColor[0]);
-//
-//    CSCI441::drawSolidCylinder(this->wheelInnerRadius, this->wheelInnerRadius, axelWidth,20, 30);
-//
-//}
+
+    this->computeAndSendMatUniforms(axelModelMat, viewMtx, projMtx);
+    glUniform3fv(this->materialColorUniformLocation, 1, &this->bodyColor[0]);
+    CSCI441::drawSolidCube(1);
+    glm::mat4 noseModelMat = modelMtx;
+    noseModelMat = glm::translate(noseModelMat, glm::vec3(0, 2, -3));
+    this->computeAndSendMatUniforms(noseModelMat, viewMtx, projMtx);
+    glUniform3fv(this->materialColorUniformLocation, 1, &this->bodyColor[0]);
+    CSCI441::drawSolidCube(1);
+
+}
 
 void eeyore::drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
 

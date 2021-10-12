@@ -49,7 +49,7 @@ private:
 
     void drawLeg(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 
-    void drawAxel(bool isFront, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+    void drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 
     void drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 
