@@ -85,6 +85,13 @@ void TheWarrior::drawLeg(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm
         CSCI441::drawSolidCylinder(this->legWidthBottom, this->legWidthTop, this->legLength, 40, 40);
     }
 
+    if (this->initialLeftLegModelMat != glm::mat4(1.0f) && isLeft){
+        this->initialLeftLegModelMat = legModelMat;
+    }
+    if (this->initialRightLegModelMat != glm::mat4(1.0f) && !isLeft){
+        this->initialRightLegModelMat = legModelMat;
+    }
+
 
     this->drawFoot(legModelMat, viewMtx, projMtx);
 }
@@ -224,4 +231,35 @@ void TheWarrior::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx
 
 glm::vec3 TheWarrior::getCurrentPosition() {
     return this->currentWorldPosition;
+}
+
+//Animation methods
+void TheWarrior::startMoving() {
+
+}
+
+void TheWarrior::moveHeroForward() {
+    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(0, 0, this->movementSpeed));
+    this->updateCurrentPosition();
+}
+
+void TheWarrior::moveHeroBackward() {
+    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(0, 0, -this->movementSpeed));
+    this->updateCurrentPosition();
+}
+
+void TheWarrior::stopMoving() {
+
+}
+
+void TheWarrior::turnHero(GLfloat theta) {
+    this->currentModelMatrix = glm::rotate(this->currentModelMatrix, theta, glm::vec3(0, 1, 0));
+}
+
+void TheWarrior::updateCurrentPosition() {
+    this->currentWorldPosition = this->currentModelMatrix * glm::vec4(0, 0, 0, 1);
+}
+
+glm::mat4 TheWarrior::getCurrentModelMat() {
+    return this->currentModelMatrix;
 }

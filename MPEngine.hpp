@@ -9,6 +9,8 @@
 #include "ShaderLocations.hpp"
 #include "the_warrior/TheWarrior.hpp"
 #include "Eeyore/eeyore.hpp"
+#include "HeroType.hpp"
+#include "HeroVirtual.h"
 
 #include <vector>
 
@@ -124,6 +126,10 @@ private:
     /// \param viewMtx camera view matrix
     /// \param projMtx camera projection matrix
     void _computeAndSendMatrixUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const;
+
+    HeroVirtual *getCurrentHero();
+
+    HeroType currentlySelectedHero = CAR;
 };
 
 void a3_keyboard_callback(GLFWwindow *window, int key, int scancode, int action, int mods );

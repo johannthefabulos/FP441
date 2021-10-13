@@ -121,7 +121,7 @@ glm::vec3 Car::getCurrentPosition() {
     return this->currentWorldPosition;
 }
 
-void Car::driveForward() {
+void Car::moveHeroForward() {
 
     if (!this->testCarShouldMove(-this->moveSpeed)){
         return;
@@ -133,7 +133,7 @@ void Car::driveForward() {
     this->updateCurrentPosition();
 }
 
-void Car::driveBackward() {
+void Car::moveHeroBackward() {
 
     if (!this->testCarShouldMove(this->moveSpeed)){
         return;
@@ -149,7 +149,7 @@ void Car::updateCurrentPosition() {
     this->currentWorldPosition = this->currentModelMatrix * glm::vec4(0, 0, 0, 1);
 }
 
-void Car::turnCar(GLfloat theta) {
+void Car::turnHero(GLfloat theta) {
     this->currentModelMatrix = glm::rotate(this->currentModelMatrix, theta, glm::vec3(0, 1, 0));
 }
 
@@ -179,4 +179,8 @@ void Car::updateWheelRotation(bool isMovingForward) {
     if (this->wheelAngle > glm::two_pi<GLfloat>()){
         this->wheelAngle -= glm::two_pi<GLfloat>();
     }
+}
+
+glm::mat4 Car::getCurrentModelMat() {
+    return this->currentModelMatrix;
 }

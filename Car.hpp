@@ -9,26 +9,31 @@
 
 #include <glm/glm.hpp>
 
-class Car {
+#include "HeroVirtual.h"
+
+class Car : public virtual HeroVirtual{
 
 public:
     Car(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH);
 
     void drawCar(glm::mat4 viewMatrix, glm::mat4 projMatrix);
 
-    glm::vec3 getCurrentPosition();
+    void moveHeroForward() override;
 
-    void driveForward();
-    void driveBackward();
-    void turnCar(GLfloat theta);
+    glm::vec3 getCurrentPosition() override;
 
+    void moveHeroBackward() override;
 
-    glm::mat4 currentModelMatrix = glm::mat4(1.0f);
+    void turnHero(GLfloat theta) override;
+
+    glm::mat4 getCurrentModelMat() override;
 private:
     GLuint shaderProgramHandle;
     GLint mvpMatrixUniformLocation;
     GLint normalMatrixUniformLocation;
     GLint materialColorUniformLocation;
+
+    glm::mat4 currentModelMatrix = glm::mat4(1.0f);
 
     GLfloat WORLD_SIDE_LENGTH;
 

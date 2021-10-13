@@ -34,6 +34,20 @@ void MPEngine::handleKeyEvent(GLint key, GLint action) {
     if(key != GLFW_KEY_UNKNOWN)
         _keys[key] = ((action == GLFW_PRESS) || (action == GLFW_REPEAT));
 
+    //Only call stopMoving call at end
+    if (action == GLFW_KEY_UP){
+        if (key == GLFW_KEY_W || key == GLFW_KEY_S){
+            this->_warrior->stopMoving();
+        }
+    }
+    //Only call start moving call at beginning
+    if (action == GLFW_KEY_DOWN){
+        if (key == GLFW_KEY_W || key == GLFW_KEY_S){
+            this->_warrior->startMoving();
+        }
+    }
+
+
     if(action == GLFW_PRESS) {
         switch( key ) {
             // quit!
@@ -326,7 +340,7 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     //// END DRAWING THE CHAIR ////
 
 
-    this->_arcballCam->setLookAtPoint(_car->getCurrentPosition());
+    this->_arcballCam->setLookAtPoint(this->getCurrentHero()->getCurrentPosition());
     this->_arcballCam->recomputeOrientation();
     glUniform3fv(shaderUniformLocations.cameraPos, 1, &this->_arcballCam->getPosition()[0]);
 
@@ -376,19 +390,19 @@ void MPEngine::_updateScene() {
     animationAngle+=.05;
     // turn right
     if( _keys[GLFW_KEY_D] ) {
-        _car->turnCar(-glm::pi<GLfloat>() / 128.0f);
+        this->getCurrentHero()->turnHero(-glm::pi<GLfloat>()/128.0f);
     }
     // turn left
     if( _keys[GLFW_KEY_A] ) {
-        _car->turnCar(glm::pi<GLfloat>() / 128.0f);
+        this->getCurrentHero()->turnHero(glm::pi<GLfloat>()/128.0f);
     }
     // pitch up
     if( _keys[GLFW_KEY_W] ) {
-        _car->driveForward();
+        this->getCurrentHero()->moveHeroForward();
     }
     // pitch down
     if( _keys[GLFW_KEY_S] ) {
-        _car->driveBackward();
+        this->getCurrentHero()->moveHeroBackward();
     }
 }
 
@@ -436,13 +450,13 @@ void MPEngine::run() {
 
         // set up our look at matrix to position our camera
         GLfloat minimapCamHeight = 20;
-        glm::vec3 minimapCamPos = this->_car->getCurrentPosition();
+        glm::vec3 minimapCamPos = this->getCurrentHero()->getCurrentPosition();
         minimapCamPos.y = minimapCamHeight;
 
-        glm::vec3 carForwardVec = glm::transpose(glm::inverse(this->_car->currentModelMatrix)) * glm::vec4(0, 0, -1, 1);
+        glm::vec3 carForwardVec = glm::transpose(glm::inverse(this->getCurrentHero()->getCurrentModelMat())) * glm::vec4(0, 0, -1, 1);
         carForwardVec = glm::normalize(carForwardVec);
 
-        glm::mat4 minimapViewMat = glm::lookAt(minimapCamPos, this->_car->getCurrentPosition(), carForwardVec);
+        glm::mat4 minimapViewMat = glm::lookAt(minimapCamPos, this->getCurrentHero()->getCurrentPosition(), carForwardVec);
 
         // draw everything to the minimap
         _renderScene(minimapViewMat, projectionMatrix);
@@ -476,6 +490,17 @@ void MPEngine::handleScrollEvent(glm::vec2 offset) {
     // update the camera radius in/out
     GLfloat totChgSq = offset.y;
     _arcballCam->moveForward( totChgSq * 0.2f );
+}
+
+HeroVirtual * MPEngine::getCurrentHero() {
+    switch (this->currentlySelectedHero){
+        case WARRIOR:
+            return this->_warrior;
+        case EEYORE:
+            break;
+        case CAR:
+            return this->_car;
+    }
 }
 
 //*************************************************************************************

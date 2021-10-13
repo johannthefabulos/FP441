@@ -10,19 +10,28 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "../ShaderLocations.hpp"
+#include "../HeroVirtual.h"
 
-class TheWarrior {
+class TheWarrior : public virtual HeroVirtual{
 
 public:
     TheWarrior(ModelShaderLocations shaderLocations, GLfloat WORLD_SIDE_LENGTH);
 
     void drawWarrior(glm::mat4 viewMatrix, glm::mat4 projMatrix);
 
-    glm::vec3 getCurrentPosition();
+    void startMoving();
+    void moveHeroForward() override;
+    void moveHeroBackward() override;
+    void stopMoving();
 
-    glm::mat4 currentModelMatrix = glm::mat4(1.0f);
+    void turnHero(GLfloat theta) override;
+    glm::vec3 getCurrentPosition() override;
+
+    glm::mat4 getCurrentModelMat() override;
 private:
     ModelShaderLocations shaderLocations;
+
+    glm::mat4 currentModelMatrix = glm::mat4(1.0f);
 
     GLfloat WORLD_SIDE_LENGTH;
 
@@ -31,6 +40,11 @@ private:
     const glm::vec3 bodyColor = {1.0, 223.0f/255.0f, 196.0f/255.0f};
     const glm::vec3 shieldColor = {0.06f, 0.42f, 0.99f};
     const glm::vec3 swordColor = {0.82, 0.82, 0.82};
+
+    const GLfloat movementSpeed = 0.1;
+    const GLfloat legRotationTheta = glm::pi<GLfloat>()/4.0f;
+    glm::mat4 initialLeftLegModelMat = glm::mat4(1.0f);
+    glm::mat4 initialRightLegModelMat = glm::mat4(1.0f);
 
     const bool drawWireframe = false;
 
@@ -94,6 +108,8 @@ private:
     void drawSword(glm::mat4 armEndModelMtx, GLfloat armRotation, glm::mat4 viewMtx, glm::mat4 projMtx);
 
     void drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+
+    void updateCurrentPosition();
 
     void computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const;
 };
