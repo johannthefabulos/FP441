@@ -30,6 +30,7 @@ private:
 
     const glm::vec3 bodyColor = {1.0, 223.0f/255.0f, 196.0f/255.0f};
     const glm::vec3 shieldColor = {0.06f, 0.42f, 0.99f};
+    const glm::vec3 swordColor = {0.82, 0.82, 0.82};
 
     const bool drawWireframe = false;
 
@@ -67,6 +68,15 @@ private:
     const GLfloat shieldRectHeight = 1;
     const GLfloat shieldDepth = 0.2;
 
+    //Sword constants
+    const GLfloat swordCenterSideLength = 0.3;
+    const GLfloat swordCenterHeight = 2.5;
+
+    const GLfloat swordHiltLength = swordCenterSideLength * 2;
+    const GLfloat swordHiltWidth = swordCenterSideLength * 3;
+    const GLfloat swordHiltHeight = 0.5;
+    const GLfloat swordConeHeight = 0.4;
+
     const GLfloat headRadius = 1;
 
     void drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
@@ -80,6 +90,8 @@ private:
     void drawArm(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 
     void drawShield(glm::mat4 armEndModelMtx, GLfloat armRotation, glm::mat4 viewMtx, glm::mat4 projMtx);
+
+    void drawSword(glm::mat4 armEndModelMtx, GLfloat armRotation, glm::mat4 viewMtx, glm::mat4 projMtx);
 
     void drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 

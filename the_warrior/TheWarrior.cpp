@@ -5,6 +5,7 @@
 #include "TheWarrior.hpp"
 #include <CSCI441/SimpleShader.hpp>
 #include <stdio.h>
+#include <cmath>
 
 TheWarrior::TheWarrior(ModelShaderLocations shaderLocations, GLfloat WORLD_SIDE_LENGTH) {
     this->shaderLocations = shaderLocations;
@@ -112,7 +113,7 @@ void TheWarrior::drawArm(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm
     glm::mat4 armModelMat = glm::translate(modelMtx, glm::vec3(armOffset, armCenterY, 0));
 
     //Used when drawing shield + sword
-    glm::mat4 armEndModelMat = glm::translate(armModelMat, glm::vec3(this->armLength, 0, 0));
+    glm::mat4 armEndModelMat = glm::translate(armModelMat, glm::vec3(std::copysign(this->armLength, armOffset), 0, 0));
 
     armModelMat = glm::rotate(armModelMat, armRotation, glm::vec3(0, 0, 1));
 
@@ -122,6 +123,9 @@ void TheWarrior::drawArm(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm
     CSCI441::drawSolidCylinder(this->armStartWidth, this->armEndWidth, this->armLength, 40, 40);
     if (isLeft){
         this->drawShield(armEndModelMat, armRotation, viewMtx, projMtx);
+    }
+    if (!isLeft){
+        this->drawSword(armEndModelMat, armRotation, viewMtx, projMtx);
     }
 
 
@@ -161,6 +165,35 @@ void TheWarrior::drawShield(glm::mat4 armEndModelMtx, GLfloat armRotation, glm::
     this->computeAndSendMatUniforms(shieldRectMat, viewMtx, projMtx);
     CSCI441::drawSolidCube(this->shieldRectWidth);
 
+}
+
+void TheWarrior::drawSword(glm::mat4 armEndModelMtx, GLfloat armRotation, glm::mat4 viewMtx, glm::mat4 projMtx) {
+    GLfloat swordAngle = armRotation - glm::pi<GLfloat>()/2;
+
+    // Draw sword center
+    glm::mat4 swordModelBaseMat = glm::rotate(armEndModelMtx, swordAngle, glm::vec3(0, 0, 1));;
+    glm::mat4 swordCenterModelMat = glm::scale(swordModelBaseMat, glm::vec3(1, this->swordCenterHeight/this->swordCenterSideLength, 1));
+
+    this->computeAndSendMatUniforms(swordCenterModelMat, viewMtx, projMtx);
+    glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->swordColor[0]);
+
+    CSCI441::drawSolidCube(this->swordCenterSideLength);
+    //End draw sword center
+
+    glm::mat4 swordHiltBaseModelMat = glm::translate(swordModelBaseMat, glm::vec3(0, (-this->swordHiltHeight), 0));
+    glm::mat4 swordHiltModelMat = glm::scale(swordHiltBaseModelMat, glm::vec3(swordHiltLength/swordHiltHeight, 1, swordHiltWidth/swordHiltHeight));
+
+    this->computeAndSendMatUniforms(swordHiltModelMat, viewMtx, projMtx);
+    glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->swordColor[0]);
+
+    CSCI441::drawSolidCube(this->swordHiltHeight);
+
+    glm::mat4 swordTipModelMat = glm::translate(swordModelBaseMat, glm::vec3(0, this->swordCenterHeight/2, 0));
+
+    this->computeAndSendMatUniforms(swordTipModelMat, viewMtx, projMtx);
+    glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->swordColor[0]);
+
+    CSCI441::drawSolidCylinder(this->swordCenterSideLength/1.5, 0.0f, this->swordConeHeight, 10, 20);
 }
 
 
