@@ -9,10 +9,10 @@
 
 #include <glm/glm.hpp>
 
-class car {
+class Car {
 
 public:
-    car(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH);
+    Car(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH);
 
     void drawCar(glm::mat4 viewMatrix, glm::mat4 projMatrix);
 

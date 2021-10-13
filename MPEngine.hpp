@@ -39,7 +39,10 @@ public:
 
     /// \desc value off-screen to represent mouse has not begun interacting with window yet
     static constexpr GLfloat MOUSE_UNINITIALIZED = -9999.0f;
-
+    glm::mat4 chairModelMatrix;
+    float correctionAngle = 1.5708;
+    float chairCurrentAngle = 0;
+    float animationAngle = 0.0f;
 private:
     void _setupGLFW() final;
     void _setupOpenGL() final;
@@ -49,7 +52,10 @@ private:
 
     void _cleanupBuffers() final;
     void _cleanupShaders() final;
-
+    void drawChair(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+    void drawArmRests(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+    void drawBack(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+    void drawCusion(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
     /// \desc draws everything to the scene from a particular point of view
     /// \param viewMtx the current view matrix for our camera
     /// \param projMtx the current projection matrix for our camera
@@ -73,7 +79,9 @@ private:
     /// \desc the static fixed camera in our world
     CSCI441::ArcballCam* _arcballCam;
 
-    eeyore* _car;
+    Car* _car;
+
+    eeyore* _eeyore;
 
     TheWarrior* _warrior;
 

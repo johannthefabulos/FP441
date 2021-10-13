@@ -4,10 +4,8 @@
 #include <CSCI441/FreeCam.hpp>
 
 #include "ShaderLocations.hpp"
-
+#include <ctime>
 #include <stdio.h>
-#include "time.h"
-#include "Eeyore/eeyore.hpp"
 
 /// \desc Simple helper function to return a random number between 0.0f and 1.0f.
 GLfloat getRand() {
@@ -133,25 +131,21 @@ void MPEngine::_setupBuffers() {
 
     CSCI441::setVertexAttributeLocations(shaderAttributeLocations.vPos, shaderAttributeLocations.vNormal);
 
-//    _car = new car(_shaderProgram->getShaderProgramHandle(),
-//                   shaderUniformLocations.mvpMatrix,
-//                   shaderUniformLocations.normalMat,
-//                   shaderUniformLocations.materialColor,
-//                   WORLD_SIZE);
-
     ModelShaderLocations modelLocations = {_shaderProgram->getShaderProgramHandle(),
                                            shaderUniformLocations.mvpMatrix, shaderUniformLocations.normalMat,
                                            shaderUniformLocations.materialColor };
 
-    _warrior = new TheWarrior(&modelLocations);
-//    _car = new car(_shaderProgram->getShaderProgramHandle(),
-//                   shaderUniformLocations.mvpMatrix,
-//                   shaderUniformLocations.normalMat,
-//                   shaderUniformLocations.materialColor,
-//                   WORLD_SIZE);
-    _car = new eeyore(_shaderProgram->getShaderProgramHandle(),shaderUniformLocations.mvpMatrix,shaderUniformLocations.normalMat,shaderUniformLocations.materialColor,WORLD_SIZE);
-
-
+    _warrior = new TheWarrior(modelLocations, WORLD_SIZE);
+    _car = new Car(_shaderProgram->getShaderProgramHandle(),
+                   shaderUniformLocations.mvpMatrix,
+                   shaderUniformLocations.normalMat,
+                   shaderUniformLocations.materialColor,
+                   WORLD_SIZE);
+    _eeyore = new eeyore(_shaderProgram->getShaderProgramHandle(),
+                   shaderUniformLocations.mvpMatrix,
+                   shaderUniformLocations.normalMat,
+                   shaderUniformLocations.materialColor,
+                   WORLD_SIZE);
     _createGroundBuffers();
     _generateEnvironment();
 }
@@ -209,7 +203,10 @@ void MPEngine::_generateEnvironment() {
     //******************************************************************
 
     srand( time(0) );                                                   // seed our RNG
-
+    glm::mat4 chairTransToSpotMtx = glm::translate( glm::mat4(1.0), glm::vec3(0.0f, 0.0f, 0.0f) );
+    glm::mat4 chairScaleToHeightMtx = glm::scale( glm::mat4(1.0), glm::vec3(1, 5, 1) );
+    glm::mat4 chairTransToHeight = glm::translate( glm::mat4(1.0), glm::vec3(0, 1/2.0f, 0) );
+    chairModelMatrix = chairTransToHeight * chairTransToSpotMtx;
     // psych! everything's on a grid.
     for(int i = LEFT_END_POINT; i < RIGHT_END_POINT; i += GRID_SPACING_WIDTH) {
         for(int j = BOTTOM_END_POINT; j < TOP_END_POINT; j += GRID_SPACING_LENGTH) {
@@ -277,6 +274,7 @@ void MPEngine::_cleanupBuffers() {
 
     fprintf( stdout, "[INFO]: ...deleting models..\n" );
     delete _car;
+    delete _warrior;
 }
 
 //*************************************************************************************
@@ -308,19 +306,74 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 
         glUniform3fv(shaderUniformLocations.materialColor, 1, &currentBuilding.color[0]);
 
-        CSCI441::drawSolidCube(1.0);
+        //CSCI441::drawSolidCube(1.0);
     }
     //// END DRAWING THE BUILDINGS ////
-    //Draw car
-    glUniform1f(shaderUniformLocations.materialShininess, 1);
-    _car->drawEeyore(viewMtx, projMtx);
+    //Draw eeyore
 
-    this->_arcballCam->setLookAtPoint(this->_car->getCurrentPosition());
+    glUniform1f(shaderUniformLocations.materialShininess, 1);
+    _car->drawCar(viewMtx, projMtx);
+
+    glUniform1f(shaderUniformLocations.materialShininess, 1);
+    _warrior->drawWarrior(viewMtx, projMtx);
+
+    glUniform1f(shaderUniformLocations.materialShininess, 1);
+    _eeyore->drawEeyore(viewMtx, projMtx);
+
+    //// START DRAWING THE CHAIR ////
+    _computeAndSendMatrixUniforms(chairModelMatrix, viewMtx, projMtx);
+    drawChair(chairModelMatrix, viewMtx, projMtx);
+    //// END DRAWING THE CHAIR ////
+
+
+    this->_arcballCam->setLookAtPoint(_car->getCurrentPosition());
     this->_arcballCam->recomputeOrientation();
     glUniform3fv(shaderUniformLocations.cameraPos, 1, &this->_arcballCam->getPosition()[0]);
-}
 
+
+}
+void MPEngine::drawChair( glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx ) {
+    modelMtx = glm::translate( modelMtx, glm::vec3( cos(animationAngle), 0, sin(animationAngle) ));
+    //modelMtx = glm::translate( modelMtx, glm::vec3( translateX, 0, translateY));
+    modelMtx = glm::rotate( modelMtx, 2*correctionAngle, CSCI441::Y_AXIS );
+    modelMtx = glm::rotate( modelMtx, chairCurrentAngle, CSCI441::Y_AXIS );
+    drawArmRests(modelMtx,viewMtx, projMtx );
+    drawCusion(modelMtx,viewMtx,projMtx );
+    drawBack(modelMtx,viewMtx, projMtx );
+}
+void MPEngine::drawArmRests(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx ) {
+    glm::vec3 _colorRed = glm::vec3( 1.0f, 0.0f, 0 );
+    modelMtx = glm::scale( modelMtx,glm::vec3( .5, 1, 1 ));
+    modelMtx = glm::translate( modelMtx, glm::vec3( 1.5f, 0, 0 ));
+    _computeAndSendMatrixUniforms(modelMtx, viewMtx, projMtx);
+    glUniform3fv(shaderUniformLocations.materialColor, 1, &_colorRed[0]);
+    CSCI441::drawSolidCube(1);
+    modelMtx = glm::translate( modelMtx, glm::vec3( -1.5f, 0, 0 ));
+    modelMtx = glm::translate( modelMtx, glm::vec3( -1.5f, 0, 0 ));
+    _computeAndSendMatrixUniforms(modelMtx, viewMtx, projMtx);
+    glUniform3fv(shaderUniformLocations.materialColor, 1, &_colorRed[0]);
+    CSCI441::drawSolidCube(1);
+
+}
+void MPEngine::drawBack(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx ) {
+    glm::vec3 _colorBlue = glm::vec3( 0, 0, 1.0f );
+    modelMtx = glm::translate( modelMtx, glm::vec3( 0, .5, .5 ));
+    modelMtx = glm::scale( modelMtx,glm::vec3( 1, 1.5, .5 ));
+    _computeAndSendMatrixUniforms(modelMtx, viewMtx, projMtx);
+    glUniform3fv(shaderUniformLocations.materialColor, 1, &_colorBlue[0]);
+    CSCI441::drawSolidCube(1);
+}
+void MPEngine::drawCusion(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx ) {
+    glm::vec3 _colorGreen = glm::vec3( 0, 1.0f, 0);
+    modelMtx = glm::translate( modelMtx, glm::vec3( 0, 0, 0 ));
+    modelMtx = glm::scale( modelMtx,glm::vec3( 1, .5, 1 ));
+    _computeAndSendMatrixUniforms(modelMtx, viewMtx, projMtx);
+    glUniform3fv(shaderUniformLocations.materialColor, 1, &_colorGreen[0]);
+    CSCI441::drawSolidCube(1);
+}
 void MPEngine::_updateScene() {
+    chairCurrentAngle+=.05;
+    animationAngle+=.05;
     // turn right
     if( _keys[GLFW_KEY_D] ) {
         _car->turnCar(-glm::pi<GLfloat>() / 128.0f);
