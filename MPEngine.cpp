@@ -47,6 +47,15 @@ void MPEngine::handleKeyEvent(GLint key, GLint action) {
         }
     }
 
+    if ((key >= GLFW_KEY_0 && key <= GLFW_KEY_9)){
+        int heroEnumVal = key - GLFW_KEY_0;
+        if (heroEnumVal < LAST){
+            HeroType heroType = (HeroType) heroEnumVal;
+            this->currentlySelectedHero = heroType;
+        }
+
+    }
+
 
     if(action == GLFW_PRESS) {
         switch( key ) {
@@ -497,8 +506,10 @@ HeroVirtual * MPEngine::getCurrentHero() {
         case WARRIOR:
             return this->_warrior;
         case EEYORE:
-            break;
+            return this->_car;
         case CAR:
+            return this->_car;
+        default:
             return this->_car;
     }
 }

@@ -129,7 +129,7 @@ private:
 
     HeroVirtual *getCurrentHero();
 
-    HeroType currentlySelectedHero = CAR;
+    HeroType currentlySelectedHero = (HeroType) 3;
 };
 
 void a3_keyboard_callback(GLFWwindow *window, int key, int scancode, int action, int mods );
