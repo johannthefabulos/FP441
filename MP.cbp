@@ -84,6 +84,12 @@
 		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/Eeyore/eeyore.hpp">
 			<Option target="MP"/>
 		</Unit>
+		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/HeroType.hpp">
+			<Option target="MP"/>
+		</Unit>
+		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/HeroVirtual.hpp">
+			<Option target="MP"/>
+		</Unit>
 		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/MPEngine.cpp">
 			<Option target="MP"/>
 		</Unit>
