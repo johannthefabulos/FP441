@@ -9,7 +9,7 @@
 
 #include <glm/glm.hpp>
 
-#include "HeroVirtual.h"
+#include "HeroVirtual.hpp"
 
 class Car : public virtual HeroVirtual{
 
@@ -27,6 +27,8 @@ public:
     void turnHero(GLfloat theta) override;
 
     glm::mat4 getCurrentModelMat() override;
+
+    void leftClickAction() override{};
 private:
     GLuint shaderProgramHandle;
     GLint mvpMatrixUniformLocation;

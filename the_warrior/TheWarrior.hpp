@@ -10,7 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "../ShaderLocations.hpp"
-#include "../HeroVirtual.h"
+#include "../HeroVirtual.hpp"
 
 class TheWarrior : public virtual HeroVirtual{
 
@@ -28,6 +28,8 @@ public:
     glm::vec3 getCurrentPosition() override;
 
     glm::mat4 getCurrentModelMat() override;
+
+    void leftClickAction() override;
 private:
     ModelShaderLocations shaderLocations;
 
@@ -45,6 +47,8 @@ private:
     const GLfloat legRotationTheta = glm::pi<GLfloat>()/4.0f;
     glm::mat4 initialLeftLegModelMat = glm::mat4(1.0f);
     glm::mat4 initialRightLegModelMat = glm::mat4(1.0f);
+
+    GLfloat swordRotationAngle = 0.0f;
 
     const bool drawWireframe = false;
 

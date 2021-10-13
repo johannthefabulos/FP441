@@ -72,9 +72,11 @@ void MPEngine::handleKeyEvent(GLint key, GLint action) {
 
 void MPEngine::handleMouseButtonEvent(GLint button, GLint action) {
     // if the event is for the left mouse button
+
     if( button == GLFW_MOUSE_BUTTON_LEFT ) {
         // update the left mouse button's state
         _leftMouseButtonState = action;
+        this->getCurrentHero()->leftClickAction();
     }
 }
 

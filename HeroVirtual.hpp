@@ -2,8 +2,8 @@
 // Created by Fibonacci on 10/12/21.
 //
 
-#ifndef MP_HEROVIRTUAL_H
-#define MP_HEROVIRTUAL_H
+#ifndef MP_HEROVIRTUAL_HPP
+#define MP_HEROVIRTUAL_HPP
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -17,6 +17,8 @@ public:
     virtual void moveHeroForward() = 0;
     virtual void moveHeroBackward() = 0;
     virtual glm::mat4 getCurrentModelMat() = 0;
+
+    virtual void leftClickAction() = 0;
 };
 
-#endif //MP_HEROVIRTUAL_H
+#endif //MP_HEROVIRTUAL_HPP

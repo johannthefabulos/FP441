@@ -132,6 +132,11 @@ void TheWarrior::drawArm(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm
         this->drawShield(armEndModelMat, armRotation, viewMtx, projMtx);
     }
     if (!isLeft){
+
+        armEndModelMat = glm::rotate(armEndModelMat, swordRotationAngle, glm::vec3(1, 0, 0));
+        if (swordRotationAngle != 0){
+            armEndModelMat = glm::translate(armEndModelMat, glm::vec3(0, 0, this->swordHiltHeight));
+        }
         this->drawSword(armEndModelMat, armRotation, viewMtx, projMtx);
     }
 
@@ -262,4 +267,11 @@ void TheWarrior::updateCurrentPosition() {
 
 glm::mat4 TheWarrior::getCurrentModelMat() {
     return this->currentModelMatrix;
+}
+
+void TheWarrior::leftClickAction() {
+    this->swordRotationAngle += glm::quarter_pi<GLfloat>();
+    if (this->swordRotationAngle >= glm::quarter_pi<GLfloat>()*2){
+        this->swordRotationAngle = 0;
+    }
 }

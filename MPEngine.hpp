@@ -10,7 +10,7 @@
 #include "the_warrior/TheWarrior.hpp"
 #include "Eeyore/eeyore.hpp"
 #include "HeroType.hpp"
-#include "HeroVirtual.h"
+#include "HeroVirtual.hpp"
 
 #include <vector>
 
