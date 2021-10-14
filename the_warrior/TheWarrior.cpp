@@ -28,6 +28,8 @@ void TheWarrior::drawWarrior(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
 
     this->drawHead(currentModelMatrix, viewMatrix, projMatrix);
 
+    this->currentTime += this->timeDelta;
+
 }
 
 void TheWarrior::drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
@@ -75,7 +77,31 @@ void TheWarrior::drawLeg(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm
     GLfloat legCenterY = this->bodyY - (this->bodyHeight/2);
     GLfloat legOffset = isLeft ? this->legLeftOffset : -this->legLeftOffset;
 
-    glm::mat4 legModelMat = glm::translate(modelMtx, glm::vec3(legOffset, legCenterY, 0));
+    glm::mat4 legModelMat = glm::translate(modelMtx, glm::vec3(legOffset, legCenterY, 0));;
+
+    if (isMoving || isCoolingDown){
+        GLfloat angleMultiplier = isLeft ? 1 : -1;
+        GLfloat footRotAngle = 0;
+        if (isCoolingDown){
+            //Bring animations to a slow stop
+
+            footRotAngle = angleMultiplier * glm::half_pi<GLfloat>() * glm::sin(this->currentMoveCooldownTime);
+
+            this->currentMoveCooldownTime -= timeDelta;
+            if (this->currentMoveCooldownTime <= 0){
+                this->isCoolingDown = false;
+                this->currentMoveCooldownTime = this->initalCooldownTime;
+            }
+        }else{
+            footRotAngle = angleMultiplier * glm::half_pi<GLfloat>() * glm::sin(this->movementTime);
+        }
+
+        legModelMat = glm::translate(legModelMat, glm::vec3(0, -legCenterY*8, 0));
+        legModelMat = glm::rotate(legModelMat, footRotAngle, glm::vec3(1, 0, 0));
+        legModelMat = glm::translate(legModelMat, glm::vec3(0, legCenterY*8, 0));
+    }
+
+
     this->computeAndSendMatUniforms(legModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
 
@@ -85,13 +111,6 @@ void TheWarrior::drawLeg(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm
         CSCI441::drawSolidCylinder(this->legWidthBottom, this->legWidthTop, this->legLength, 40, 40);
     }
 
-    if (this->initialLeftLegModelMat != glm::mat4(1.0f) && isLeft){
-        this->initialLeftLegModelMat = legModelMat;
-    }
-    if (this->initialRightLegModelMat != glm::mat4(1.0f) && !isLeft){
-        this->initialRightLegModelMat = legModelMat;
-    }
-
 
     this->drawFoot(legModelMat, viewMtx, projMtx);
 }
@@ -99,6 +118,7 @@ void TheWarrior::drawLeg(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm
 void TheWarrior::drawFoot(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
     GLfloat footCenterZ = this->footLength - (this->legWidthTop*1.5);
     glm::mat4 footModelMat = glm::translate(modelMtx, glm::vec3(0, 0, footCenterZ));
+
     footModelMat = glm::scale(footModelMat, glm::vec3(1, this->footHeight/this->footWidth, this->footLength/this->footWidth));
 
     this->computeAndSendMatUniforms(footModelMat, viewMtx, projMtx);
@@ -213,6 +233,10 @@ void TheWarrior::drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projM
     GLfloat headCenterY = this->bodyY + this->bodyHeight + (neckHeight*2) + (this->headRadius/2);
 
     glm::mat4 headModelMat = glm::translate(modelMtx, glm::vec3(0, headCenterY, 0));
+
+    GLfloat animatedHeadY = abs(glm::sin(this->currentTime)) * 0.2;
+    headModelMat = glm::translate(headModelMat, glm::vec3(0, animatedHeadY, 0));
+
     this->computeAndSendMatUniforms(headModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
 
@@ -240,7 +264,9 @@ glm::vec3 TheWarrior::getCurrentPosition() {
 
 //Animation methods
 void TheWarrior::startMoving() {
-
+    this->isMoving = true;
+    this->isCoolingDown = false;
+    this->movementTime = 0;
 }
 
 void TheWarrior::moveHeroForward() {
@@ -254,15 +280,20 @@ void TheWarrior::moveHeroBackward() {
 }
 
 void TheWarrior::stopMoving() {
-
+    this->isMoving = false;
+    this->isCoolingDown = true;
+    this->movementTime = 0;
 }
 
 void TheWarrior::turnHero(GLfloat theta) {
     this->currentModelMatrix = glm::rotate(this->currentModelMatrix, theta, glm::vec3(0, 1, 0));
 }
 
+
+
 void TheWarrior::updateCurrentPosition() {
     this->currentWorldPosition = this->currentModelMatrix * glm::vec4(0, 0, 0, 1);
+    this->movementTime += this->timeDelta;
 }
 
 glm::mat4 TheWarrior::getCurrentModelMat() {

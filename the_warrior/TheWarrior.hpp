@@ -12,6 +12,12 @@
 #include "../ShaderLocations.hpp"
 #include "../HeroVirtual.hpp"
 
+enum MovingLeg{
+    NONE,
+    LEFT,
+    RIGHT
+};
+
 class TheWarrior : public virtual HeroVirtual{
 
 public:
@@ -43,10 +49,15 @@ private:
     const glm::vec3 shieldColor = {0.06f, 0.42f, 0.99f};
     const glm::vec3 swordColor = {0.82, 0.82, 0.82};
 
+    GLfloat currentTime = 0;
+    GLfloat movementTime = 0;
+    const GLfloat initalCooldownTime = 2;
+    GLfloat currentMoveCooldownTime = initalCooldownTime;
+    const GLfloat timeDelta = glm::pi<GLfloat>()/256.0f;
     const GLfloat movementSpeed = 0.1;
-    const GLfloat legRotationTheta = glm::pi<GLfloat>()/4.0f;
-    glm::mat4 initialLeftLegModelMat = glm::mat4(1.0f);
-    glm::mat4 initialRightLegModelMat = glm::mat4(1.0f);
+
+    bool isMoving = false;
+    bool isCoolingDown = false;
 
     GLfloat swordRotationAngle = 0.0f;
 

@@ -35,13 +35,13 @@ void MPEngine::handleKeyEvent(GLint key, GLint action) {
         _keys[key] = ((action == GLFW_PRESS) || (action == GLFW_REPEAT));
 
     //Only call stopMoving call at end
-    if (action == GLFW_KEY_UP){
+    if (action == GLFW_RELEASE){
         if (key == GLFW_KEY_W || key == GLFW_KEY_S){
             this->_warrior->stopMoving();
         }
     }
     //Only call start moving call at beginning
-    if (action == GLFW_KEY_DOWN){
+    if (action == GLFW_PRESS){
         if (key == GLFW_KEY_W || key == GLFW_KEY_S){
             this->_warrior->startMoving();
         }
@@ -331,7 +331,7 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 
         glUniform3fv(shaderUniformLocations.materialColor, 1, &currentBuilding.color[0]);
 
-        //CSCI441::drawSolidCube(1.0);
+        CSCI441::drawSolidCube(1.0);
     }
     //// END DRAWING THE BUILDINGS ////
     //Draw eeyore
