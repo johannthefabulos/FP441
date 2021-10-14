@@ -9,7 +9,6 @@
 #include "ShaderLocations.hpp"
 #include "the_warrior/TheWarrior.hpp"
 #include "Eeyore/eeyore.hpp"
-#include "JohnReimann.hpp"
 #include "john_Reimann/JohnReimann.hpp"
 
 #include <vector>

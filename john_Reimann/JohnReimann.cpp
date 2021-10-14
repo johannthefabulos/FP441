@@ -21,31 +21,26 @@ JohnReimann::JohnReimann(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint norm
 }
 
 void JohnReimann::drawJohn_Reimann(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
-    glUseProgram(this->shaderProgramHandle);
-    //Front wheels
-    this->drawLegs(this->currentModelMatrix, viewMatrix, projMatrix);
-    //this->drawLeg(this->currentModelMatrix, viewMatrix, projMatrix);
-    //Back wheels
-
-    //this->drawHead( this->currentModelMatrix, viewMatrix, projMatrix);
-//    this->drawAxel(false, this->currentModelMatrix, viewMatrix, projMatrix);
-
-    //this->drawBody(this->currentModelMatrix, viewMatrix, projMatrix);
+    //modelMtx = glm::translate( modelMtx, glm::vec3( cos(animationAngle), 0, sin(animationAngle) ));
+    //modelMtx = glm::translate( modelMtx, glm::vec3( translateX, 0, translateY));
+    //modelMtx = glm::rotate( modelMtx, 2*correctionAngle, CSCI441::Y_AXIS );
+    //modelMtx = glm::rotate( modelMtx, chairCurrentAngle, CSCI441::Y_AXIS );
+    drawLegs(this->currentModelMatrix,viewMatrix, projMatrix );
+    drawHead(this->currentModelMatrix,viewMatrix,projMatrix );
+    drawBody(this->currentModelMatrix,viewMatrix, projMatrix );
 }
 
 void JohnReimann::drawLegs(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
-    modelMtx = glm::translate(modelMtx,glm::vec3(1,5,1));
-
-
-//    wheelModelMat = glm::rotate(wheelModelMat, glm::half_pi<GLfloat>(), glm::vec3(0, 1, 0));
-
-    //wheelModelMat = glm::rotate(wheelModelMat, wheelAngle, glm::vec3(0, 0, 1));
-
+    glm::vec3 _colorRed = glm::vec3( 1.0f, 0.0f, 0 );
+    modelMtx = glm::scale( modelMtx,glm::vec3( .5, 1, 1 ));
+    modelMtx = glm::translate( modelMtx, glm::vec3( 1.5f, 0, 0 ));
     this->computeAndSendMatUniforms(modelMtx, viewMtx, projMtx);
-
-    //glUniform3fv(this->materialColorUniformLocation, 1, &this->wheelColor[0]);
-
-    //Testing values
+    glUniform3fv(this->materialColorUniformLocation, 1, &_colorRed[0]);
+    CSCI441::drawSolidCube(1);
+    modelMtx = glm::translate( modelMtx, glm::vec3( -1.5f, 0, 0 ));
+    modelMtx = glm::translate( modelMtx, glm::vec3( -1.5f, 0, 0 ));
+    this->computeAndSendMatUniforms(modelMtx, viewMtx, projMtx);
+    glUniform3fv(this->materialColorUniformLocation, 1, &_colorRed[0]);
     CSCI441::drawSolidCube(1);
 
 }
@@ -61,57 +56,22 @@ void JohnReimann::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMt
 }
 
 void JohnReimann::drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
-    glm::mat4 axelModelMat = modelMtx;
-    //GLfloat axelWidth = this->wheelLRTranslation.x;
-//    axelModelMat = glm::scale(axelModelMat, glm::vec3(axelWidth, axelWidth, axelWidth));
-
-
-    axelModelMat = glm::translate(axelModelMat, glm::vec3(0, 2, -2));
-
-//    axelModelMat = glm::rotate(axelModelMat, glm::half_pi<GLfloat>(), glm::vec3(0, 0, 1));
-//
-//    axelModelMat = glm::rotate(axelModelMat, wheelAngle, glm::vec3(0, 1, 0));
-
-    this->computeAndSendMatUniforms(axelModelMat, viewMtx, projMtx);
-    glUniform3fv(this->materialColorUniformLocation, 1, &this->bodyColor[0]);
+    glm::vec3 _colorGreen = glm::vec3( 0, 1.0f, 0);
+    modelMtx = glm::translate( modelMtx, glm::vec3( 0, 0, 0 ));
+    modelMtx = glm::scale( modelMtx,glm::vec3( 1, .5, 1 ));
+    this->computeAndSendMatUniforms(modelMtx, viewMtx, projMtx);
+    glUniform3fv(this->materialColorUniformLocation, 1, &_colorGreen[0]);
     CSCI441::drawSolidCube(1);
-    glm::mat4 noseModelMat = modelMtx;
-    noseModelMat = glm::translate(noseModelMat, glm::vec3(0, 2, -3));
-    this->computeAndSendMatUniforms(noseModelMat, viewMtx, projMtx);
-    glUniform3fv(this->materialColorUniformLocation, 1, &this->bodyColor[0]);
-    CSCI441::drawSolidCube(1);
-
 }
 
 void JohnReimann::drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
 
-//    glm::mat4 teapotModelMat = glm::scale(modelMtx, glm::vec3(0.4, 0.4, 0.4));
-//    teapotModelMat = glm::translate(teapotModelMat, glm::vec3(0, 0, -this->wheelFBTranslation.z));
-//    teapotModelMat = glm::rotate(teapotModelMat, -glm::half_pi<GLfloat>(), glm::vec3(1, 0, 0));
-//    teapotModelMat = glm::rotate(teapotModelMat, glm::half_pi<GLfloat>(), glm::vec3(0, 0, 1));
-//    this->computeAndSendMatUniforms(teapotModelMat, viewMtx, projMtx);
-//
-//    glUniform3fv(this->materialColorUniformLocation, 1, &this->teapotColor[0]);
-//    CSCI441::drawSolidTeapot();
-
-    GLfloat bodyWidth = (this->wheelLRTranslation.x * 2) + (this->wheelInnerRadius);
-    GLfloat bodyLength = (this->wheelFBTranslation.z * 2) + (this->wheelInnerRadius);
-    GLfloat bodyWidthScale = bodyWidth/this->wheelInnerRadius;
-    GLfloat bodyLengthScale = bodyLength/this->wheelInnerRadius;
-
-
-
-    glm::mat4 flatBodyModelMat = glm::scale(modelMtx, glm::vec3(bodyWidthScale, bodyWidthScale/2, bodyLengthScale));
-    flatBodyModelMat = glm::translate(flatBodyModelMat,glm::vec3(0,.2,0));
-    this->computeAndSendMatUniforms(flatBodyModelMat, viewMtx, projMtx);
-    glUniform3fv(this->materialColorUniformLocation, 1, &this->bodyColor[0]);
-    CSCI441::drawSolidCube(this->wheelInnerRadius);
-
-    glm::mat4 tailMat = glm::scale(modelMtx, glm::vec3(.5, bodyWidthScale/3, .5));
-    tailMat = glm::translate(tailMat,glm::vec3(0,.3,3.5));
-    this->computeAndSendMatUniforms(tailMat, viewMtx, projMtx);
-    glUniform3fv(this->materialColorUniformLocation, 1, &this->tailColor[0]);
-    CSCI441::drawSolidCube(this->wheelInnerRadius);
+    glm::vec3 _colorBlue = glm::vec3( 0, 0, 1.0f );
+    modelMtx = glm::translate( modelMtx, glm::vec3( 0, .5, .5 ));
+    modelMtx = glm::scale( modelMtx,glm::vec3( 1, 1.5, .5 ));
+    this->computeAndSendMatUniforms(modelMtx, viewMtx, projMtx);
+    glUniform3fv(this->materialColorUniformLocation, 1, &_colorBlue[0]);
+    CSCI441::drawSolidCube(1);
 }
 
 glm::vec3 JohnReimann::getCurrentPosition() {

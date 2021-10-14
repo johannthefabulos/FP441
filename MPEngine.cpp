@@ -322,16 +322,17 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     _car->drawCar(viewMtx, projMtx);
 
     //glUniform1f(shaderUniformLocations.materialShininess, 1);
-    _warrior->drawWarrior(viewMtx, projMtx);
+    //_warrior->drawWarrior(viewMtx, projMtx);
 
     //glUniform1f(shaderUniformLocations.materialShininess, 1);
-    _eeyore->drawEeyore(viewMtx, projMtx);
+    //_eeyore->drawEeyore(viewMtx, projMtx);
 
     //// START DRAWING THE CHAIR ////
-    _computeAndSendMatrixUniforms(chairModelMatrix, viewMtx, projMtx);
-    drawChair(chairModelMatrix, viewMtx, projMtx);
+    //_computeAndSendMatrixUniforms(chairModelMatrix, viewMtx, projMtx);
+    //drawChair(chairModelMatrix, viewMtx, projMtx);
     //// END DRAWING THE CHAIR ////
-
+    glUniform1f(shaderUniformLocations.materialShininess, 1);
+    _JohnReimann->drawJohn_Reimann(viewMtx, projMtx);
 
     this->_arcballCam->setLookAtPoint(_car->getCurrentPosition());
     this->_arcballCam->recomputeOrientation();

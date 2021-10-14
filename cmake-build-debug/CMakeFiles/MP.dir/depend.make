@@ -348,10 +348,10 @@ CMakeFiles/MP.dir/MPEngine.cpp.obj: \
  ../include/CSCI441/teapot.hpp \
  ../Car.hpp \
  ../Eeyore/eeyore.hpp \
- ../JohnReimann.hpp \
  ../MPEngine.cpp \
  ../MPEngine.hpp \
  ../ShaderLocations.hpp \
+ ../john_Reimann/JohnReimann.hpp \
  ../the_warrior/TheWarrior.hpp \
  C:/Users/johan/Desktop/CSCI441/include/GL/glew.h \
  C:/Users/johan/Desktop/CSCI441/include/GLFW/glfw3.h \
@@ -524,9 +524,9 @@ CMakeFiles/MP.dir/main.cpp.obj: \
  ../include/CSCI441/ShaderUtils.hpp \
  ../Car.hpp \
  ../Eeyore/eeyore.hpp \
- ../JohnReimann.hpp \
  ../MPEngine.hpp \
  ../ShaderLocations.hpp \
+ ../john_Reimann/JohnReimann.hpp \
  ../main.cpp \
  ../the_warrior/TheWarrior.hpp \
  C:/Users/johan/Desktop/CSCI441/include/GL/glew.h \

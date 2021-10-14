@@ -1,5 +1,5 @@
-#ifndef LAB05_PLANE_HPP
-#define LAB05_PLANE_HPP
+#ifndef MP_JOHNRIEMANN_HPP
+#define MP_JOHNRIEMANN_HPP
 
 #include <GL/glew.h>
 
@@ -63,4 +63,4 @@ private:
 };
 
 
-#endif //LAB05_PLANE_HPP
+#endif MP_JOHNRIEMANN_HPP
