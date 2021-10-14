@@ -1,5 +1,5 @@
 //
-// Created by Fibonacci on 10/10/21.
+// Created by Benjamin Carlson on 10/10/21.
 //
 
 #ifndef MP_THEWARRIOR_HPP
@@ -19,43 +19,52 @@ public:
 
     void drawWarrior(glm::mat4 viewMatrix, glm::mat4 projMatrix);
 
+    glm::vec3 getFirstPersonCamPosition() override;
+    glm::vec3 getCurrentPosition() override;
+    glm::mat4 getCurrentModelMat() override;
+    GLint getFirstPersonCamZModifier() override { return -1;};
+
     void startMoving() override;
     void moveHeroForward() override;
     void moveHeroBackward() override;
     void stopMoving() override;
-
     void turnHero(GLfloat theta) override;
-    glm::vec3 getCurrentPosition() override;
-
-    glm::mat4 getCurrentModelMat() override;
 
     void leftClickAction() override;
+
 private:
     ModelShaderLocations shaderLocations;
-
-    glm::mat4 currentModelMatrix = glm::mat4(1.0f);
-
     GLfloat WORLD_SIDE_LENGTH;
 
+    glm::mat4 currentModelMatrix = glm::mat4(1.0f);
     glm::vec3 currentWorldPosition = {0, 0, 0};
+
+    /// \desc The amount of time to increment/decrement times by (fraction of pi since times are used for trig functions)
+    const GLfloat timeDelta = glm::pi<GLfloat>()/256.0f;
+    /// \desc The speed to move the model at
+    const GLfloat movementSpeed = 0.1;
+    /// \desc The total amount of time for the cool down animation
+    const GLfloat initalCooldownTime = 2;
+
+    /// \desc The amount of time the model has been drawn
+    GLfloat currentTime = 0;
+    /// \desc The amount of time the model has been moving
+    GLfloat movementTime = 0;
+    /// \desc The current time left in the cool down animation
+    GLfloat currentMoveCooldownTime = initalCooldownTime;
+
+    /// \desc Wether the model is moving or not
+    bool isMoving = false;
+    /// \desc Wether the model is cooling down or not
+    bool isCoolingDown = false;
+    /// \desc Current rotation angle of the sword
+    GLfloat swordRotationAngle = 0.0f;
 
     const glm::vec3 bodyColor = {1.0, 223.0f/255.0f, 196.0f/255.0f};
     const glm::vec3 shieldColor = {0.06f, 0.42f, 0.99f};
     const glm::vec3 swordColor = {0.82, 0.82, 0.82};
     const glm::vec3 outerEyeColor = {1.0f, 1.0f, 1.0f};
     const glm::vec3 innerEyeColor = {0.12f, 0.55f, 0.84f};
-
-    GLfloat currentTime = 0;
-    GLfloat movementTime = 0;
-    const GLfloat initalCooldownTime = 2;
-    GLfloat currentMoveCooldownTime = initalCooldownTime;
-    const GLfloat timeDelta = glm::pi<GLfloat>()/256.0f;
-    const GLfloat movementSpeed = 0.1;
-
-    bool isMoving = false;
-    bool isCoolingDown = false;
-
-    GLfloat swordRotationAngle = 0.0f;
 
     //Body Constants
     const GLfloat bodyTopWidth = 0.6;
@@ -66,7 +75,7 @@ private:
     const GLfloat neckTopWidth = 0.2;
     const GLfloat neckHeight = 0.3;
 
-    const GLfloat bodyY = 1.5;
+    const GLfloat bodyCenterY = 1.5;
 
     //Leg Constants
     const GLfloat legLeftOffset = 0.45;

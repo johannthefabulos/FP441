@@ -5,7 +5,7 @@
 #include <CSCI441/OpenGLEngine.hpp>
 #include <CSCI441/ShaderProgram.hpp>
 
-#include "Car.hpp"
+#include "car/Car.hpp"
 #include "ShaderLocations.hpp"
 #include "the_warrior/TheWarrior.hpp"
 #include "Eeyore/eeyore.hpp"
@@ -14,8 +14,10 @@
 #include "john_Reimann/JohnReimann.hpp"
 #include "Tree.hpp"
 #include "Castle.hpp"
+#include "hero_cameras/HeroCameras.hpp"
 
 #include <vector>
+#include <CSCI441/FreeCam.hpp>
 
 
 class MPEngine : public CSCI441::OpenGLEngine {
@@ -26,6 +28,8 @@ public:
     ~MPEngine();
 
     void run() final;
+
+    void drawPIPView(glm::mat4 projectionMatrix);
 
     /// \desc handle any key events inside the engine
     /// \param key key as represented by GLFW_KEY_ macros
@@ -58,10 +62,7 @@ private:
 
     void _cleanupBuffers() final;
     void _cleanupShaders() final;
-    void drawChair(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
-    void drawArmRests(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
-    void drawBack(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
-    void drawCusion(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+
     /// \desc draws everything to the scene from a particular point of view
     /// \param viewMtx the current view matrix for our camera
     /// \param projMtx the current projection matrix for our camera
@@ -80,18 +81,13 @@ private:
     /// \desc current state of the left mouse button
     GLint _leftMouseButtonState;
 
-    //Begin Models
+    HeroCameras* cameras;
 
-    /// \desc the static fixed camera in our world
-    CSCI441::ArcballCam* _arcballCam;
-
+    // Hero models
     Car* _car;
-
     eeyore* _eeyore;
     JohnReimann* _JohnReimann;
     TheWarrior* _warrior;
-
-
 
     //End Models
     /// \desc the size of the world (controls the ground size and locations of buildings)

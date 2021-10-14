@@ -22,9 +22,15 @@ public:
 
     void leftClickAction() override{};
 
+    glm::vec3 getFirstPersonCamPosition() override{
+        return this->getCurrentPosition();
+    };
+
     void startMoving() override{};
 
     void stopMoving() override{};
+
+    GLint getFirstPersonCamZModifier() override { return 1;};
 
 
     glm::mat4 currentModelMatrix = glm::mat4(1.0f);

@@ -129,30 +129,6 @@ MP/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/build
 .PHONY : MP/fast
 
-Car.o: Car.cpp.o
-.PHONY : Car.o
-
-# target to build an object file
-Car.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/Car.cpp.o
-.PHONY : Car.cpp.o
-
-Car.i: Car.cpp.i
-.PHONY : Car.i
-
-# target to preprocess a source file
-Car.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/Car.cpp.i
-.PHONY : Car.cpp.i
-
-Car.s: Car.cpp.s
-.PHONY : Car.s
-
-# target to generate assembly for a file
-Car.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/Car.cpp.s
-.PHONY : Car.cpp.s
-
 Eeyore/eeyore.o: Eeyore/eeyore.cpp.o
 .PHONY : Eeyore/eeyore.o
 
@@ -200,6 +176,54 @@ MPEngine.s: MPEngine.cpp.s
 MPEngine.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/MPEngine.cpp.s
 .PHONY : MPEngine.cpp.s
+
+car/Car.o: car/Car.cpp.o
+.PHONY : car/Car.o
+
+# target to build an object file
+car/Car.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/car/Car.cpp.o
+.PHONY : car/Car.cpp.o
+
+car/Car.i: car/Car.cpp.i
+.PHONY : car/Car.i
+
+# target to preprocess a source file
+car/Car.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/car/Car.cpp.i
+.PHONY : car/Car.cpp.i
+
+car/Car.s: car/Car.cpp.s
+.PHONY : car/Car.s
+
+# target to generate assembly for a file
+car/Car.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/car/Car.cpp.s
+.PHONY : car/Car.cpp.s
+
+hero_cameras/HeroCameras.o: hero_cameras/HeroCameras.cpp.o
+.PHONY : hero_cameras/HeroCameras.o
+
+# target to build an object file
+hero_cameras/HeroCameras.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/hero_cameras/HeroCameras.cpp.o
+.PHONY : hero_cameras/HeroCameras.cpp.o
+
+hero_cameras/HeroCameras.i: hero_cameras/HeroCameras.cpp.i
+.PHONY : hero_cameras/HeroCameras.i
+
+# target to preprocess a source file
+hero_cameras/HeroCameras.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/hero_cameras/HeroCameras.cpp.i
+.PHONY : hero_cameras/HeroCameras.cpp.i
+
+hero_cameras/HeroCameras.s: hero_cameras/HeroCameras.cpp.s
+.PHONY : hero_cameras/HeroCameras.s
+
+# target to generate assembly for a file
+hero_cameras/HeroCameras.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/hero_cameras/HeroCameras.cpp.s
+.PHONY : hero_cameras/HeroCameras.cpp.s
 
 john_Reimann/JohnReimann.o: john_Reimann/JohnReimann.cpp.o
 .PHONY : john_Reimann/JohnReimann.o
@@ -282,15 +306,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... MP"
-	@echo "... Car.o"
-	@echo "... Car.i"
-	@echo "... Car.s"
 	@echo "... Eeyore/eeyore.o"
 	@echo "... Eeyore/eeyore.i"
 	@echo "... Eeyore/eeyore.s"
 	@echo "... MPEngine.o"
 	@echo "... MPEngine.i"
 	@echo "... MPEngine.s"
+	@echo "... car/Car.o"
+	@echo "... car/Car.i"
+	@echo "... car/Car.s"
+	@echo "... hero_cameras/HeroCameras.o"
+	@echo "... hero_cameras/HeroCameras.i"
+	@echo "... hero_cameras/HeroCameras.s"
 	@echo "... john_Reimann/JohnReimann.o"
 	@echo "... john_Reimann/JohnReimann.i"
 	@echo "... john_Reimann/JohnReimann.s"
