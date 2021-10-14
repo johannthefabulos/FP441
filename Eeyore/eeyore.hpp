@@ -21,6 +21,10 @@ public:
     void turnHero(GLfloat theta) override;
     void leftClickAction() override;
 
+    glm::vec3 getFirstPersonCamPosition() override{
+        return this->getCurrentPosition();
+    };
+
     void startMoving() override{};
 
     void stopMoving() override{};

@@ -9,7 +9,7 @@
 
 #include <glm/glm.hpp>
 
-#include "HeroVirtual.hpp"
+#include "../HeroVirtual.hpp"
 
 class Car : public virtual HeroVirtual{
 
@@ -33,6 +33,10 @@ public:
     void startMoving() override{};
 
     void stopMoving() override{};
+
+    glm::vec3 getFirstPersonCamPosition() override{
+        return this->getCurrentPosition();
+    };
 private:
     GLuint shaderProgramHandle;
     GLint mvpMatrixUniformLocation;

@@ -27,22 +27,26 @@ MPEngine::MPEngine(int OPENGL_MAJOR_VERSION, int OPENGL_MINOR_VERSION,
 }
 
 MPEngine::~MPEngine() {
-    delete _arcballCam;
+    delete cameras;
 }
 
 void MPEngine::handleKeyEvent(GLint key, GLint action) {
     if(key != GLFW_KEY_UNKNOWN)
         _keys[key] = ((action == GLFW_PRESS) || (action == GLFW_REPEAT));
 
+    bool shouldMoveHero = this->cameras->getCurrentMainCameraType() == ARCBALL;
+
     //Only call stopMoving call at end
     if (action == GLFW_RELEASE){
-        if (key == GLFW_KEY_W || key == GLFW_KEY_S){
+        if ((key == GLFW_KEY_W || key == GLFW_KEY_S) && shouldMoveHero){
             this->getCurrentHero()->stopMoving();
         }
     }
-    //Only call start moving call at beginning
+
     if (action == GLFW_PRESS){
-        if (key == GLFW_KEY_W || key == GLFW_KEY_S){
+        this->cameras->changeCamera(key);
+        if ((key == GLFW_KEY_W || key == GLFW_KEY_S) && shouldMoveHero){
+            //Only call start moving call at beginning
             this->getCurrentHero()->startMoving();
         }
     }
@@ -53,6 +57,7 @@ void MPEngine::handleKeyEvent(GLint key, GLint action) {
         if (heroEnumVal < LAST){
             HeroType heroType = (HeroType) heroEnumVal;
             this->currentlySelectedHero = heroType;
+            this->cameras->setHero(this->getCurrentHero());
         }
 
     }
@@ -87,23 +92,19 @@ void MPEngine::handleCursorPositionEvent(glm::vec2 currMousePosition) {
         _mousePosition = currMousePosition;
     }
 
-    // active motion - if the left mouse button is being held down while the mouse is moving
-    if(_leftMouseButtonState == GLFW_PRESS) {
+    // active motion - if the left mouse button is being held down while the mouse is moving (Only ARCBALL)
+    if(_leftMouseButtonState == GLFW_PRESS && this->cameras->getCurrentMainCameraType() == ARCBALL) {
         // if shift is held down, update our camera radius
         if( _keys[GLFW_KEY_LEFT_SHIFT] || _keys[GLFW_KEY_RIGHT_SHIFT] ) {
             GLfloat totChgSq = (currMousePosition.x - _mousePosition.x) + (currMousePosition.y - _mousePosition.y);
-            _arcballCam->moveForward( totChgSq * 0.01f );
+            this->cameras->getCamera()->moveForward( totChgSq * 0.01f );
         }
             // otherwise, update our camera angles theta & phi
         else {
             // rotate the camera by the distance the mouse moved
-            _arcballCam->rotate((currMousePosition.x - _mousePosition.x) * 0.005f,
+            this->cameras->getCamera()->rotate((currMousePosition.x - _mousePosition.x) * 0.005f,
                                 -(_mousePosition.y - currMousePosition.y) * 0.005f);
         }
-    }
-        // passive motion
-    else {
-
     }
 
     // update the mouse position
@@ -151,6 +152,8 @@ void MPEngine::_setupShaders() {
 
     shaderAttributeLocations.vNormal         = _shaderProgram->getAttributeLocation("vNormal");
 
+    this->cameras = new HeroCameras(shaderUniformLocations.cameraPos);
+
 }
 
 void MPEngine::_setupBuffers() {
@@ -175,6 +178,7 @@ void MPEngine::_setupBuffers() {
                                     shaderUniformLocations.normalMat,
                                     shaderUniformLocations.materialColor,
                                     WORLD_SIZE);
+    this->cameras->setHero(this->getCurrentHero());
     _createGroundBuffers();
     _generateEnvironment();
 }
@@ -266,13 +270,6 @@ void MPEngine::_generateEnvironment() {
 }
 
 void MPEngine::_setupScene() {
-    _arcballCam = new CSCI441::ArcballCam();
-    _arcballCam->setLookAtPoint(glm::vec3(0.0f, 2.1f, 0.0f) );
-    _arcballCam->setTheta(3.52f );
-    _arcballCam->setPhi(1.9f );
-    _arcballCam->setRadius( 15.0f );
-    _arcballCam->recomputeOrientation();
-
 
     glm::vec3 lightPos(-1, -1, -1);
     glm::vec3 lightColor(1, 1, 1);
@@ -323,7 +320,11 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     glm::vec3 groundColor(0.3f, 0.8f, 0.2f);
     glUniform3fv(shaderUniformLocations.materialColor, 1, &groundColor[0]);
     glUniform1f(shaderUniformLocations.materialShininess, 0.0f);
-    glUniform3fv(shaderUniformLocations.cameraPos, 1, &this->_arcballCam->getPosition()[0]);
+
+
+    glUniform3fv(shaderUniformLocations.cameraPos, 1, &this->cameras->getCamera()->getPosition()[0]);
+
+
     glBindVertexArray(_groundVAO);
     //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glDrawElements(GL_TRIANGLE_STRIP, _numGroundPoints, GL_UNSIGNED_SHORT, (void*)0);
@@ -354,70 +355,32 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     glUniform1f(shaderUniformLocations.materialShininess, 1);
     _JohnReimann->drawJohn_Reimann(viewMtx, projMtx);
 
-    this->_arcballCam->setLookAtPoint(this->getCurrentHero()->getCurrentPosition());
-    this->_arcballCam->recomputeOrientation();
-    glUniform3fv(shaderUniformLocations.cameraPos, 1, &this->_arcballCam->getPosition()[0]);
 
-
-}
-void MPEngine::drawChair( glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx ) {
-    modelMtx = glm::translate( modelMtx, glm::vec3( cos(animationAngle), 0, sin(animationAngle) ));
-    //modelMtx = glm::translate( modelMtx, glm::vec3( translateX, 0, translateY));
-    modelMtx = glm::rotate( modelMtx, 2*correctionAngle, CSCI441::Y_AXIS );
-    modelMtx = glm::rotate( modelMtx, chairCurrentAngle, CSCI441::Y_AXIS );
-    drawArmRests(modelMtx,viewMtx, projMtx );
-    drawCusion(modelMtx,viewMtx,projMtx );
-    drawBack(modelMtx,viewMtx, projMtx );
-}
-void MPEngine::drawArmRests(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx ) {
-    glm::vec3 _colorRed = glm::vec3( 1.0f, 0.0f, 0 );
-    modelMtx = glm::scale( modelMtx,glm::vec3( .5, 1, 1 ));
-    modelMtx = glm::translate( modelMtx, glm::vec3( 1.5f, 0, 0 ));
-    _computeAndSendMatrixUniforms(modelMtx, viewMtx, projMtx);
-    glUniform3fv(shaderUniformLocations.materialColor, 1, &_colorRed[0]);
-    CSCI441::drawSolidCube(1);
-    modelMtx = glm::translate( modelMtx, glm::vec3( -1.5f, 0, 0 ));
-    modelMtx = glm::translate( modelMtx, glm::vec3( -1.5f, 0, 0 ));
-    _computeAndSendMatrixUniforms(modelMtx, viewMtx, projMtx);
-    glUniform3fv(shaderUniformLocations.materialColor, 1, &_colorRed[0]);
-    CSCI441::drawSolidCube(1);
-
-}
-void MPEngine::drawBack(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx ) {
-    glm::vec3 _colorBlue = glm::vec3( 0, 0, 1.0f );
-    modelMtx = glm::translate( modelMtx, glm::vec3( 0, .5, .5 ));
-    modelMtx = glm::scale( modelMtx,glm::vec3( 1, 1.5, .5 ));
-    _computeAndSendMatrixUniforms(modelMtx, viewMtx, projMtx);
-    glUniform3fv(shaderUniformLocations.materialColor, 1, &_colorBlue[0]);
-    CSCI441::drawSolidCube(1);
-}
-void MPEngine::drawCusion(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx ) {
-    glm::vec3 _colorGreen = glm::vec3( 0, 1.0f, 0);
-    modelMtx = glm::translate( modelMtx, glm::vec3( 0, 0, 0 ));
-    modelMtx = glm::scale( modelMtx,glm::vec3( 1, .5, 1 ));
-    _computeAndSendMatrixUniforms(modelMtx, viewMtx, projMtx);
-    glUniform3fv(shaderUniformLocations.materialColor, 1, &_colorGreen[0]);
-    CSCI441::drawSolidCube(1);
 }
 void MPEngine::_updateScene() {
-    chairCurrentAngle+=.05;
-    animationAngle+=.05;
+
+    //Only the ARCBALL main camera type moves the hero
+    bool shouldMoveHero = (this->cameras->getCurrentMainCameraType() == ARCBALL);
+
     // turn right
-    if( _keys[GLFW_KEY_D] ) {
+    if( _keys[GLFW_KEY_D] && shouldMoveHero) {
         this->getCurrentHero()->turnHero(-glm::pi<GLfloat>()/128.0f);
+
     }
     // turn left
-    if( _keys[GLFW_KEY_A] ) {
+    if( _keys[GLFW_KEY_A] && shouldMoveHero) {
         this->getCurrentHero()->turnHero(glm::pi<GLfloat>()/128.0f);
     }
     // pitch up
-    if( _keys[GLFW_KEY_W] ) {
+    if( _keys[GLFW_KEY_W] && shouldMoveHero) {
         this->getCurrentHero()->moveHeroForward();
     }
     // pitch down
-    if( _keys[GLFW_KEY_S] ) {
+    if( _keys[GLFW_KEY_S] && shouldMoveHero) {
         this->getCurrentHero()->moveHeroBackward();
     }
+    //Handle free cam movement or keep arcball pointed at hero
+    this->cameras->update(_keys);
 }
 
 void MPEngine::run() {
@@ -444,7 +407,7 @@ void MPEngine::run() {
         glm::mat4 projectionMatrix = glm::perspective( 45.0f, (GLfloat) framebufferWidth / (GLfloat) framebufferHeight, 0.001f, 1000.0f );
 
         // set up our look at matrix to position our camera
-        glm::mat4 viewMatrix = this->_arcballCam->getViewMatrix();
+        glm::mat4 viewMatrix = this->cameras->getCamera()->getViewMatrix();
 
         // draw everything to the window
         _renderScene(viewMatrix, projectionMatrix);
@@ -453,39 +416,41 @@ void MPEngine::run() {
         /// End draw main view port
         /// Start draw minimap view port
 
-        //Width/4 square minimap
-        glViewport( framebufferWidth - (framebufferWidth/4), framebufferHeight - (framebufferWidth/4), framebufferWidth/4, framebufferWidth/4);
-
-        // Don't let other objects overlap this
-        glScissor(framebufferWidth - (framebufferWidth/4), framebufferHeight - (framebufferWidth/4), framebufferWidth/4, framebufferWidth/4);
-        glEnable(GL_SCISSOR_TEST);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glDisable(GL_SCISSOR_TEST);
-
-        // set up our look at matrix to position our camera
-        GLfloat minimapCamHeight = 20;
-        glm::vec3 minimapCamPos = this->getCurrentHero()->getCurrentPosition();
-        minimapCamPos.y = minimapCamHeight;
-
-        glm::vec3 carForwardVec = glm::transpose(glm::inverse(this->getCurrentHero()->getCurrentModelMat())) * glm::vec4(0, 0, -1, 1);
-        carForwardVec = glm::normalize(carForwardVec);
-
-        glm::mat4 minimapViewMat = glm::lookAt(minimapCamPos, this->getCurrentHero()->getCurrentPosition(), carForwardVec);
-
-        // draw everything to the minimap
-        _renderScene(minimapViewMat, projectionMatrix);
-
-        _updateScene();
-        /// End draw minimap view port
+        if (this->cameras->getViewMatrix() != glm::mat4(1.0f)){
+            projectionMatrix = glm::perspective( 45.0f, (GLfloat) framebufferWidth / (GLfloat) framebufferHeight, 0.001f, 1000.0f );
+            this->drawPIPView(projectionMatrix);
+        }
 
         glfwSwapBuffers(_window);                       // flush the OpenGL commands and make sure they get rendered!
         glfwPollEvents();				                // check for any events and signal to redraw screen
     }
 }
 
+void MPEngine::drawPIPView(glm::mat4 projectionMatrix) {
+    //Width/4 square pip
+    GLint framebufferWidth, framebufferHeight;
+    glfwGetFramebufferSize( _window, &framebufferWidth, &framebufferHeight );
+
+    glViewport( framebufferWidth - (framebufferWidth/4), framebufferHeight - (framebufferWidth/4), framebufferWidth/4, framebufferWidth/4);
+
+    // Don't let other objects overlap this
+    glScissor(framebufferWidth - (framebufferWidth/4), framebufferHeight - (framebufferWidth/4), framebufferWidth/4, framebufferWidth/4);
+    glEnable(GL_SCISSOR_TEST);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glDisable(GL_SCISSOR_TEST);
+
+    // set up our look at matrix to position our camera
+    this->cameras->recalculateViewMatrix();
+
+    // draw everything to the minimap
+    _renderScene(this->cameras->getViewMatrix(), projectionMatrix);
+
+    _updateScene();
+}
+
 //*************************************************************************************
 //
-// Private Helper FUnctions
+// Private Helper Functions
 
 void MPEngine::_computeAndSendMatrixUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const {
     // precompute the Model-View-Projection matrix on the CPU
@@ -495,15 +460,15 @@ void MPEngine::_computeAndSendMatrixUniforms(glm::mat4 modelMtx, glm::mat4 viewM
 
     glm::mat3 normalMtx = glm::mat3(glm::transpose(glm::inverse(modelMtx)));
     _shaderProgram->setProgramUniform(shaderUniformLocations.normalMat, normalMtx);
-
-
-
 }
 
 void MPEngine::handleScrollEvent(glm::vec2 offset) {
     // update the camera radius in/out
     GLfloat totChgSq = offset.y;
-    _arcballCam->moveForward( totChgSq * 0.2f );
+    if (this->cameras->getCurrentMainCameraType() == ARCBALL){
+        this->cameras->getCamera()->moveForward( totChgSq * 0.2f );
+    }
+
 }
 
 HeroVirtual * MPEngine::getCurrentHero() {

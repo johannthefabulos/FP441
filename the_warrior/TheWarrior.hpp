@@ -24,6 +24,8 @@ public:
     void moveHeroBackward() override;
     void stopMoving() override;
 
+    glm::vec3 getFirstPersonCamPosition() override;
+
     void turnHero(GLfloat theta) override;
     glm::vec3 getCurrentPosition() override;
 

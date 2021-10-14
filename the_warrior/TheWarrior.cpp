@@ -4,6 +4,7 @@
 
 #include "TheWarrior.hpp"
 #include <CSCI441/SimpleShader.hpp>
+#include <glm/gtc/matrix_access.hpp>
 #include <stdio.h>
 #include <cmath>
 
@@ -280,7 +281,7 @@ void TheWarrior::moveHeroForward() {
 
 void TheWarrior::moveHeroBackward() {
 
-    if (!this->testWarriorShouldMove(this->movementSpeed)){
+    if (!this->testWarriorShouldMove(-this->movementSpeed)){
         this->stopMoving();
         return;
     }
@@ -329,10 +330,15 @@ bool TheWarrior::testWarriorShouldMove(GLfloat testMoveSpeed) {
     // Since the ground extends from (-WORLD_SIDE_LENGTH, -WORLD_SIDE_LENGTH) to (WORLD_SIDE_LENGTH, WORLD_SIDE_LENGTH)
     //      we can use the absolute value
     // Using leg length since when that is fully extended that is the farthest sticking out part of the body
-    GLfloat absXPos = glm::abs(testWorldPos.x) + this->legLength;
-    GLfloat absZPos = glm::abs(testWorldPos.z) + this->legLength;
+    GLfloat absXPos = ceil(glm::abs(testWorldPos.x) + this->legLength);
+    GLfloat absZPos = ceil(glm::abs(testWorldPos.z) + this->legLength);
     if (absXPos >= WORLD_SIDE_LENGTH || absZPos >= WORLD_SIDE_LENGTH){
         return false;
     }
     return true;
+}
+
+glm::vec3 TheWarrior::getFirstPersonCamPosition() {
+    glm::vec3 pos = glm::column(this->currentModelMatrix, 3);
+    return pos + glm::vec3(0, this->bodyHeight + this->headRadius + this->legLength, this->headRadius * 1.5);
 }
