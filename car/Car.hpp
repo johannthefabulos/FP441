@@ -1,5 +1,5 @@
 //
-// Created by Fibonacci on 10/8/21.
+// Created by Benjamin Carlson on 10/8/21.
 //
 
 #ifndef A3_CAR_HPP
@@ -18,40 +18,33 @@ public:
 
     void drawCar(glm::mat4 viewMatrix, glm::mat4 projMatrix);
 
-    void moveHeroForward() override;
-
-    glm::vec3 getCurrentPosition() override;
-
-    void moveHeroBackward() override;
-
-    void turnHero(GLfloat theta) override;
-
-    glm::mat4 getCurrentModelMat() override;
-
-    void leftClickAction() override{};
-
-    void startMoving() override{};
-
-    void stopMoving() override{};
-
-    GLint getFirstPersonCamZModifer() override { return 1;};
-
     glm::vec3 getFirstPersonCamPosition() override{
         return this->getCurrentPosition();
     };
+    glm::vec3 getCurrentPosition() override;
+    glm::mat4 getCurrentModelMat() override;
+    GLint getFirstPersonCamZModifier() override { return -1;};
+
+    void startMoving() override{};
+    void moveHeroForward() override;
+    void moveHeroBackward() override;
+    void stopMoving() override {};
+    void turnHero(GLfloat theta) override;
+
+    void leftClickAction() override {};
+
 private:
     GLuint shaderProgramHandle;
     GLint mvpMatrixUniformLocation;
     GLint normalMatrixUniformLocation;
     GLint materialColorUniformLocation;
-
-    glm::mat4 currentModelMatrix = glm::mat4(1.0f);
-
     GLfloat WORLD_SIDE_LENGTH;
 
-    GLfloat wheelAngle = 0.0f;
-
+    glm::mat4 currentModelMatrix = glm::mat4(1.0f);
     glm::vec3 currentWorldPosition = {0, 0, 0};
+
+    /// \desc The current angle of the wheels (in radians)
+    GLfloat wheelAngle = 0.0f;
 
     const glm::vec3 wheelColor = {0.1, 0.1, 0.1};
     const glm::vec3 bodyColor = {0.9, 0.05, 0.05};
@@ -64,9 +57,9 @@ private:
 
     const GLfloat moveSpeed = 0.1;
 
-    //The left/right translation for the wheels, original state is right wheel
+    /// \desc The left/right translation for the wheels, original state is right wheel
     const glm::vec3 wheelLRTranslation = {1.5, 0, 0};
-    //The front/back translation for the wheels, original state is front wheel
+    /// \desc The front/back translation for the wheels, original state is front wheel
     const glm::vec3 wheelFBTranslation = {0, 0, 2.25};
 
     void drawWheel(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);

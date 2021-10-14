@@ -30,7 +30,7 @@ public:
 
     void stopMoving() override{};
 
-    GLint getFirstPersonCamZModifer() override { return 1;};
+    GLint getFirstPersonCamZModifier() override { return 1;};
 
 
     glm::mat4 currentModelMatrix = glm::mat4(1.0f);

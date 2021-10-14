@@ -34,11 +34,12 @@ void MPEngine::handleKeyEvent(GLint key, GLint action) {
     if(key != GLFW_KEY_UNKNOWN)
         _keys[key] = ((action == GLFW_PRESS) || (action == GLFW_REPEAT));
 
-    bool shouldMoveHero = this->cameras->getCurrentMainCameraType() == ARCBALL;
+    // Only move hero if camera is ARCBALL
+    bool shouldMoveHero = this->cameras->getPrimaryCameraType() == ARCBALL;
 
-    //Only call stopMoving call at end
     if (action == GLFW_RELEASE){
         if ((key == GLFW_KEY_W || key == GLFW_KEY_S) && shouldMoveHero){
+            //Only call stopMoving call at end
             this->getCurrentHero()->stopMoving();
         }
     }
@@ -51,6 +52,7 @@ void MPEngine::handleKeyEvent(GLint key, GLint action) {
         }
     }
 
+    // Cycle through HeroTypes based on number keys
     if ((key >= GLFW_KEY_0 && key <= GLFW_KEY_9)){
         int heroEnumVal = key - GLFW_KEY_0;
 
@@ -97,6 +99,7 @@ void MPEngine::handleMouseButtonEvent(GLint button, GLint action) {
         }
         if (action == GLFW_RELEASE){
             this->_keys[GLFW_KEY_SPACE] = false;
+            this->_keys[GLFW_KEY_SPACE] = false;
             this->_keys[GLFW_KEY_LEFT_SHIFT] = false;
         }
     }
@@ -109,16 +112,16 @@ void MPEngine::handleCursorPositionEvent(glm::vec2 currMousePosition) {
     }
 
     // active motion - if the left mouse button is being held down while the mouse is moving (Only ARCBALL)
-    if(_leftMouseButtonState == GLFW_PRESS && this->cameras->getCurrentMainCameraType() == ARCBALL) {
+    if(_leftMouseButtonState == GLFW_PRESS && this->cameras->getPrimaryCameraType() == ARCBALL) {
         // if shift is held down, update our camera radius
         if( _keys[GLFW_KEY_LEFT_SHIFT] || _keys[GLFW_KEY_RIGHT_SHIFT] ) {
             GLfloat totChgSq = (currMousePosition.x - _mousePosition.x) + (currMousePosition.y - _mousePosition.y);
-            this->cameras->getCamera()->moveForward( totChgSq * 0.01f );
+            this->cameras->getPrimaryCamera()->moveForward(totChgSq * 0.01f );
         }
             // otherwise, update our camera angles theta & phi
         else {
             // rotate the camera by the distance the mouse moved
-            this->cameras->getCamera()->rotate((currMousePosition.x - _mousePosition.x) * 0.005f,
+            this->cameras->getPrimaryCamera()->rotate((currMousePosition.x - _mousePosition.x) * 0.005f,
                                 -(_mousePosition.y - currMousePosition.y) * 0.005f);
         }
     }
@@ -338,7 +341,7 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     glUniform1f(shaderUniformLocations.materialShininess, 0.0f);
 
 
-    glUniform3fv(shaderUniformLocations.cameraPos, 1, &this->cameras->getCamera()->getPosition()[0]);
+    glUniform3fv(shaderUniformLocations.cameraPos, 1, &this->cameras->getPrimaryCamera()->getPosition()[0]);
 
 
     glBindVertexArray(_groundVAO);
@@ -376,7 +379,7 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 void MPEngine::_updateScene() {
 
     //Only the ARCBALL main camera type moves the hero
-    bool shouldMoveHero = (this->cameras->getCurrentMainCameraType() == ARCBALL);
+    bool shouldMoveHero = (this->cameras->getPrimaryCameraType() == ARCBALL);
 
     // turn right
     if( _keys[GLFW_KEY_D] && shouldMoveHero) {
@@ -423,7 +426,7 @@ void MPEngine::run() {
         glm::mat4 projectionMatrix = glm::perspective( 45.0f, (GLfloat) framebufferWidth / (GLfloat) framebufferHeight, 0.001f, 1000.0f );
 
         // set up our look at matrix to position our camera
-        glm::mat4 viewMatrix = this->cameras->getCamera()->getViewMatrix();
+        glm::mat4 viewMatrix = this->cameras->getPrimaryCamera()->getViewMatrix();
 
         // draw everything to the window
         _renderScene(viewMatrix, projectionMatrix);
@@ -433,7 +436,6 @@ void MPEngine::run() {
         /// Start draw minimap view port
 
         if (this->cameras->getViewMatrix() != glm::mat4(1.0f)){
-            projectionMatrix = glm::perspective( 45.0f, (GLfloat) framebufferWidth / (GLfloat) framebufferHeight, 0.001f, 1000.0f );
             this->drawPIPView(projectionMatrix);
         }
 
@@ -481,8 +483,8 @@ void MPEngine::_computeAndSendMatrixUniforms(glm::mat4 modelMtx, glm::mat4 viewM
 void MPEngine::handleScrollEvent(glm::vec2 offset) {
     // update the camera radius in/out
     GLfloat totChgSq = offset.y;
-    if (this->cameras->getCurrentMainCameraType() == ARCBALL){
-        this->cameras->getCamera()->moveForward( totChgSq * 0.2f );
+    if (this->cameras->getPrimaryCameraType() == ARCBALL){
+        this->cameras->getPrimaryCamera()->moveForward(totChgSq * 0.2f );
     }
 
 }

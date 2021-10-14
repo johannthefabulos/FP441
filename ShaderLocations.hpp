@@ -1,10 +1,11 @@
 //
-// Created by Fibonacci on 10/10/21.
+// Created by Benjamin Carlson on 10/10/21.
 //
 
 #ifndef MP_MODELSHADERLOCATIONS_H
 #define MP_MODELSHADERLOCATIONS_H
 
+/// \desc The shader locations to pass to the models
 struct ModelShaderLocations{
     GLuint shaderProgramHandle;
     GLint mvpMatUniformLocation;
