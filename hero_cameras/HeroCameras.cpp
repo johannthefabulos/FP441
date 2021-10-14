@@ -41,7 +41,7 @@ void HeroCameras::changeCamera(int possibleKeyCode) {
     glm::vec3 skyCamPos, heroForwardVec, pos;
     if (possibleKeyCode == SKY_CAM || possibleKeyCode == FIRST_PERSON){
         glm::mat4 heroInvMat = glm::inverse(this->currentHero->getCurrentModelMat());
-        heroForwardVec = glm::transpose(heroInvMat) * glm::vec4(0, 0, 1, 1);
+        heroForwardVec = glm::transpose(heroInvMat) * glm::vec4(0, 0, this->currentHero->getFirstPersonCamZModifer(), 1);
         heroForwardVec = glm::normalize(heroForwardVec);
         pos = this->currentHero->getFirstPersonCamPosition();
     }

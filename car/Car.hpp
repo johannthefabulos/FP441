@@ -34,6 +34,8 @@ public:
 
     void stopMoving() override{};
 
+    GLint getFirstPersonCamZModifer() override { return 1;};
+
     glm::vec3 getFirstPersonCamPosition() override{
         return this->getCurrentPosition();
     };

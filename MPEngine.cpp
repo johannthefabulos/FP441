@@ -83,6 +83,22 @@ void MPEngine::handleMouseButtonEvent(GLint button, GLint action) {
         // update the left mouse button's state
         _leftMouseButtonState = action;
         this->getCurrentHero()->leftClickAction();
+        if (action == GLFW_PRESS){
+            this->_keys[GLFW_KEY_SPACE] = true;
+        }
+        if (action == GLFW_RELEASE){
+            this->_keys[GLFW_KEY_SPACE] = false;
+        }
+    }
+    if (button == GLFW_MOUSE_BUTTON_RIGHT){
+        if (action == GLFW_PRESS){
+            this->_keys[GLFW_KEY_SPACE] = true;
+            this->_keys[GLFW_KEY_LEFT_SHIFT] = true;
+        }
+        if (action == GLFW_RELEASE){
+            this->_keys[GLFW_KEY_SPACE] = false;
+            this->_keys[GLFW_KEY_LEFT_SHIFT] = false;
+        }
     }
 }
 

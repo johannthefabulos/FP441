@@ -31,6 +31,8 @@ public:
 
     glm::mat4 getCurrentModelMat() override;
 
+    GLint getFirstPersonCamZModifer() override { return -1;};
+
     void leftClickAction() override;
 private:
     ModelShaderLocations shaderLocations;

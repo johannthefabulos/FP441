@@ -29,6 +29,8 @@ public:
 
     void stopMoving() override{};
 
+    GLint getFirstPersonCamZModifer() override { return 1;};
+
 private:
     ModelShaderLocations shaderLocations;
     GLint mvpMatrixUniformLocation;

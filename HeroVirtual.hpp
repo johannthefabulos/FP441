@@ -22,6 +22,8 @@ public:
 
     virtual glm::vec3 getFirstPersonCamPosition() = 0;
 
+    virtual GLint getFirstPersonCamZModifer() = 0;
+
     virtual glm::mat4 getCurrentModelMat() = 0;
 
     virtual void leftClickAction() = 0;
