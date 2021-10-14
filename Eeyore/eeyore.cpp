@@ -140,7 +140,7 @@ void eeyore::drawEar(bool left,glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 
         ear = glm::translate(ear, glm::vec3(.3, 3+headBob, -2));
     }
     else{
-        ear = glm::translate(ear, glm::vec3(-.3s, 3+headBob, -2));
+        ear = glm::translate(ear, glm::vec3(-.3, 3+headBob, -2));
     }
     ear = glm::scale(ear, glm::vec3(.5,3,.8));
     this->computeAndSendMatUniforms(ear, viewMtx, projMtx);

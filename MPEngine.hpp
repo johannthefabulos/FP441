@@ -12,7 +12,7 @@
 #include "HeroType.hpp"
 #include "HeroVirtual.hpp"
 #include "john_Reimann/JohnReimann.hpp"
-
+#include "Tree.hpp"
 
 #include <vector>
 
@@ -103,18 +103,11 @@ private:
     /// \desc creates the ground VAO
     void _createGroundBuffers();
 
-    /// \desc smart container to store information specific to each building we wish to draw
-    struct BuildingData {
-        /// \desc transformations to position and size the building
-        glm::mat4 modelMatrix;
-        /// \desc color to draw the building
-        glm::vec3 color;
-    };
     /// \desc information list of all the buildings to draw
-    std::vector<BuildingData> _buildings;
+    std::vector<Tree*> _trees;
 
     /// \desc generates building information to make up our scene
-    void _generateEnvironment();
+    void _generateEnvironment(ModelShaderLocations locations);
 
     /// \desc shader program
     CSCI441::ShaderProgram* _shaderProgram = nullptr;   // the wrapper for our shader program

@@ -176,7 +176,7 @@ void MPEngine::_setupBuffers() {
                                     shaderUniformLocations.materialColor,
                                     WORLD_SIZE);
     _createGroundBuffers();
-    _generateEnvironment();
+    _generateEnvironment(modelLocations);
 }
 
 void MPEngine::_createGroundBuffers() {
@@ -216,7 +216,7 @@ void MPEngine::_createGroundBuffers() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 }
 
-void MPEngine::_generateEnvironment() {
+void MPEngine::_generateEnvironment(ModelShaderLocations locations) {
     //******************************************************************
     // parameters to make up our grid size and spacing, feel free to
     // play around with this
@@ -240,26 +240,8 @@ void MPEngine::_generateEnvironment() {
     for(int i = LEFT_END_POINT; i < RIGHT_END_POINT; i += GRID_SPACING_WIDTH) {
         for(int j = BOTTOM_END_POINT; j < TOP_END_POINT; j += GRID_SPACING_LENGTH) {
             // don't just draw a building ANYWHERE.
-            if( i % 2 && j % 2 && getRand() < 0.4f ) {
-                // translate to spot
-                glm::mat4 transToSpotMtx = glm::translate( glm::mat4(1.0), glm::vec3(i, 0.0f, j) );
-
-                // compute random height
-                GLdouble height = powf(getRand(), 2.5)*5 + 1;
-                // scale to building size
-                glm::mat4 scaleToHeightMtx = glm::scale( glm::mat4(1.0), glm::vec3(1, height, 1) );
-
-                // translate up to grid
-                glm::mat4 transToHeight = glm::translate( glm::mat4(1.0), glm::vec3(0, height/2.0f, 0) );
-
-                // compute full model matrix
-                glm::mat4 modelMatrix = transToHeight * scaleToHeightMtx * transToSpotMtx;
-
-                // compute random color
-                glm::vec3 color( getRand(), getRand(), getRand() );
-                // store building properties
-                BuildingData currentBuilding = {modelMatrix, color};
-                _buildings.emplace_back( currentBuilding );
+            if( i % 2 && j % 2 && getRand() < 0.1f ) {
+                _trees.push_back(new Tree(locations,i,getRand()*2,j));
             }
         }
     }
@@ -331,12 +313,8 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 
     //// BEGIN DRAWING THE BUILDINGS ////
     glUniform1f(shaderUniformLocations.materialShininess, 1);
-    for( const BuildingData& currentBuilding : _buildings ) {
-        _computeAndSendMatrixUniforms(currentBuilding.modelMatrix, viewMtx, projMtx);
-
-        glUniform3fv(shaderUniformLocations.materialColor, 1, &currentBuilding.color[0]);
-
-        CSCI441::drawSolidCube(1.0);
+    for( Tree* currentTree : _trees ) {
+        currentTree->drawTree(viewMtx,projMtx);
     }
     //// END DRAWING THE BUILDINGS ////
 
