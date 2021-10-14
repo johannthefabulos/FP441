@@ -28,8 +28,10 @@ void eeyore::drawEeyore(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
     this->drawLeg(false, false, this->currentModelMatrix, viewMatrix, projMatrix);
 
     this->drawHead( this->currentModelMatrix, viewMatrix, projMatrix);
-//    this->drawAxel(false, this->currentModelMatrix, viewMatrix, projMatrix);
-
+    this->drawEye(true,this->currentModelMatrix, viewMatrix, projMatrix);
+    this->drawEye(false,this->currentModelMatrix, viewMatrix, projMatrix);
+    this->drawEar(true,this->currentModelMatrix, viewMatrix, projMatrix);
+    this->drawEar(false,this->currentModelMatrix, viewMatrix, projMatrix);
     this->drawBody(this->currentModelMatrix, viewMatrix, projMatrix);
 }
 
@@ -78,26 +80,76 @@ void eeyore::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, gl
 void eeyore::drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
     glm::mat4 axelModelMat = modelMtx;
     //GLfloat axelWidth = this->wheelLRTranslation.x;
+    if (headBool) {
+        this->headBob += .001;
+        if (headBob > .2) {
+            headBool = false;
+        }
+    }else{
+        this->headBob -= .001;
+        if (headBob < 0) {
+            headBool = true;
+        }
+    }
     axelModelMat = glm::scale(axelModelMat, glm::vec3(1, 1, 1.5));
 
 
-    axelModelMat = glm::translate(axelModelMat, glm::vec3(0, 2, -1.5));
+    axelModelMat = glm::translate(axelModelMat, glm::vec3(0, 2+headBob, -1.5));
 
-//    axelModelMat = glm::rotate(axelModelMat, glm::half_pi<GLfloat>(), glm::vec3(0, 0, 1));
-//
-//    axelModelMat = glm::rotate(axelModelMat, wheelAngle, glm::vec3(0, 1, 0));
+
 
     this->computeAndSendMatUniforms(axelModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
     CSCI441::drawSolidCube(1);
+
     glm::mat4 noseModelMat = modelMtx;
     noseModelMat = glm::scale(noseModelMat, glm::vec3(1, 1, .5));
-    noseModelMat = glm::translate(noseModelMat, glm::vec3(0, 2, -6.5));
+    noseModelMat = glm::translate(noseModelMat, glm::vec3(0, 2+headBob, -6.5));
     this->computeAndSendMatUniforms(noseModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->noseColor[0]);
     CSCI441::drawSolidCube(1);
 
+
+
 }
+void eeyore::drawEye(bool left,glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx){
+    glm::mat4 eyeModelMat = modelMtx;
+    glm::mat4 pupilModelMat = modelMtx;
+    if(left){
+        eyeModelMat = glm::translate(eyeModelMat, glm::vec3(.5, 2+headBob, -2));
+        pupilModelMat = glm::translate(pupilModelMat, glm::vec3(.65, 2+headBob, -2));
+    }
+    else{
+        eyeModelMat = glm::translate(eyeModelMat, glm::vec3(-.5, 2+headBob, -2));
+        pupilModelMat = glm::translate(pupilModelMat, glm::vec3(-.65, 2+headBob, -2));
+    }
+
+    this->computeAndSendMatUniforms(eyeModelMat, viewMtx, projMtx);
+    glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->eyeColor[0]);
+    CSCI441::drawSolidCube(.3);
+    this->computeAndSendMatUniforms(pupilModelMat, viewMtx, projMtx);
+    glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->tailColor[0]);
+    CSCI441::drawSolidCube(.1);
+
+}
+
+void eeyore::drawEar(bool left,glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx){
+    glm::mat4 ear = modelMtx;
+
+    if(left){
+        ear = glm::translate(ear, glm::vec3(.3, 3+headBob, -2));
+    }
+    else{
+        ear = glm::translate(ear, glm::vec3(-.3s, 3+headBob, -2));
+    }
+    ear = glm::scale(ear, glm::vec3(.5,3,.8));
+    this->computeAndSendMatUniforms(ear, viewMtx, projMtx);
+    glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
+    CSCI441::drawSolidCube(.5);
+
+
+}
+
 
 void eeyore::drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
 
@@ -173,6 +225,9 @@ bool eeyore::testCarShouldMove(GLfloat testMoveSpeed) {
 
 void eeyore::updateWheelRotation(bool isMovingForward) {
     GLfloat wheelAngleDelta = glm::pi<GLfloat>() /256.0f;
+//    if (isMovingForward){
+//        wheelAngleDelta *= -1;
+//    }
 
     if (direction) {
         this->wheelAngle += wheelAngleDelta;

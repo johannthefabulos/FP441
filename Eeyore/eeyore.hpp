@@ -38,6 +38,7 @@ private:
     GLfloat wheelAngle = 0.0f;
     GLfloat headBob = 0;
 
+    bool headBool = true;
 
     glm::vec3 currentWorldPosition = {0, 0, 0};
 
@@ -45,6 +46,7 @@ private:
     const glm::vec3 bodyColor = {0.0f, 0.0f, 1.0f};
     const glm::vec3 tailColor = {0, 0, 0};
     const glm::vec3 noseColor = {0.98, 0.81, 0.69};
+    const glm::vec3 eyeColor = {1,1,1};
     bool direction = true;
     const GLfloat wheelInnerRadius = 0.25;
     const GLfloat wheelOuterRadius = 0.5;
@@ -70,6 +72,10 @@ private:
     void updateWheelRotation(bool isMovingForward);
 
     bool testCarShouldMove(GLfloat testMoveSpeed);
+
+    void drawEye(bool left, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+
+    void drawEar(bool left, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 };
 
 
