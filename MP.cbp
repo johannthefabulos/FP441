@@ -72,12 +72,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/Car.cpp">
-			<Option target="MP"/>
-		</Unit>
-		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/Car.hpp">
-			<Option target="MP"/>
-		</Unit>
 		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/Eeyore/eeyore.cpp">
 			<Option target="MP"/>
 		</Unit>
@@ -97,6 +91,21 @@
 			<Option target="MP"/>
 		</Unit>
 		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/ShaderLocations.hpp">
+			<Option target="MP"/>
+		</Unit>
+		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/car/Car.cpp">
+			<Option target="MP"/>
+		</Unit>
+		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/car/Car.hpp">
+			<Option target="MP"/>
+		</Unit>
+		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/hero_cameras/CameraType.hpp">
+			<Option target="MP"/>
+		</Unit>
+		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/hero_cameras/HeroCameras.cpp">
+			<Option target="MP"/>
+		</Unit>
+		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/hero_cameras/HeroCameras.hpp">
 			<Option target="MP"/>
 		</Unit>
 		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/john_Reimann/JohnReimann.cpp">
