@@ -328,7 +328,7 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 
         glUniform3fv(shaderUniformLocations.materialColor, 1, &currentBuilding.color[0]);
 
-        //CSCI441::drawSolidCube(1.0);
+        CSCI441::drawSolidCube(1.0);
     }
     //// END DRAWING THE BUILDINGS ////
     //Draw eeyore
