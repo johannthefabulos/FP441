@@ -69,9 +69,9 @@ private:
 
     void updateCurrentPosition();
 
-    void updateWheelRotation(bool isMovingForward);
+    void updateLegRotation(bool isMovingForward);
 
-    bool testCarShouldMove(GLfloat testMoveSpeed);
+    bool testEeyoreShouldMove(GLfloat testMoveSpeed);
 
     void drawEye(bool left, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 

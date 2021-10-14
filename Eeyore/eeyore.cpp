@@ -179,11 +179,11 @@ glm::vec3 eeyore::getCurrentPosition() {
 
 void eeyore::moveHeroForward() {
 
-    if (!this->testCarShouldMove(-this->moveSpeed)){
+    if (!this->testEeyoreShouldMove(-this->moveSpeed)){
         return;
     }
 
-    this->updateWheelRotation(true);
+    this->updateLegRotation(true);
 
     this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(0, 0, -moveSpeed));
     this->updateCurrentPosition();
@@ -191,11 +191,11 @@ void eeyore::moveHeroForward() {
 
 void eeyore::moveHeroBackward() {
 
-    if (!this->testCarShouldMove(this->moveSpeed)){
+    if (!this->testEeyoreShouldMove(this->moveSpeed)){
         return;
     }
 
-    this->updateWheelRotation(false);
+    this->updateLegRotation(false);
 
     this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(0, 0, moveSpeed));
     this->updateCurrentPosition();
@@ -209,7 +209,7 @@ void eeyore::turnHero(GLfloat theta) {
     this->currentModelMatrix = glm::rotate(this->currentModelMatrix, theta, glm::vec3(0, 1, 0));
 }
 
-bool eeyore::testCarShouldMove(GLfloat testMoveSpeed) {
+bool eeyore::testEeyoreShouldMove(GLfloat testMoveSpeed) {
     glm::mat4 testModelMat = glm::translate(this->currentModelMatrix, glm::vec3(0, 0, testMoveSpeed));
     glm::vec3 testWorldPos = testModelMat * glm::vec4(0, 0, 0, 1);
 
@@ -223,7 +223,7 @@ bool eeyore::testCarShouldMove(GLfloat testMoveSpeed) {
     return true;
 }
 
-void eeyore::updateWheelRotation(bool isMovingForward) {
+void eeyore::updateLegRotation(bool isMovingForward) {
     GLfloat wheelAngleDelta = glm::pi<GLfloat>() /256.0f;
 //    if (isMovingForward){
 //        wheelAngleDelta *= -1;
