@@ -129,6 +129,30 @@ MP/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/build
 .PHONY : MP/fast
 
+Castle.o: Castle.cpp.o
+.PHONY : Castle.o
+
+# target to build an object file
+Castle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/Castle.cpp.o
+.PHONY : Castle.cpp.o
+
+Castle.i: Castle.cpp.i
+.PHONY : Castle.i
+
+# target to preprocess a source file
+Castle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/Castle.cpp.i
+.PHONY : Castle.cpp.i
+
+Castle.s: Castle.cpp.s
+.PHONY : Castle.s
+
+# target to generate assembly for a file
+Castle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/Castle.cpp.s
+.PHONY : Castle.cpp.s
+
 Eeyore/eeyore.o: Eeyore/eeyore.cpp.o
 .PHONY : Eeyore/eeyore.o
 
@@ -176,6 +200,30 @@ MPEngine.s: MPEngine.cpp.s
 MPEngine.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/MPEngine.cpp.s
 .PHONY : MPEngine.cpp.s
+
+Tree.o: Tree.cpp.o
+.PHONY : Tree.o
+
+# target to build an object file
+Tree.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/Tree.cpp.o
+.PHONY : Tree.cpp.o
+
+Tree.i: Tree.cpp.i
+.PHONY : Tree.i
+
+# target to preprocess a source file
+Tree.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/Tree.cpp.i
+.PHONY : Tree.cpp.i
+
+Tree.s: Tree.cpp.s
+.PHONY : Tree.s
+
+# target to generate assembly for a file
+Tree.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MP.dir/build.make CMakeFiles/MP.dir/Tree.cpp.s
+.PHONY : Tree.cpp.s
 
 car/Car.o: car/Car.cpp.o
 .PHONY : car/Car.o
@@ -306,12 +354,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... MP"
+	@echo "... Castle.o"
+	@echo "... Castle.i"
+	@echo "... Castle.s"
 	@echo "... Eeyore/eeyore.o"
 	@echo "... Eeyore/eeyore.i"
 	@echo "... Eeyore/eeyore.s"
 	@echo "... MPEngine.o"
 	@echo "... MPEngine.i"
 	@echo "... MPEngine.s"
+	@echo "... Tree.o"
+	@echo "... Tree.i"
+	@echo "... Tree.s"
 	@echo "... car/Car.o"
 	@echo "... car/Car.i"
 	@echo "... car/Car.s"
