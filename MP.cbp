@@ -99,6 +99,12 @@
 		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/ShaderLocations.hpp">
 			<Option target="MP"/>
 		</Unit>
+		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/john_Reimann/JohnReimann.cpp">
+			<Option target="MP"/>
+		</Unit>
+		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/john_Reimann/JohnReimann.hpp">
+			<Option target="MP"/>
+		</Unit>
 		<Unit filename="/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/main.cpp">
 			<Option target="MP"/>
 		</Unit>

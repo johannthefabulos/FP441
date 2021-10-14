@@ -49,6 +49,7 @@ void MPEngine::handleKeyEvent(GLint key, GLint action) {
 
     if ((key >= GLFW_KEY_0 && key <= GLFW_KEY_9)){
         int heroEnumVal = key - GLFW_KEY_0;
+
         if (heroEnumVal < LAST){
             HeroType heroType = (HeroType) heroEnumVal;
             this->currentlySelectedHero = heroType;
@@ -338,22 +339,20 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
         CSCI441::drawSolidCube(1.0);
     }
     //// END DRAWING THE BUILDINGS ////
-    //Draw eeyore
 
     glUniform1f(shaderUniformLocations.materialShininess, 1);
     _car->drawCar(viewMtx, projMtx);
 
-    //glUniform1f(shaderUniformLocations.materialShininess, 1);
+    glUniform1f(shaderUniformLocations.materialShininess, 1);
     _warrior->drawWarrior(viewMtx, projMtx);
 
-    //glUniform1f(shaderUniformLocations.materialShininess, 1);
-    _eeyore->drawEeyore(viewMtx, projMtx);
-//
-//    //// START DRAWING THE CHAIR ////
-//    _computeAndSendMatrixUniforms(chairModelMatrix, viewMtx, projMtx);
-//    drawChair(chairModelMatrix, viewMtx, projMtx);
-    //// END DRAWING THE CHAIR ////
+    glUniform1f(shaderUniformLocations.materialShininess, 1);
 
+    _eeyore->drawEeyore(viewMtx, projMtx);
+
+
+    glUniform1f(shaderUniformLocations.materialShininess, 1);
+    _JohnReimann->drawJohn_Reimann(viewMtx, projMtx);
 
     this->_arcballCam->setLookAtPoint(this->getCurrentHero()->getCurrentPosition());
     this->_arcballCam->recomputeOrientation();
@@ -513,6 +512,8 @@ HeroVirtual * MPEngine::getCurrentHero() {
             return this->_warrior;
         case EEYORE:
             return this->_eeyore;
+        case JOHN:
+            return this->_JohnReimann;
         case CAR:
             return this->_car;
         default:

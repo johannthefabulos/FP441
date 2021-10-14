@@ -11,8 +11,8 @@
 #include "Eeyore/eeyore.hpp"
 #include "HeroType.hpp"
 #include "HeroVirtual.hpp"
-
 #include "john_Reimann/JohnReimann.hpp"
+
 
 #include <vector>
 
@@ -134,7 +134,7 @@ private:
 
     HeroVirtual *getCurrentHero();
 
-    HeroType currentlySelectedHero = (HeroType) 3;
+    HeroType currentlySelectedHero = WARRIOR;
 };
 
 void a3_keyboard_callback(GLFWwindow *window, int key, int scancode, int action, int mods );

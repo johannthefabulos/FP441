@@ -8,7 +8,8 @@
 enum HeroType{
     WARRIOR = 1,
     EEYORE = 2,
-    CAR = 3,
+    JOHN = 3,
+    CAR = 4,
     LAST = CAR+1
 };
 

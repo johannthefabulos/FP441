@@ -1,21 +1,30 @@
-#ifndef LAB05_PLANE_HPP
-#define LAB05_PLANE_HPP
+#ifndef MP_JOHNRIEMANN_HPP
+#define MP_JOHNRIEMANN_HPP
 
 #include <GL/glew.h>
 
 #include <glm/glm.hpp>
+#include "../HeroVirtual.hpp"
 
-class JohnReimann {
+class JohnReimann : public virtual HeroVirtual{
 public:
     JohnReimann(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH);
 
     void drawJohn_Reimann(glm::mat4 viewMatrix, glm::mat4 projMatrix);
 
-    glm::vec3 getCurrentPosition();
+    glm::vec3 getCurrentPosition() override;
 
-    void driveForward();
-    void driveBackward();
-    void turnCar(GLfloat theta);
+    void moveHeroForward() override;
+    void moveHeroBackward() override;
+    void turnHero(GLfloat theta) override;
+
+    glm::mat4 getCurrentModelMat() override;
+
+    void leftClickAction() override{};
+
+    void startMoving() override{};
+
+    void stopMoving() override{};
 
 
     glm::mat4 currentModelMatrix = glm::mat4(1.0f);
@@ -62,5 +71,4 @@ private:
     bool testCarShouldMove(GLfloat testMoveSpeed);
 };
 
-
-#endif //LAB05_PLANE_HPP
+#endif
