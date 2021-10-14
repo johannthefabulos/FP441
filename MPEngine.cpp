@@ -166,11 +166,7 @@ void MPEngine::_setupBuffers() {
                    shaderUniformLocations.normalMat,
                    shaderUniformLocations.materialColor,
                    WORLD_SIZE);
-    _eeyore = new eeyore(_shaderProgram->getShaderProgramHandle(),
-                   shaderUniformLocations.mvpMatrix,
-                   shaderUniformLocations.normalMat,
-                   shaderUniformLocations.materialColor,
-                   WORLD_SIZE);
+    _eeyore = new eeyore(modelLocations, WORLD_SIZE);
     _createGroundBuffers();
     _generateEnvironment();
 }
@@ -300,6 +296,7 @@ void MPEngine::_cleanupBuffers() {
     fprintf( stdout, "[INFO]: ...deleting models..\n" );
     delete _car;
     delete _warrior;
+    delete _eeyore;
 }
 
 //*************************************************************************************
@@ -342,8 +339,8 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     glUniform1f(shaderUniformLocations.materialShininess, 1);
     _warrior->drawWarrior(viewMtx, projMtx);
 
-//    glUniform1f(shaderUniformLocations.materialShininess, 1);
-//    _eeyore->drawEeyore(viewMtx, projMtx);
+    glUniform1f(shaderUniformLocations.materialShininess, 1);
+    _eeyore->drawEeyore(viewMtx, projMtx);
 //
 //    //// START DRAWING THE CHAIR ////
 //    _computeAndSendMatrixUniforms(chairModelMatrix, viewMtx, projMtx);
@@ -508,7 +505,7 @@ HeroVirtual * MPEngine::getCurrentHero() {
         case WARRIOR:
             return this->_warrior;
         case EEYORE:
-            return this->_car;
+            return this->_eeyore;
         case CAR:
             return this->_car;
         default:
