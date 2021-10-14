@@ -222,6 +222,7 @@ void MPEngine::_generateEnvironment(ModelShaderLocations locations) {
     // play around with this
     const GLfloat GRID_WIDTH = WORLD_SIZE * 1.8f;
     const GLfloat GRID_LENGTH = WORLD_SIZE * 1.8f;
+    const GLfloat GRID_RADIUS = GRID_LENGTH/2;
     const GLfloat GRID_SPACING_WIDTH = 4;
     const GLfloat GRID_SPACING_LENGTH = 4;
     // precomputed parameters based on above
@@ -245,6 +246,11 @@ void MPEngine::_generateEnvironment(ModelShaderLocations locations) {
             }
         }
     }
+    for(float i = 0; i < 2*M_PI;i += M_PI/50){
+        _castles.push_back(new Castle(locations, cos(i)*GRID_RADIUS, sin(i)*GRID_RADIUS,i/10));
+
+    }
+
 }
 
 void MPEngine::_setupScene() {
@@ -315,6 +321,9 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     glUniform1f(shaderUniformLocations.materialShininess, 1);
     for( Tree* currentTree : _trees ) {
         currentTree->drawTree(viewMtx,projMtx);
+    }
+    for(Castle* currentCastle : _castles){
+        currentCastle->drawCastle(viewMtx,projMtx);
     }
     //// END DRAWING THE BUILDINGS ////
 

@@ -13,6 +13,7 @@
 #include "HeroVirtual.hpp"
 #include "john_Reimann/JohnReimann.hpp"
 #include "Tree.hpp"
+#include "Castle.hpp"
 
 #include <vector>
 
@@ -105,6 +106,7 @@ private:
 
     /// \desc information list of all the buildings to draw
     std::vector<Tree*> _trees;
+    std::vector<Castle*> _castles;
 
     /// \desc generates building information to make up our scene
     void _generateEnvironment(ModelShaderLocations locations);
