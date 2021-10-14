@@ -20,7 +20,7 @@ void Castle::drawCastle(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
 }
 
 void Castle::drawMain(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
-    glm::mat4 castleMtx = glm::rotate(modelMtx,ang,glm::vec3(0,1,0));
+    glm::mat4 castleMtx = glm::rotate(modelMtx,-ang,glm::vec3(0,1,0));
 
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->trunkColor[0]);
     this->computeAndSendMatUniforms(castleMtx, viewMtx, projMtx);
