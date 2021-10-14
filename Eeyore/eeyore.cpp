@@ -35,6 +35,7 @@ void eeyore::drawEeyore(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
 
 void eeyore::drawLeg(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
     glm::mat4 wheelModelMat = modelMtx;
+
     wheelModelMat = glm::scale(wheelModelMat,glm::vec3(1,5,1));
 
     if (isFront){
@@ -44,10 +45,12 @@ void eeyore::drawLeg(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 v
     }
     if (isRight){
         wheelModelMat = glm::translate(wheelModelMat, this->wheelLRTranslation);
+        wheelModelMat = glm::rotate(wheelModelMat, wheelAngle, glm::vec3(0.5,0,0));
     }else{
         wheelModelMat = glm::translate(wheelModelMat, -this->wheelLRTranslation);
+        wheelModelMat = glm::rotate(wheelModelMat, -wheelAngle, glm::vec3(0.5,0,0));
     }
-    wheelModelMat = glm::rotate(wheelModelMat, wheelAngle, CSCI441::X_AXIS);
+
 
 //    wheelModelMat = glm::rotate(wheelModelMat, glm::half_pi<GLfloat>(), glm::vec3(0, 1, 0));
 
@@ -75,10 +78,10 @@ void eeyore::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, gl
 void eeyore::drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
     glm::mat4 axelModelMat = modelMtx;
     //GLfloat axelWidth = this->wheelLRTranslation.x;
-//    axelModelMat = glm::scale(axelModelMat, glm::vec3(axelWidth, axelWidth, axelWidth));
+    axelModelMat = glm::scale(axelModelMat, glm::vec3(1, 1, 1.5));
 
 
-    axelModelMat = glm::translate(axelModelMat, glm::vec3(0, 2, -2));
+    axelModelMat = glm::translate(axelModelMat, glm::vec3(0, 2, -1.5));
 
 //    axelModelMat = glm::rotate(axelModelMat, glm::half_pi<GLfloat>(), glm::vec3(0, 0, 1));
 //
@@ -88,7 +91,8 @@ void eeyore::drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) 
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
     CSCI441::drawSolidCube(1);
     glm::mat4 noseModelMat = modelMtx;
-    noseModelMat = glm::translate(noseModelMat, glm::vec3(0, 2, -3));
+    noseModelMat = glm::scale(noseModelMat, glm::vec3(1, 1, .5));
+    noseModelMat = glm::translate(noseModelMat, glm::vec3(0, 2, -6.5));
     this->computeAndSendMatUniforms(noseModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->noseColor[0]);
     CSCI441::drawSolidCube(1);
@@ -169,9 +173,6 @@ bool eeyore::testCarShouldMove(GLfloat testMoveSpeed) {
 
 void eeyore::updateWheelRotation(bool isMovingForward) {
     GLfloat wheelAngleDelta = glm::pi<GLfloat>() /256.0f;
-//    if (isMovingForward){
-//        wheelAngleDelta *= -1;
-//    }
 
     if (direction) {
         this->wheelAngle += wheelAngleDelta;
@@ -184,9 +185,6 @@ void eeyore::updateWheelRotation(bool isMovingForward) {
             direction = true;
         }
     }
-//    if (this->wheelAngle > glm::two_pi<GLfloat>()){
-//        this->wheelAngle -= glm::two_pi<GLfloat>();
-//    }
 
 }
 

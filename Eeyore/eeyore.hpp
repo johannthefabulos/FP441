@@ -1,5 +1,5 @@
-#ifndef LAB05_PLANE_HPP
-#define LAB05_PLANE_HPP
+#ifndef EEYORE_HPP
+#define EEYORE_HPP
 
 #include <GL/glew.h>
 
@@ -33,6 +33,8 @@ private:
     GLfloat WORLD_SIDE_LENGTH;
 
     GLfloat wheelAngle = 0.0f;
+    GLfloat headBob = 0;
+
 
     glm::vec3 currentWorldPosition = {0, 0, 0};
 
