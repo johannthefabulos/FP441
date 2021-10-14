@@ -21,6 +21,9 @@ public:
     void turnHero(GLfloat theta) override;
     void leftClickAction() override;
 
+    void startMoving() override{};
+
+    void stopMoving() override{};
 
 private:
     ModelShaderLocations shaderLocations;

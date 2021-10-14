@@ -1,0 +1,3 @@
+/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/fibonacci/Desktop/Mines/Fall-2021/Computer Graphics/Projects/CSCI446MP/cmake-build-debug/CMakeFiles/MP.dir
