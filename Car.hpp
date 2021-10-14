@@ -29,6 +29,10 @@ public:
     glm::mat4 getCurrentModelMat() override;
 
     void leftClickAction() override{};
+
+    void startMoving() override{};
+
+    void stopMoving() override{};
 private:
     GLuint shaderProgramHandle;
     GLint mvpMatrixUniformLocation;

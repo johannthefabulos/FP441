@@ -12,12 +12,6 @@
 #include "../ShaderLocations.hpp"
 #include "../HeroVirtual.hpp"
 
-enum MovingLeg{
-    NONE,
-    LEFT,
-    RIGHT
-};
-
 class TheWarrior : public virtual HeroVirtual{
 
 public:
@@ -25,10 +19,10 @@ public:
 
     void drawWarrior(glm::mat4 viewMatrix, glm::mat4 projMatrix);
 
-    void startMoving();
+    void startMoving() override;
     void moveHeroForward() override;
     void moveHeroBackward() override;
-    void stopMoving();
+    void stopMoving() override;
 
     void turnHero(GLfloat theta) override;
     glm::vec3 getCurrentPosition() override;
@@ -48,6 +42,8 @@ private:
     const glm::vec3 bodyColor = {1.0, 223.0f/255.0f, 196.0f/255.0f};
     const glm::vec3 shieldColor = {0.06f, 0.42f, 0.99f};
     const glm::vec3 swordColor = {0.82, 0.82, 0.82};
+    const glm::vec3 outerEyeColor = {1.0f, 1.0f, 1.0f};
+    const glm::vec3 innerEyeColor = {0.12f, 0.55f, 0.84f};
 
     GLfloat currentTime = 0;
     GLfloat movementTime = 0;
@@ -60,8 +56,6 @@ private:
     bool isCoolingDown = false;
 
     GLfloat swordRotationAngle = 0.0f;
-
-    const bool drawWireframe = false;
 
     //Body Constants
     const GLfloat bodyTopWidth = 0.6;
@@ -106,7 +100,12 @@ private:
     const GLfloat swordHiltHeight = 0.5;
     const GLfloat swordConeHeight = 0.4;
 
+    //Head constants
     const GLfloat headRadius = 1;
+    const GLfloat eyeLeftOffset = 0.3;
+    const GLfloat outerEyeHeight = 0.3;
+    const GLfloat outerEyeWidth = 0.25;
+    const GLfloat innerEyeRadius = 0.1;
 
     void drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 
@@ -124,9 +123,13 @@ private:
 
     void drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 
+    void drawEyes(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+
     void updateCurrentPosition();
 
     void computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const;
+
+    bool testWarriorShouldMove(GLfloat testMoveSpeed);
 };
 
 

@@ -14,8 +14,12 @@ class HeroVirtual{
 public:
     virtual glm::vec3 getCurrentPosition() = 0;
     virtual void turnHero(GLfloat theta) = 0;
+
+    virtual void startMoving() = 0;
     virtual void moveHeroForward() = 0;
     virtual void moveHeroBackward() = 0;
+    virtual void stopMoving() = 0;
+
     virtual glm::mat4 getCurrentModelMat() = 0;
 
     virtual void leftClickAction() = 0;

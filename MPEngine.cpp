@@ -37,13 +37,13 @@ void MPEngine::handleKeyEvent(GLint key, GLint action) {
     //Only call stopMoving call at end
     if (action == GLFW_RELEASE){
         if (key == GLFW_KEY_W || key == GLFW_KEY_S){
-            this->_warrior->stopMoving();
+            this->getCurrentHero()->stopMoving();
         }
     }
     //Only call start moving call at beginning
     if (action == GLFW_PRESS){
         if (key == GLFW_KEY_W || key == GLFW_KEY_S){
-            this->_warrior->startMoving();
+            this->getCurrentHero()->startMoving();
         }
     }
 

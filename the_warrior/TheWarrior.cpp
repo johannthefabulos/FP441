@@ -40,19 +40,11 @@ void TheWarrior::drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projM
     this->computeAndSendMatUniforms(bodyModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
 
-    if (this->drawWireframe){
-        CSCI441::drawWireCylinder(this->bodyBottomWidth,this->bodyCenterWidth , segmentHeight, 30, 30);
-    }else{
-        CSCI441::drawSolidCylinder(this->bodyBottomWidth,this->bodyCenterWidth , segmentHeight, 30, 30);
-    }
+    CSCI441::drawSolidCylinder(this->bodyBottomWidth,this->bodyCenterWidth , segmentHeight, 30, 30);
 
     bodyModelMat = glm::translate(bodyModelMat, glm::vec3(0, segmentHeight, 0));
     this->computeAndSendMatUniforms(bodyModelMat, viewMtx, projMtx);
-    if (this->drawWireframe){
-        CSCI441::drawWireCylinder(this->bodyCenterWidth,this->bodyTopWidth , segmentHeight, 30, 30);
-    }else{
-        CSCI441::drawSolidCylinder(this->bodyCenterWidth,this->bodyTopWidth , segmentHeight, 30, 30);
-    }
+    CSCI441::drawSolidCylinder(this->bodyCenterWidth,this->bodyTopWidth , segmentHeight, 30, 30);
 
 
     this->drawNeck(bodyModelMat, viewMtx, projMtx);
@@ -64,11 +56,7 @@ void TheWarrior::drawNeck(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projM
 
     this->computeAndSendMatUniforms(neckModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
-    if (this->drawWireframe) {
-        CSCI441::drawWireCylinder(this->bodyTopWidth,this->neckTopWidth , this->neckHeight, 30, 30);
-    }else{
-        CSCI441::drawSolidCylinder(this->bodyTopWidth,this->neckTopWidth , this->neckHeight, 30, 30);
-    }
+    CSCI441::drawSolidCylinder(this->bodyTopWidth,this->neckTopWidth , this->neckHeight, 30, 30);
 
 
 }
@@ -105,11 +93,7 @@ void TheWarrior::drawLeg(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm
     this->computeAndSendMatUniforms(legModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
 
-    if (this->drawWireframe) {
-        CSCI441::drawWireCylinder(this->legWidthBottom, this->legWidthTop, this->legLength, 40, 40);
-    }else{
-        CSCI441::drawSolidCylinder(this->legWidthBottom, this->legWidthTop, this->legLength, 40, 40);
-    }
+    CSCI441::drawSolidCylinder(this->legWidthBottom, this->legWidthTop, this->legLength, 40, 40);
 
 
     this->drawFoot(legModelMat, viewMtx, projMtx);
@@ -124,11 +108,7 @@ void TheWarrior::drawFoot(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projM
     this->computeAndSendMatUniforms(footModelMat, viewMtx, projMtx);
 
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
-    if (this->drawWireframe) {
-        CSCI441::drawWireCube(this->footWidth);
-    }else{
-        CSCI441::drawSolidCube(this->footWidth);
-    }
+    CSCI441::drawSolidCube(this->footWidth);
 
 }
 
@@ -240,11 +220,27 @@ void TheWarrior::drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projM
     this->computeAndSendMatUniforms(headModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
 
-    if (this->drawWireframe) {
-        CSCI441::drawWireSphere(this->headRadius, 30, 30);
-    }else{
-        CSCI441::drawSolidSphere(this->headRadius, 30, 30);
-    }
+    CSCI441::drawSolidSphere(this->headRadius, 30, 30);
+    this->drawEyes(true, headModelMat, viewMtx, projMtx);
+    this->drawEyes(false, headModelMat, viewMtx, projMtx);
+}
+
+void TheWarrior::drawEyes(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
+
+    GLfloat eyeOffset = isLeft ? this->eyeLeftOffset : -this->eyeLeftOffset;
+    glm::mat4 eyeCenterModelMat = glm::translate(modelMtx, glm::vec3(eyeOffset, 0, headRadius));
+
+    this->computeAndSendMatUniforms(glm::scale(eyeCenterModelMat, glm::vec3(1, this->outerEyeHeight/this->outerEyeWidth, 1)), viewMtx, projMtx);
+    glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->outerEyeColor[0]);
+
+    CSCI441::drawSolidDisk(0, this->outerEyeWidth, 20, 20);
+
+    eyeCenterModelMat = glm::translate(eyeCenterModelMat, glm::vec3(0, 0, 0.05));
+
+    this->computeAndSendMatUniforms(eyeCenterModelMat, viewMtx, projMtx);
+    glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->innerEyeColor[0]);
+
+    CSCI441::drawSolidDisk(0, this->innerEyeRadius, 20, 20);
 
 }
 
@@ -270,16 +266,35 @@ void TheWarrior::startMoving() {
 }
 
 void TheWarrior::moveHeroForward() {
+
+    if (!this->testWarriorShouldMove(this->movementSpeed)){
+        this->stopMoving();
+        return;
+    }
+
+    this->isMoving = true;
+
     this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(0, 0, this->movementSpeed));
     this->updateCurrentPosition();
 }
 
 void TheWarrior::moveHeroBackward() {
+
+    if (!this->testWarriorShouldMove(this->movementSpeed)){
+        this->stopMoving();
+        return;
+    }
+    this->isMoving = true;
+
     this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(0, 0, -this->movementSpeed));
     this->updateCurrentPosition();
 }
 
 void TheWarrior::stopMoving() {
+    if (!isMoving){
+        return;
+    }
+
     this->isMoving = false;
     this->isCoolingDown = true;
     this->movementTime = 0;
@@ -305,4 +320,19 @@ void TheWarrior::leftClickAction() {
     if (this->swordRotationAngle >= glm::quarter_pi<GLfloat>()*2){
         this->swordRotationAngle = 0;
     }
+}
+
+bool TheWarrior::testWarriorShouldMove(GLfloat testMoveSpeed) {
+    glm::mat4 testModelMat = glm::translate(this->currentModelMatrix, glm::vec3(0, 0, testMoveSpeed));
+    glm::vec3 testWorldPos = testModelMat * glm::vec4(0, 0, 0, 1);
+
+    // Since the ground extends from (-WORLD_SIDE_LENGTH, -WORLD_SIDE_LENGTH) to (WORLD_SIDE_LENGTH, WORLD_SIDE_LENGTH)
+    //      we can use the absolute value
+    // Using leg length since when that is fully extended that is the farthest sticking out part of the body
+    GLfloat absXPos = glm::abs(testWorldPos.x) + this->legLength;
+    GLfloat absZPos = glm::abs(testWorldPos.z) + this->legLength;
+    if (absXPos >= WORLD_SIDE_LENGTH || absZPos >= WORLD_SIDE_LENGTH){
+        return false;
+    }
+    return true;
 }
