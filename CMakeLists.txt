@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(MP)
 set(CMAKE_CXX_STANDARD 17)
-set(SOURCE_FILES main.cpp MPEngine.cpp MPEngine.hpp Car.cpp Car.hpp the_warrior/TheWarrior.cpp the_warrior/TheWarrior.hpp ShaderLocations.hpp Eeyore/eeyore.cpp Eeyore/eeyore.hpp HeroType.hpp HeroVirtual.hpp john_Reimann/JohnReimann.cpp john_Reimann/JohnReimann.hpp Tree.cpp Tree.hpp Castle.hpp Castle.cpp Castle.hpp)
+set(SOURCE_FILES main.cpp MPEngine.cpp MPEngine.hpp car/Car.cpp car/Car.hpp the_warrior/TheWarrior.cpp the_warrior/TheWarrior.hpp ShaderLocations.hpp Eeyore/eeyore.cpp Eeyore/eeyore.hpp HeroType.hpp HeroVirtual.hpp john_Reimann/JohnReimann.cpp john_Reimann/JohnReimann.hpp hero_cameras/CameraType.hpp hero_cameras/HeroCameras.cpp hero_cameras/HeroCameras.hpp  Tree.cpp Tree.hpp Castle.hpp Castle.cpp Castle.hpp)
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 include_directories("${CMAKE_SOURCE_DIR}/include")
 

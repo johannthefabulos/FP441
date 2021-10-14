@@ -1,5 +1,5 @@
 //
-// Created by Fibonacci on 10/12/21.
+// Created by Benjamin Carlson on 10/12/21.
 //
 
 #ifndef MP_HEROTYPE_HPP
