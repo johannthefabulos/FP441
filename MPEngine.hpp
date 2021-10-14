@@ -9,8 +9,11 @@
 #include "ShaderLocations.hpp"
 #include "the_warrior/TheWarrior.hpp"
 #include "Eeyore/eeyore.hpp"
+#include "JohnReimann.hpp"
+#include "john_Reimann/JohnReimann.hpp"
 
 #include <vector>
+
 
 class MPEngine : public CSCI441::OpenGLEngine {
 public:
@@ -82,8 +85,10 @@ private:
     Car* _car;
 
     eeyore* _eeyore;
-
+    JohnReimann* _JohnReimann;
     TheWarrior* _warrior;
+
+
 
     //End Models
     /// \desc the size of the world (controls the ground size and locations of buildings)

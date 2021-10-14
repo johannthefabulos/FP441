@@ -141,11 +141,18 @@ void MPEngine::_setupBuffers() {
                    shaderUniformLocations.normalMat,
                    shaderUniformLocations.materialColor,
                    WORLD_SIZE);
+    _JohnReimann = new JohnReimann(_shaderProgram->getShaderProgramHandle(),
+                                    shaderUniformLocations.mvpMatrix,
+                                    shaderUniformLocations.normalMat,
+                                    shaderUniformLocations.materialColor,
+                                    WORLD_SIZE);
     _eeyore = new eeyore(_shaderProgram->getShaderProgramHandle(),
                    shaderUniformLocations.mvpMatrix,
                    shaderUniformLocations.normalMat,
                    shaderUniformLocations.materialColor,
                    WORLD_SIZE);
+
+
     _createGroundBuffers();
     _generateEnvironment();
 }
@@ -314,10 +321,10 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     glUniform1f(shaderUniformLocations.materialShininess, 1);
     _car->drawCar(viewMtx, projMtx);
 
-    glUniform1f(shaderUniformLocations.materialShininess, 1);
+    //glUniform1f(shaderUniformLocations.materialShininess, 1);
     _warrior->drawWarrior(viewMtx, projMtx);
 
-    glUniform1f(shaderUniformLocations.materialShininess, 1);
+    //glUniform1f(shaderUniformLocations.materialShininess, 1);
     _eeyore->drawEeyore(viewMtx, projMtx);
 
     //// START DRAWING THE CHAIR ////
