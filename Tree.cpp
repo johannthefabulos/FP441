@@ -10,7 +10,9 @@
 Tree::Tree(ModelShaderLocations shaderLocations, float xPos, float yPos, float zPos) {
     this->shaderLocations = shaderLocations;
 
+    this->currentModelMatrix = glm::scale(this->currentModelMatrix,glm::vec3(yPos,yPos,yPos));
     this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(xPos, 0, zPos));
+
     this-> x = xPos;
     this-> y = yPos;
     this-> z = zPos;
@@ -25,11 +27,11 @@ void Tree::drawTree(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
 }
 
 void Tree::drawTrunk(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
-
+    modelMtx = glm::scale(modelMtx, glm::vec3(y,y,y));
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->trunkColor[0]);
     this->computeAndSendMatUniforms(modelMtx, viewMtx, projMtx);
 
-    CSCI441::drawSolidCylinder(.3,.3,2,1,20);
+    CSCI441::drawSolidCylinder(.3,.3,3,1,20);
 
 
 }
