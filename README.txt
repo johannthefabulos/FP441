@@ -1,6 +1,6 @@
 1. Matrix Magic / TheWarrior -- Ben Carlson / Eeyore--Connor Caldwell / JohnReimann --John Reimann
 2. MP -- The Main Attraction
-3. This program is designed to create an arena of our Heroes and a car in an environment with custom lighting.
+3. This program is designed to create an arena of our Heroes in an environment with custom lighting.
    The arena consist of a border of castles, with trees dispersed around. Our heroes have the ability to walk around the
    inside of the castle perimeter and wonder about. This also gives the user to switch between heroes. Some heroes preform
    sepecial actions as well. The viewpoints of the heroes are an arcball camera. You are then able to enable a picture-in-
@@ -20,7 +20,7 @@
         -D (Turn Right)
         -Left Click (Special Action & Rotate Screen)
         -Scroll Wheel OR Shift+Left Click (Zoom In/Out)
-        -Numbers 1 to 4 (Choose Hero: 1 - TheWarrior, 2 - Eeyore, 3 - JohnReimann, 4 - Car)
+        -Numbers 1 to 3 (Choose Hero: 1 - TheWarrior, 2 - Eeyore, 3 - JohnReimann)
     In Free Cam Mode:
         -W (Pan Up)
         -S (Pan Down)
