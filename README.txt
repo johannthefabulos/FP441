@@ -7,6 +7,9 @@
    picture view for either the top down view or the first person view. There is also the ability to use the Freecam to move
    around in the space.
 4.  The implementation is as follows:
+    Switching Camera Views:
+        -Z (Move to Hero Mode (ArcBallCam))
+        -X (Move to FreeCam Mode)
     In any mode:
         -V (Enable Top View Picture in Picture)
         -C (Enable First Person Picture in Picute)
