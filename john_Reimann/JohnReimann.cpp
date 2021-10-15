@@ -18,7 +18,7 @@ JohnReimann::JohnReimann(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint mode
 
     this->WORLD_SIDE_LENGTH = WORLD_SIDE_LENGTH;
 
-    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(0, this->carYPosition, 0));
+    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(-10, this->carYPosition, 10));
 }
 
 void JohnReimann::drawJohn_Reimann(glm::mat4 viewMatrix, glm::mat4 projMatrix) {

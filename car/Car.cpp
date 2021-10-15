@@ -16,7 +16,7 @@ Car::Car(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint modelMatUniformLoc, 
 
     this->WORLD_SIDE_LENGTH = WORLD_SIDE_LENGTH;
 
-    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(0, this->carYPosition, 0));
+    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(-10, this->carYPosition, -10));
 }
 
 void Car::drawCar(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
