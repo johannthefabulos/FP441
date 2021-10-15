@@ -1,5 +1,5 @@
 //
-// Created by Fibonacci on 10/14/21.
+// Created by Benjamin Carlson on 10/14/21.
 //
 
 #ifndef MP_LIGHTPROPERTIES_HPP
