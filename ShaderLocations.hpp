@@ -9,6 +9,7 @@
 struct ModelShaderLocations{
     GLuint shaderProgramHandle;
     GLint mvpMatUniformLocation;
+    GLint modelMatUniformLocation;
     GLint normalMatUniformLocation;
     GLint matColorUniformLocation;
 };
@@ -16,6 +17,9 @@ struct ModelShaderLocations{
 struct ShaderUniformLocations {
     /// \desc precomputed MVP matrix location
     GLint mvpMatrix;
+
+    GLint modelMatrix;
+
     /// \desc material diffuse color location
     GLint materialColor;
 

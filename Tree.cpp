@@ -41,6 +41,8 @@ void Tree::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm:
     // then send it to the shader on the GPU to apply to every vertex
     glProgramUniformMatrix4fv(this->shaderLocations.shaderProgramHandle, this->shaderLocations.mvpMatUniformLocation, 1, GL_FALSE, &mvpMtx[0][0] );
 
+    glProgramUniformMatrix4fv(this->shaderLocations.shaderProgramHandle, this->shaderLocations.modelMatUniformLocation, 1, GL_FALSE, &modelMtx[0][0] );
+
     glm::mat3 normalMtx = glm::mat3( glm::transpose( glm::inverse( modelMtx )));
     glProgramUniformMatrix3fv( this->shaderLocations.shaderProgramHandle, this->shaderLocations.normalMatUniformLocation, 1, GL_FALSE, &normalMtx[0][0] );
 }

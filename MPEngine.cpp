@@ -157,6 +157,7 @@ void MPEngine::_setupOpenGL() {
 void MPEngine::_setupShaders() {
     _shaderProgram = new CSCI441::ShaderProgram("shaders/a3.v.glsl", "shaders/a3.f.glsl" );
     shaderUniformLocations.mvpMatrix      = _shaderProgram->getUniformLocation("mvpMatrix");
+    shaderUniformLocations.modelMatrix      = _shaderProgram->getUniformLocation("modelMatrix");
 
     shaderUniformLocations.lightColor = _shaderProgram->getUniformLocation("lightColor");
     shaderUniformLocations.lightPos = _shaderProgram->getUniformLocation("lightPos");
@@ -180,12 +181,13 @@ void MPEngine::_setupBuffers() {
     CSCI441::setVertexAttributeLocations(shaderAttributeLocations.vPos, shaderAttributeLocations.vNormal);
 
     ModelShaderLocations modelLocations = {_shaderProgram->getShaderProgramHandle(),
-                                           shaderUniformLocations.mvpMatrix, shaderUniformLocations.normalMat,
-                                           shaderUniformLocations.materialColor };
+                                           shaderUniformLocations.mvpMatrix, shaderUniformLocations.modelMatrix,
+                                           shaderUniformLocations.normalMat,shaderUniformLocations.materialColor };
 
     _warrior = new TheWarrior(modelLocations, WORLD_SIZE);
     _car = new Car(_shaderProgram->getShaderProgramHandle(),
                    shaderUniformLocations.mvpMatrix,
+                   shaderUniformLocations.modelMatrix,
                    shaderUniformLocations.normalMat,
                    shaderUniformLocations.materialColor,
                    WORLD_SIZE);
@@ -194,6 +196,7 @@ void MPEngine::_setupBuffers() {
 
     _JohnReimann = new JohnReimann(_shaderProgram->getShaderProgramHandle(),
                                     shaderUniformLocations.mvpMatrix,
+                                   shaderUniformLocations.modelMatrix,
                                     shaderUniformLocations.normalMat,
                                     shaderUniformLocations.materialColor,
                                     WORLD_SIZE);
@@ -274,7 +277,7 @@ void MPEngine::_generateEnvironment(ModelShaderLocations locations) {
 
 void MPEngine::_setupScene() {
 
-    glm::vec3 lightPos(WORLD_SIZE, -10, WORLD_SIZE);
+    glm::vec3 lightPos(0, 10, 0);
     glm::vec3 lightColor(1, 1, 1);
 
     glProgramUniform3fv(_shaderProgram->getShaderProgramHandle(), shaderUniformLocations.lightPos,
@@ -324,7 +327,7 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 
     glm::vec3 groundColor(0.3f, 0.8f, 0.2f);
     glUniform3fv(shaderUniformLocations.materialColor, 1, &groundColor[0]);
-    glUniform1f(shaderUniformLocations.materialShininess, 1.0f);
+    glUniform1f(shaderUniformLocations.materialShininess, 100.0f);
 
 
     glUniform3fv(shaderUniformLocations.cameraPos, 1, &this->cameras->getPrimaryCamera()->getPosition()[0]);

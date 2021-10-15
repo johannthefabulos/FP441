@@ -8,7 +8,7 @@
 
 class JohnReimann : public virtual HeroVirtual{
 public:
-    JohnReimann(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH);
+    JohnReimann(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint modelMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH);
 
     void drawJohn_Reimann(glm::mat4 viewMatrix, glm::mat4 projMatrix);
 
@@ -37,6 +37,7 @@ public:
 private:
     GLuint shaderProgramHandle;
     GLint mvpMatrixUniformLocation;
+    GLint modelMatUniformLocation;
     GLint normalMatrixUniformLocation;
     GLint materialColorUniformLocation;
 

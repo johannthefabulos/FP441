@@ -14,7 +14,7 @@
 class Car : public virtual HeroVirtual{
 
 public:
-    Car(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH);
+    Car(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint modelMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH);
 
     void drawCar(glm::mat4 viewMatrix, glm::mat4 projMatrix);
 
@@ -36,6 +36,7 @@ public:
 private:
     GLuint shaderProgramHandle;
     GLint mvpMatrixUniformLocation;
+    GLint modelMatUniformLocation;
     GLint normalMatrixUniformLocation;
     GLint materialColorUniformLocation;
     GLfloat WORLD_SIDE_LENGTH;
