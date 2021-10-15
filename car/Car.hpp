@@ -42,7 +42,7 @@ private:
     GLfloat WORLD_SIDE_LENGTH;
 
     glm::mat4 currentModelMatrix = glm::mat4(1.0f);
-    glm::vec3 currentWorldPosition = {0, 0, 0};
+    glm::vec3 currentWorldPosition = {-10, 0, -10};
 
     /// \desc The current angle of the wheels (in radians)
     GLfloat wheelAngle = 0.0f;

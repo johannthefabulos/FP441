@@ -214,6 +214,7 @@ void MPEngine::_setupBuffers() {
                                     shaderUniformLocations.materialColor,
                                     WORLD_SIZE);
     this->cameras->setHero(this->getCurrentHero());
+
     _createGroundBuffers();
     _generateEnvironment(modelLocations);
 }

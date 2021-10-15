@@ -46,7 +46,7 @@ private:
 
     bool headBool = true;
 
-    glm::vec3 currentWorldPosition = {0, 0, 0};
+    glm::vec3 currentWorldPosition = {10, 0, -10};
 
     const glm::vec3 wheelColor = {0.0f, 0.0f, 1.0f};
     const glm::vec3 bodyColor = {0.0f, 0.0f, 1.0f};
@@ -55,9 +55,9 @@ private:
     glm::vec3 eyeColor = {1,1,1};
     int eyeFlag = 0;
     bool direction = true;
-    const GLfloat wheelInnerRadius = 0.25;
-    const GLfloat wheelOuterRadius = 0.5;
-    const GLfloat carYPosition = wheelOuterRadius+wheelInnerRadius;
+    const GLfloat legInWid = 0.25;
+    const GLfloat legOutWid = 0.5;
+    const GLfloat eeyoreYPosition = legOutWid+legInWid;
 
     const GLfloat moveSpeed = 0.1;
 
@@ -86,4 +86,4 @@ private:
 };
 
 
-#endif //LAB05_PLANE_HPP
+#endif

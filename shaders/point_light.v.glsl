@@ -33,9 +33,7 @@ void main() {
     vec3 reflectVec = -lightVec+2*(dot(normal,lightVec)*normal);
 
     vec3 illumSpec = materialColor * lightColor * pow(max(dot(viewVec,reflectVec),0),materialShininess);
-        if (materialShininess == 0){
-            illumSpec = vec3(0);
-        }
+
     vec3 illumAmb = materialColor*lightColor;
 
     vec3 attenuation = vec3(5,0.1,0.01);

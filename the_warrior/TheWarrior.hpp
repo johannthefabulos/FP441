@@ -37,7 +37,7 @@ private:
     GLfloat WORLD_SIDE_LENGTH;
 
     glm::mat4 currentModelMatrix = glm::mat4(1.0f);
-    glm::vec3 currentWorldPosition = {0, 0, 0};
+    glm::vec3 currentWorldPosition = {10, 0, 10};
 
     /// \desc The amount of time to increment/decrement times by (fraction of pi since times are used for trig functions)
     const GLfloat timeDelta = glm::pi<GLfloat>()/256.0f;

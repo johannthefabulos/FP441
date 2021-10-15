@@ -13,7 +13,7 @@ TheWarrior::TheWarrior(ModelShaderLocations shaderLocations, GLfloat WORLD_SIDE_
 
     this->WORLD_SIDE_LENGTH = WORLD_SIDE_LENGTH;
 
-    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(0, this->footHeight*1.35, 0));
+    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(10, this->footHeight*1.35, 10));
 }
 
 void TheWarrior::drawWarrior(glm::mat4 viewMatrix, glm::mat4 projMatrix) {

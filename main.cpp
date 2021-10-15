@@ -21,7 +21,7 @@
 // Our main function
 int main() {
 
-    auto labEngine = new MPEngine(4, 1, 853, 640, "A3: Character Vehicle");
+    auto labEngine = new MPEngine(4, 1, 853, 640, "MP: The Main Attraction");
     labEngine->initialize();
     if (labEngine->getError() == CSCI441::OpenGLEngine::OPENGL_ENGINE_ERROR_NO_ERROR) {
         labEngine->run();
