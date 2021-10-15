@@ -256,10 +256,6 @@ void MPEngine::_generateEnvironment(ModelShaderLocations locations) {
     //******************************************************************
 
     srand( time(0) );                                                   // seed our RNG
-    glm::mat4 chairTransToSpotMtx = glm::translate( glm::mat4(1.0), glm::vec3(0.0f, 0.0f, 0.0f) );
-    glm::mat4 chairScaleToHeightMtx = glm::scale( glm::mat4(1.0), glm::vec3(1, 5, 1) );
-    glm::mat4 chairTransToHeight = glm::translate( glm::mat4(1.0), glm::vec3(0, 1/2.0f, 0) );
-    chairModelMatrix = chairTransToHeight * chairTransToSpotMtx;
     // psych! everything's on a grid.
     for(int i = LEFT_END_POINT; i < RIGHT_END_POINT; i += GRID_SPACING_WIDTH) {
         for(int j = BOTTOM_END_POINT; j < TOP_END_POINT; j += GRID_SPACING_LENGTH) {
@@ -278,7 +274,7 @@ void MPEngine::_generateEnvironment(ModelShaderLocations locations) {
 
 void MPEngine::_setupScene() {
 
-    glm::vec3 lightPos(-1, -1, -1);
+    glm::vec3 lightPos(WORLD_SIZE, -10, WORLD_SIZE);
     glm::vec3 lightColor(1, 1, 1);
 
     glProgramUniform3fv(_shaderProgram->getShaderProgramHandle(), shaderUniformLocations.lightPos,
@@ -321,19 +317,21 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 
     //// BEGIN DRAWING THE GROUND PLANE ////
     // draw the ground plane
-    glm::mat4 groundModelMtx = glm::scale( glm::mat4(1.0f), glm::vec3(WORLD_SIZE, 1.0f, WORLD_SIZE));
+    //glm::mat4 groundModelMtx = glm::translate(glm::mat4(1.0f), glm::vec3(WORLD_SIZE, 1.0f, WORLD_SIZE));
+    glm::mat4 groundModelMtx = glm::scale(glm::mat4(1.0f) , glm::vec3(WORLD_SIZE, 1.0f, WORLD_SIZE));
+
     _computeAndSendMatrixUniforms(groundModelMtx, viewMtx, projMtx);
 
     glm::vec3 groundColor(0.3f, 0.8f, 0.2f);
     glUniform3fv(shaderUniformLocations.materialColor, 1, &groundColor[0]);
-    glUniform1f(shaderUniformLocations.materialShininess, 0.0f);
+    glUniform1f(shaderUniformLocations.materialShininess, 1.0f);
 
 
     glUniform3fv(shaderUniformLocations.cameraPos, 1, &this->cameras->getPrimaryCamera()->getPosition()[0]);
-
+    //CSCI441::drawWireCube(WORLD_SIZE/4);
 
     glBindVertexArray(_groundVAO);
-    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
     glDrawElements(GL_TRIANGLE_STRIP, _numGroundPoints, GL_UNSIGNED_SHORT, (void*)0);
     //// END DRAWING THE GROUND PLANE ////
 

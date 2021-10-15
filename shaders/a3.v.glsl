@@ -20,6 +20,7 @@ in vec3 vNormal;
 // varying outputs
 layout(location = 0) out vec3 color;    // color to apply to this vertex
 
+
 void main() {
     // transform & output the vertex in clip space
     gl_Position = mvpMatrix * vec4(vPos, 1.0);
@@ -30,14 +31,22 @@ void main() {
 
     vec3 illumDiffuse = lightColor * materialColor * max(dot(lightVec,worldNormal), 0);
 
-    //Specular lighting
-    vec3 reflectVec = reflect(lightVec, worldNormal);
-    vec3 viewVec = normalize(cameraPos - vPos);
-    float spec = pow(max(dot(viewVec, reflectVec), 0.0), materialShininess);
-    vec3 illumSpec = lightColor * materialColor * spec;
-    if (materialShininess == 0){
-        illumSpec = vec3(0);
-    }
+    vec3 abcVec = vec3(0.2, 0, 1);
+    float d = length(lightVec);
+    vec3 dVec = vec3(1, d, pow(d, 2));
 
-    color = illumDiffuse + illumSpec;
+    //Specular lighting
+    vec3 viewVec = normalize(cameraPos - vPos);
+    vec3 refectVec = -lightVec + (2 * (dot(lightVec, worldNormal) * worldNormal));
+    vec3 illumSpec = materialColor * lightColor * pow(max(dot(refectVec, viewVec), 0), materialShininess);
+
+    vec3 ambientColorVec = lightColor * 0.1;
+    vec3 illumAmbient = vec3(0);//ambientColorVec * materialColor;
+
+//    if (materialShininess == 0){
+//        illumSpec = vec3(0);
+//    }
+
+
+    color = (illumDiffuse + illumSpec + illumAmbient)/(dot(abcVec, dVec));
 }
