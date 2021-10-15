@@ -264,7 +264,7 @@ void MPEngine::_generateEnvironment(ModelShaderLocations locations) {
     for(int i = LEFT_END_POINT; i < RIGHT_END_POINT; i += GRID_SPACING_WIDTH) {
         for(int j = BOTTOM_END_POINT; j < TOP_END_POINT; j += GRID_SPACING_LENGTH) {
             // don't just draw a building ANYWHERE.
-            if( i % 2 && j % 2 && getRand() < 0.1f ) {
+            if( i % 2 && j % 2 && getRand() < 0.1f && sqrt(pow(i,2)+pow(j,2))<GRID_RADIUS-10) {
                 _trees.push_back(new Tree(locations,i,getRand()+1,j));
             }
         }
