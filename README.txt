@@ -30,7 +30,7 @@
 5.  To compile, load the CMAKELISTS, choose your target to run on, which should be generated in the cmake-build-debug
        folder and run.
 
-6. If you click while TheWarrior is selected, he swings his sword. If you click while Eeyore is selected he eyes turn red.
+6. If you click while TheWarrior is selected, he swings his sword. If you click while Eeyore is selected his eyes turn red.
 7. The breakdown is as follows:
     -Each student was responsible for their own hero.
     -Environment - Connor
