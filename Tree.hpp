@@ -29,6 +29,9 @@ private:
     float y;
     float z;
 
+    bool leaveBool = true;
+    float leaveAngle = 0;
+
     const glm::vec3 leafColor = {0, .5f, 0};
     const glm::vec3 trunkColor = {0.43f, 0.21f, 0.1f};
 
