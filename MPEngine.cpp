@@ -159,8 +159,6 @@ void MPEngine::_setupShaders() {
     shaderUniformLocations.mvpMatrix      = _shaderProgram->getUniformLocation("mvpMatrix");
     shaderUniformLocations.modelMatrix      = _shaderProgram->getUniformLocation("modelMatrix");
 
-    shaderUniformLocations.lightColor = _shaderProgram->getUniformLocation("lightColor");
-    shaderUniformLocations.lightPos = _shaderProgram->getUniformLocation("lightPos");
     shaderUniformLocations.normalMat = _shaderProgram->getUniformLocation("normalMat");
     shaderUniformLocations.cameraPos = _shaderProgram->getUniformLocation("cameraPos");
 
@@ -171,6 +169,21 @@ void MPEngine::_setupShaders() {
     shaderAttributeLocations.vPos         = _shaderProgram->getAttributeLocation("vPos");
 
     shaderAttributeLocations.vNormal         = _shaderProgram->getAttributeLocation("vNormal");
+
+    //Light uniforms
+
+    pointLightProperties = new LightProperties(_shaderProgram->getShaderProgramHandle());
+    spotLightProperties = new LightProperties(_shaderProgram->getShaderProgramHandle());
+    directLightProperties = new LightProperties(_shaderProgram->getShaderProgramHandle());
+
+    pointLightProperties->lightColorUniformLoc = _shaderProgram->getUniformLocation("pointLight.lightColor");
+    pointLightProperties->lightPosUniformLoc = _shaderProgram->getUniformLocation("pointLight.lightPos");
+
+    spotLightProperties->lightColorUniformLoc = _shaderProgram->getUniformLocation("spotLight.lightColor");
+    spotLightProperties->lightPosUniformLoc = _shaderProgram->getUniformLocation("spotLight.lightPos");
+
+    directLightProperties->lightColorUniformLoc = _shaderProgram->getUniformLocation("directLight.lightColor");
+    directLightProperties->lightPosUniformLoc = _shaderProgram->getUniformLocation("directLight.lightPos");
 
     this->cameras = new HeroCameras(shaderUniformLocations.cameraPos);
 
@@ -277,14 +290,18 @@ void MPEngine::_generateEnvironment(ModelShaderLocations locations) {
 
 void MPEngine::_setupScene() {
 
-    glm::vec3 lightPos(0, 10, 0);
-    glm::vec3 lightColor(1, 1, 1);
+    this->pointLightProperties->lightColor = glm::vec3(1, 0, 0);
+    this->pointLightProperties->lightPosition = glm::vec3(0, 10, 0);
 
-    glProgramUniform3fv(_shaderProgram->getShaderProgramHandle(), shaderUniformLocations.lightPos,
-                        1, &lightPos[0]);
+    this->spotLightProperties->lightColor = glm::vec3(0, 1, 0);
+    this->spotLightProperties->lightPosition = glm::vec3(0, 10, 0);
 
-    glProgramUniform3fv(_shaderProgram->getShaderProgramHandle(), shaderUniformLocations.lightColor,
-                        1, &lightColor[0]);
+    this->directLightProperties->lightColor = glm::vec3(0, 0, 1);
+    this->directLightProperties->lightPosition = glm::vec3(0, 10, 0);
+
+    this->pointLightProperties->sendUniforms();
+    this->spotLightProperties->sendUniforms();
+    this->directLightProperties->sendUniforms();
 }
 
 //*************************************************************************************
@@ -294,6 +311,9 @@ void MPEngine::_setupScene() {
 void MPEngine::_cleanupShaders() {
     fprintf( stdout, "[INFO]: ...deleting Shaders.\n" );
     delete _shaderProgram;
+    delete pointLightProperties;
+    delete spotLightProperties;
+    delete directLightProperties;
 }
 
 void MPEngine::_cleanupBuffers() {
@@ -361,9 +381,8 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 
     glUniform1f(shaderUniformLocations.materialShininess, 1);
     _JohnReimann->drawJohn_Reimann(viewMtx, projMtx);
-
-
 }
+
 void MPEngine::_updateScene() {
 
     //Only the ARCBALL main camera type moves the hero

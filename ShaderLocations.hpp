@@ -25,10 +25,6 @@ struct ShaderUniformLocations {
 
     GLint normalMat;
 
-    GLint lightColor;
-
-    GLint lightPos;
-
     GLint cameraPos;
 
     GLint materialShininess;

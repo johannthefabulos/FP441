@@ -3,7 +3,7 @@
 //
 
 #include "Tree.hpp"
-#include "ShaderLocations.hpp"
+#include "../ShaderLocations.hpp"
 #include <CSCI441/SimpleShader.hpp>
 
 

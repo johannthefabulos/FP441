@@ -12,9 +12,10 @@
 #include "HeroType.hpp"
 #include "HeroVirtual.hpp"
 #include "john_Reimann/JohnReimann.hpp"
-#include "Tree.hpp"
-#include "Castle.hpp"
+#include "environment/Tree.hpp"
+#include "environment/Castle.hpp"
 #include "hero_cameras/HeroCameras.hpp"
+#include "LightProperties.hpp"
 
 #include <vector>
 #include <CSCI441/FreeCam.hpp>
@@ -70,6 +71,8 @@ private:
     /// \desc handles moving our FreeCam as determined by keyboard input
     void _updateScene();
 
+    void _cycleThroughLights();
+
     /// \desc tracks the number of different keys that can be present as determined by GLFW
     static constexpr GLuint NUM_KEYS = GLFW_KEY_LAST;
     /// \desc boolean array tracking each key state.  if true, then the key is in a pressed or held
@@ -88,6 +91,10 @@ private:
     eeyore* _eeyore;
     JohnReimann* _JohnReimann;
     TheWarrior* _warrior;
+
+    LightProperties* pointLightProperties;
+    LightProperties* spotLightProperties;
+    LightProperties* directLightProperties;
 
     //End Models
     /// \desc the size of the world (controls the ground size and locations of buildings)

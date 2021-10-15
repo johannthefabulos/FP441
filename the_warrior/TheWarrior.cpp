@@ -334,7 +334,7 @@ bool TheWarrior::testWarriorShouldMove(GLfloat testMoveSpeed) {
     GLfloat absXPos = ceil(glm::abs(testWorldPos.x) + this->legLength);
     GLfloat absZPos = ceil(glm::abs(testWorldPos.z) + this->legLength);
     GLfloat distanceFromCenter = sqrt(pow(absXPos,2)+pow(absZPos,2));
-    if (distanceFromCenter > WORLD_SIDE_LENGTH-5.5){
+    if (distanceFromCenter > WORLD_SIDE_LENGTH-6){
         return false;
     }
     return true;
