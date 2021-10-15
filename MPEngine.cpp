@@ -279,7 +279,7 @@ void MPEngine::_generateEnvironment(ModelShaderLocations locations) {
 void MPEngine::_setupScene() {
 
     glm::vec3 lightPos(1, -1, -1);
-    glm::vec3 lightColor(.5, 0, 0);
+    glm::vec3 lightColor(1, 1, 1);
 
     glProgramUniform3fv(_shaderProgram->getShaderProgramHandle(), shaderUniformLocations.lightPos,
                         1, &lightPos[0]);

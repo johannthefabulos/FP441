@@ -38,7 +38,7 @@ void main() {
         }
     vec3 illumAmb = materialColor*lightColor;
 
-    vec3 attenuation = vec3(1.0,0.1,0.01);
+    vec3 attenuation = vec3(5,0.1,0.01);
     vec3 dist = vec3(1,length(vPos),pow(length(vPos),2));
 
 

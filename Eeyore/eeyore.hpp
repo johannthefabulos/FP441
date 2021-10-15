@@ -52,7 +52,8 @@ private:
     const glm::vec3 bodyColor = {0.0f, 0.0f, 1.0f};
     const glm::vec3 tailColor = {0, 0, 0};
     const glm::vec3 noseColor = {0.98, 0.81, 0.69};
-    const glm::vec3 eyeColor = {1,1,1};
+    glm::vec3 eyeColor = {1,1,1};
+    int eyeFlag = 0;
     bool direction = true;
     const GLfloat wheelInnerRadius = 0.25;
     const GLfloat wheelOuterRadius = 0.5;

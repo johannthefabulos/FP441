@@ -249,5 +249,10 @@ glm::mat4 eeyore::getCurrentModelMat() {
 }
 
 void eeyore::leftClickAction() {
-
+    eyeColor = glm::vec3(1,0,0);
+    eyeFlag +=1;
+    if(eyeFlag>= 2){
+        eyeColor = glm::vec3(1,1,1);
+        eyeFlag = 0;
+    }
 }
