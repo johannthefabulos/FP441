@@ -22,13 +22,12 @@ JohnReimann::JohnReimann(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint mode
 }
 
 void JohnReimann::drawJohn_Reimann(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
-    //modelMtx = glm::translate( modelMtx, glm::vec3( cos(animationAngle), 0, sin(animationAngle) ));
-    //modelMtx = glm::translate( modelMtx, glm::vec3( translateX, 0, translateY));
-    //modelMtx = glm::rotate( modelMtx, 2*correctionAngle, CSCI441::Y_AXIS );
-    //modelMtx = glm::rotate( modelMtx, chairCurrentAngle, CSCI441::Y_AXIS );
+    this->currentModelMatrix = glm::translate( this->currentModelMatrix, glm::vec3( .025*sin(animationAngle), 0, .025*cos(animationAngle)));
     drawLegs(this->currentModelMatrix,viewMatrix, projMatrix );
     drawHead(this->currentModelMatrix,viewMatrix,projMatrix );
     drawBody(this->currentModelMatrix,viewMatrix, projMatrix );
+
+    animationAngle+=.05f;
 }
 
 void JohnReimann::drawLegs(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {

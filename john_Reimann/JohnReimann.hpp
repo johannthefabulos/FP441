@@ -44,6 +44,7 @@ private:
     GLfloat WORLD_SIDE_LENGTH;
 
     GLfloat wheelAngle = 0.0f;
+    float animationAngle = 0.05f;
 
     glm::vec3 currentWorldPosition = {-10, 0, 10};
 
