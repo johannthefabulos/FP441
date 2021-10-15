@@ -155,7 +155,7 @@ void MPEngine::_setupOpenGL() {
 }
 
 void MPEngine::_setupShaders() {
-    _shaderProgram = new CSCI441::ShaderProgram("shaders/a3.v.glsl", "shaders/a3.f.glsl" );
+    _shaderProgram = new CSCI441::ShaderProgram("shaders/point_light.v.glsl", "shaders/point_light.f.glsl" );
     shaderUniformLocations.mvpMatrix      = _shaderProgram->getUniformLocation("mvpMatrix");
 
     shaderUniformLocations.lightColor = _shaderProgram->getUniformLocation("lightColor");
@@ -278,8 +278,8 @@ void MPEngine::_generateEnvironment(ModelShaderLocations locations) {
 
 void MPEngine::_setupScene() {
 
-    glm::vec3 lightPos(-1, -1, -1);
-    glm::vec3 lightColor(1, 1, 1);
+    glm::vec3 lightPos(1, -1, -1);
+    glm::vec3 lightColor(.5, 0, 0);
 
     glProgramUniform3fv(_shaderProgram->getShaderProgramHandle(), shaderUniformLocations.lightPos,
                         1, &lightPos[0]);
