@@ -198,12 +198,6 @@ void MPEngine::_setupBuffers() {
                                            shaderUniformLocations.normalMat,shaderUniformLocations.materialColor };
 
     _warrior = new TheWarrior(modelLocations, WORLD_SIZE);
-    _car = new Car(_shaderProgram->getShaderProgramHandle(),
-                   shaderUniformLocations.mvpMatrix,
-                   shaderUniformLocations.modelMatrix,
-                   shaderUniformLocations.normalMat,
-                   shaderUniformLocations.materialColor,
-                   WORLD_SIZE);
 
     _eeyore = new eeyore(modelLocations, WORLD_SIZE);
 
@@ -326,7 +320,7 @@ void MPEngine::_cleanupBuffers() {
     CSCI441::deleteObjectVBOs();
 
     fprintf( stdout, "[INFO]: ...deleting models..\n" );
-    delete _car;
+
     delete _warrior;
     delete _eeyore;
 }
@@ -368,9 +362,6 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
         currentCastle->drawCastle(viewMtx,projMtx);
     }
     //// END DRAWING THE BUILDINGS ////
-
-    glUniform1f(shaderUniformLocations.materialShininess, 1);
-    _car->drawCar(viewMtx, projMtx);
 
     glUniform1f(shaderUniformLocations.materialShininess, 1);
     _warrior->drawWarrior(viewMtx, projMtx);
@@ -514,10 +505,8 @@ HeroVirtual * MPEngine::getCurrentHero() {
             return this->_eeyore;
         case JOHN:
             return this->_JohnReimann;
-        case CAR:
-            return this->_car;
         default:
-            return this->_car;
+            return this->_warrior;
     }
 }
 

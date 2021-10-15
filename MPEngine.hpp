@@ -5,7 +5,6 @@
 #include <CSCI441/OpenGLEngine.hpp>
 #include <CSCI441/ShaderProgram.hpp>
 
-#include "car/Car.hpp"
 #include "ShaderLocations.hpp"
 #include "the_warrior/TheWarrior.hpp"
 #include "Eeyore/eeyore.hpp"
@@ -87,7 +86,6 @@ private:
     HeroCameras* cameras;
 
     // Hero models
-    Car* _car;
     eeyore* _eeyore;
     JohnReimann* _JohnReimann;
     TheWarrior* _warrior;

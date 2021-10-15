@@ -9,8 +9,7 @@ enum HeroType{
     WARRIOR = 1,
     EEYORE = 2,
     JOHN = 3,
-    CAR = 4,
-    LAST = CAR+1
+    LAST = JOHN+1
 };
 
 #endif //MP_HEROTYPE_HPP
