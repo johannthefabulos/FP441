@@ -57,7 +57,7 @@ private:
     const GLfloat wheelOuterRadius = 0.5;
     const GLfloat carYPosition = wheelOuterRadius+wheelInnerRadius;
 
-    const GLfloat moveSpeed = 0.1;
+    const GLfloat moveSpeed = 0.13;
 
     //The left/right translation for the wheels, original state is right wheel
     const glm::vec3 wheelLRTranslation = {1.2, 0, 0};

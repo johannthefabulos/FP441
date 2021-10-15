@@ -59,7 +59,7 @@ private:
     const GLfloat legOutWid = 0.5;
     const GLfloat eeyoreYPosition = legOutWid+legInWid;
 
-    const GLfloat moveSpeed = 0.1;
+    const GLfloat moveSpeed = 0.13;
 
     //The left/right translation for the wheels, original state is right wheel
     const glm::vec3 bodyWid = {1.2, 0, 0};

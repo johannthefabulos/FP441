@@ -42,7 +42,7 @@ private:
     /// \desc The amount of time to increment/decrement times by (fraction of pi since times are used for trig functions)
     const GLfloat timeDelta = glm::pi<GLfloat>()/256.0f;
     /// \desc The speed to move the model at
-    const GLfloat movementSpeed = 0.1;
+    const GLfloat movementSpeed = 0.13;
     /// \desc The total amount of time for the cool down animation
     const GLfloat initalCooldownTime = 2;
 
