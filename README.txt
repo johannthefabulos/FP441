@@ -1,16 +1,43 @@
-1. Benjamin Carlson / bperkins@mines.edu
-2. Assignment 3 / To The Arena
-3. This program allows you to move a car around. This includes a minimap in the top right, showing the car from a top-
-    down view as well as diffuse and specular lighting. To drive the car, use the W and S keys to move backwards and
-    forwards, and the S and D keys to turn left and right. The camera will follow the car around. Press the mouse button
-    down to pan around the scene. If you are pressing SHIFT while holding the mouse button and moving, it will begin
-    to adjust the zoom. I also gave you the option to use the scroll wheel to zoom in and out since that felt more
-    natural to me. In order to exit, simply press Q or the ESC key.
-4. To compile, enter the A3 directory, and type "cmake ." in the terminal. This will compile the code. To run the program,
-   inside the same directory, run "./cmake-build-debug/A3" and you will see the program launch.
-5. As mentioned, A few added features are the minimap and the specular lighting. When looking in the vertex shader code,
-   you will see an if statement, not adding specular lighting if the "shininess" is 0. This is simply because the
-   ground looked too bright to me without that. I also wanted to add a border around the minimap but had issues.
-6. 7 hours
-7. The lab helped ALOT. 9/10
-8. 9/10. I enjoyed it alot and if I had more time I would've been able to make it even better
+1. Matrix Magic / TheWarrior -- Ben Carlson // Eeyore--Connor Caldwell / JohnReimann --John Reimann
+2. MP -- The Main Attraction
+3. This program is designed to create an arena of our Heroes and a car in an environment with custom lighting.
+   The arena consist of a border of castles, with trees dispersed around. Our heroes have the ability to walk around the
+   inside of the castle perimeter and wonder about. This also gives the user to switch between heroes. Some heroes preform
+   sepecial actions as well. The viewpoints of the heroes are an arcball camera. You are then able to enable a picture-in-
+   picture view for either the top down view or the first person view. There is also the ability to use the Freecam to move
+   around in the space.
+4.  The implementation is as follows:
+    In any mode:
+        -V (Enable Top View Picture in Picture)
+        -C (Enable First Person Picture in Picute)
+    In Hero Mode (ArcBall Cam):
+        -W (Move Forward)
+        -S (Move Backward)
+        -A (Turn Left)
+        -D (Turn Right)
+        -Left Click (Special Action & Rotate Screen)
+        -Scroll Wheel OR Shift+Left Click (Zoom In/Out)
+        -Numbers 1 to 4 (Choose Hero: 1 - TheWarrior, 2 - Eeyore, 3 - JohnReimann, 4 - Car)
+    In Free Cam Mode:
+        -W (Pan Up)
+        -S (Pan Down)
+        -A (Pan Left)
+        -D (Pan Right)
+        -Space (Fly Forward)
+        -Shift+Space (Fly backward)
+
+
+5.  To compile, load the CMAKELISTS, choose your target to run on, which should be generated in the cmake-build-debug
+       folder and run.
+
+6. If you click while TheWarrior is selected, he swings his sword. If you click while Eeyore is selected he eyes turn red.
+7. The breakdown is as follows:
+    -Each student was responsible for their own hero.
+    -Environment - Connor
+    -Camera & Viewports - Ben
+    -Shader & VAO - Everybody
+    - Illumination - Everybody
+
+8. Total time was approximately 50 Hours for everyone total (Very ballpark estimate)
+9. The lab and assignment helped a lot for this project. 7/10
+10. This assignment was a 8/10. Would have been better if we had more time.
