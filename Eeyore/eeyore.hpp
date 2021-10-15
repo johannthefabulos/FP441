@@ -55,9 +55,9 @@ private:
     glm::vec3 eyeColor = {1,1,1};
     int eyeFlag = 0;
     bool direction = true;
-    const GLfloat wheelInnerRadius = 0.25;
-    const GLfloat wheelOuterRadius = 0.5;
-    const GLfloat carYPosition = wheelOuterRadius+wheelInnerRadius;
+    const GLfloat legInWid = 0.25;
+    const GLfloat legOutWid = 0.5;
+    const GLfloat eeyoreYPosition = legOutWid+legInWid;
 
     const GLfloat moveSpeed = 0.1;
 
@@ -86,4 +86,4 @@ private:
 };
 
 
-#endif //LAB05_PLANE_HPP
+#endif

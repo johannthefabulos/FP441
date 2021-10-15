@@ -15,7 +15,7 @@ eeyore::eeyore(ModelShaderLocations shaderLocations, GLfloat WORLD_SIDE_LENGTH) 
 
     this->WORLD_SIDE_LENGTH = WORLD_SIDE_LENGTH;
 
-    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(10, this->carYPosition, -10));
+    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(10, this->eeyoreYPosition, -10));
 }
 
 void eeyore::drawEeyore(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
@@ -63,7 +63,7 @@ void eeyore::drawLeg(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 v
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->wheelColor[0]);
 
     //Testing values
-    CSCI441::drawSolidCube(this->wheelInnerRadius);
+    CSCI441::drawSolidCube(this->legInWid);
 
 }
 
@@ -155,10 +155,10 @@ void eeyore::drawEar(bool left,glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 
 
 void eeyore::drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
 
-    GLfloat bodyWidth = (this->bodyWid.x * 2) + (this->wheelInnerRadius);
-    GLfloat bodyLength = (this->bodyLen.z * 2) + (this->wheelInnerRadius);
-    GLfloat bodyWidthScale = bodyWidth/this->wheelInnerRadius;
-    GLfloat bodyLengthScale = bodyLength/this->wheelInnerRadius;
+    GLfloat bodyWidth = (this->bodyWid.x * 2) + (this->legInWid);
+    GLfloat bodyLength = (this->bodyLen.z * 2) + (this->legInWid);
+    GLfloat bodyWidthScale = bodyWidth/this->legInWid;
+    GLfloat bodyLengthScale = bodyLength/this->legInWid;
 
 
 
@@ -166,13 +166,13 @@ void eeyore::drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) 
     flatBodyModelMat = glm::translate(flatBodyModelMat,glm::vec3(0,.2,0));
     this->computeAndSendMatUniforms(flatBodyModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
-    CSCI441::drawSolidCube(this->wheelInnerRadius);
+    CSCI441::drawSolidCube(this->legInWid);
 
     glm::mat4 tailMat = glm::scale(modelMtx, glm::vec3(.5, bodyWidthScale/3, .5));
     tailMat = glm::translate(tailMat,glm::vec3(0,.3,3.5));
     this->computeAndSendMatUniforms(tailMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->tailColor[0]);
-    CSCI441::drawSolidCube(this->wheelInnerRadius);
+    CSCI441::drawSolidCube(this->legInWid);
 }
 
 glm::vec3 eeyore::getCurrentPosition() {
