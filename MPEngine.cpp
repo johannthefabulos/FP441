@@ -458,12 +458,21 @@ void MPEngine::drawPIPView(glm::mat4 projectionMatrix) {
 
     glViewport( framebufferWidth - (framebufferWidth/4), framebufferHeight - (framebufferWidth/4), framebufferWidth/4, framebufferWidth/4);
 
+    GLint borderWidth = 2;
+    //Add white background (looks like a border)
+    glScissor(framebufferWidth - (framebufferWidth/4) - (borderWidth*2), framebufferHeight - (framebufferWidth/4) - (borderWidth*2), (framebufferWidth/4) + (borderWidth*2), (framebufferWidth/4) + (borderWidth*2));
+    glEnable(GL_SCISSOR_TEST);
+    glClearColor(1, 1, 1, 1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glDisable(GL_SCISSOR_TEST);
+    //Change clear color back to black
+    glClearColor(0, 0, 0, 1);
+
     // Don't let other objects overlap this
     glScissor(framebufferWidth - (framebufferWidth/4), framebufferHeight - (framebufferWidth/4), framebufferWidth/4, framebufferWidth/4);
     glEnable(GL_SCISSOR_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glDisable(GL_SCISSOR_TEST);
-
     // set up our look at matrix to position our camera
     this->cameras->recalculateViewMatrix();
 
