@@ -41,11 +41,11 @@ void TheWarrior::drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projM
     this->computeAndSendMatUniforms(bodyModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
 
-    CSCI441::drawSolidCylinder(this->bodyBottomWidth,this->bodyCenterWidth , segmentHeight, 30, 30);
+    CSCI441::drawSolidCylinder(this->bodyBottomWidth,this->bodyCenterWidth , segmentHeight, 10, 30);
 
     bodyModelMat = glm::translate(bodyModelMat, glm::vec3(0, segmentHeight, 0));
     this->computeAndSendMatUniforms(bodyModelMat, viewMtx, projMtx);
-    CSCI441::drawSolidCylinder(this->bodyCenterWidth,this->bodyTopWidth , segmentHeight, 30, 30);
+    CSCI441::drawSolidCylinder(this->bodyCenterWidth,this->bodyTopWidth , segmentHeight, 10, 30);
 
 
     this->drawNeck(bodyModelMat, viewMtx, projMtx);
@@ -57,7 +57,7 @@ void TheWarrior::drawNeck(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projM
 
     this->computeAndSendMatUniforms(neckModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
-    CSCI441::drawSolidCylinder(this->bodyTopWidth,this->neckTopWidth , this->neckHeight, 30, 30);
+    CSCI441::drawSolidCylinder(this->bodyTopWidth,this->neckTopWidth , this->neckHeight, 10, 30);
 
 
 }
@@ -94,7 +94,7 @@ void TheWarrior::drawLeg(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm
     this->computeAndSendMatUniforms(legModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
 
-    CSCI441::drawSolidCylinder(this->legWidthBottom, this->legWidthTop, this->legLength, 40, 40);
+    CSCI441::drawSolidCylinder(this->legWidthBottom, this->legWidthTop, this->legLength, 10, 40);
 
 
     this->drawFoot(legModelMat, viewMtx, projMtx);
@@ -128,7 +128,7 @@ void TheWarrior::drawArm(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm
     this->computeAndSendMatUniforms(armModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
 
-    CSCI441::drawSolidCylinder(this->armStartWidth, this->armEndWidth, this->armLength, 40, 40);
+    CSCI441::drawSolidCylinder(this->armStartWidth, this->armEndWidth, this->armLength, 10, 40);
     if (isLeft){
         this->drawShield(armEndModelMat, armRotation, viewMtx, projMtx);
     }
@@ -173,7 +173,7 @@ void TheWarrior::drawShield(glm::mat4 armEndModelMtx, GLfloat armRotation, glm::
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->shieldColor[0]);
 
 
-    CSCI441::drawSolidCylinder(this->shieldRectWidth/2, this->shieldRectWidth/2, this->shieldDepth, 20, 20);
+    CSCI441::drawSolidCylinder(this->shieldRectWidth/2, this->shieldRectWidth/2, this->shieldDepth, 10, 20);
 
     this->computeAndSendMatUniforms(shieldRectMat, viewMtx, projMtx);
     CSCI441::drawSolidCube(this->shieldRectWidth);
@@ -221,7 +221,7 @@ void TheWarrior::drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projM
     this->computeAndSendMatUniforms(headModelMat, viewMtx, projMtx);
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->bodyColor[0]);
 
-    CSCI441::drawSolidSphere(this->headRadius, 30, 30);
+    CSCI441::drawSolidSphere(this->headRadius, 20, 20);
     this->drawEyes(true, headModelMat, viewMtx, projMtx);
     this->drawEyes(false, headModelMat, viewMtx, projMtx);
 }
@@ -250,6 +250,8 @@ void TheWarrior::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx
     glm::mat4 mvpMtx = projMtx * viewMtx * modelMtx;
     // then send it to the shader on the GPU to apply to every vertex
     glProgramUniformMatrix4fv(this->shaderLocations.shaderProgramHandle, this->shaderLocations.mvpMatUniformLocation, 1, GL_FALSE, &mvpMtx[0][0] );
+
+    glProgramUniformMatrix4fv(this->shaderLocations.shaderProgramHandle, this->shaderLocations.modelMatUniformLocation, 1, GL_FALSE, &modelMtx[0][0] );
 
     glm::mat3 normalMtx = glm::mat3( glm::transpose( glm::inverse( modelMtx )));
     glProgramUniformMatrix3fv( this->shaderLocations.shaderProgramHandle, this->shaderLocations.normalMatUniformLocation, 1, GL_FALSE, &normalMtx[0][0] );

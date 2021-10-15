@@ -9,9 +9,10 @@
 #define M_PI 3.14159265
 #endif
 
-JohnReimann::JohnReimann(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH) {
+JohnReimann::JohnReimann(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint modelMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH) {
     this->shaderProgramHandle = shaderHandle;
     this->mvpMatrixUniformLocation = mvpMatUniformLoc;
+    this->modelMatUniformLocation = modelMatUniformLoc;
     this->normalMatrixUniformLocation = normalMatUniformLoc;
     this->materialColorUniformLocation = matColorUniformLoc;
 
@@ -51,8 +52,10 @@ void JohnReimann::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMt
     // then send it to the shader on the GPU to apply to every vertex
     glProgramUniformMatrix4fv(this->shaderProgramHandle, this->mvpMatrixUniformLocation, 1, GL_FALSE, &mvpMtx[0][0] );
 
+    glProgramUniformMatrix4fv(this->shaderProgramHandle, this->modelMatUniformLocation, 1, GL_FALSE, &modelMtx[0][0] );
+
     glm::mat3 normalMtx = glm::mat3( glm::transpose( glm::inverse( modelMtx )));
-    glProgramUniformMatrix3fv( this->shaderProgramHandle, this->normalMatrixUniformLocation, 1, GL_FALSE, &normalMtx[0][0] );
+    glProgramUniformMatrix3fv(this->shaderProgramHandle, this->normalMatrixUniformLocation, 1, GL_FALSE, &normalMtx[0][0] );
 }
 
 void JohnReimann::drawHead(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {

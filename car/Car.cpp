@@ -7,9 +7,10 @@
 #include <CSCI441/SimpleShader.hpp>
 #include <stdio.h>
 
-Car::Car(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH) {
+Car::Car(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint modelMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH) {
     this->shaderProgramHandle = shaderHandle;
     this->mvpMatrixUniformLocation = mvpMatUniformLoc;
+    this->modelMatUniformLocation = modelMatUniformLoc;
     this->normalMatrixUniformLocation = normalMatUniformLoc;
     this->materialColorUniformLocation = matColorUniformLoc;
 
@@ -65,8 +66,10 @@ void Car::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::
     // then send it to the shader on the GPU to apply to every vertex
     glProgramUniformMatrix4fv(this->shaderProgramHandle, this->mvpMatrixUniformLocation, 1, GL_FALSE, &mvpMtx[0][0] );
 
+    glProgramUniformMatrix4fv(this->shaderProgramHandle, this->modelMatUniformLocation, 1, GL_FALSE, &modelMtx[0][0] );
+
     glm::mat3 normalMtx = glm::mat3( glm::transpose( glm::inverse( modelMtx )));
-    glProgramUniformMatrix3fv( this->shaderProgramHandle, this->normalMatrixUniformLocation, 1, GL_FALSE, &normalMtx[0][0] );
+    glProgramUniformMatrix3fv(this->shaderProgramHandle, this->normalMatrixUniformLocation, 1, GL_FALSE, &normalMtx[0][0] );
 }
 
 void Car::drawAxel(bool isFront, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
