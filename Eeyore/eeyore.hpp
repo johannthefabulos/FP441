@@ -61,9 +61,9 @@ private:
     const GLfloat moveSpeed = 0.1;
 
     //The left/right translation for the wheels, original state is right wheel
-    const glm::vec3 wheelLRTranslation = {1.2, 0, 0};
+    const glm::vec3 bodyWid = {1.2, 0, 0};
     //The front/back translation for the wheels, original state is front wheel
-    const glm::vec3 wheelFBTranslation = {0, 0, 1.6};
+    const glm::vec3 bodyLen = {0, 0, 1.6};
 
     void drawLeg(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 

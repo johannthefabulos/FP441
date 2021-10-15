@@ -116,9 +116,10 @@ bool JohnReimann::testCarShouldMove(GLfloat testMoveSpeed) {
 
     // Since the group extends from (-WORLD_SIDE_LENGTH, -WORLD_SIDE_LENGTH) to (WORLD_SIDE_LENGTH, WORLD_SIDE_LENGTH)
     //      we can use the absolute value
-    GLfloat absXPos = glm::abs(testWorldPos.x) + this->wheelFBTranslation.z;
-    GLfloat absZPos = glm::abs(testWorldPos.z) + this->wheelFBTranslation.z;
-    if (absXPos >= WORLD_SIDE_LENGTH || absZPos >= WORLD_SIDE_LENGTH){
+    GLfloat absXPos = ceil(glm::abs(testWorldPos.x) + this->wheelFBTranslation.z);
+    GLfloat absZPos = ceil(glm::abs(testWorldPos.z) + this->wheelFBTranslation.z);
+    GLfloat distanceFromCenter = sqrt(pow(absXPos,2)+pow(absZPos,2));
+    if (distanceFromCenter > WORLD_SIDE_LENGTH-5.5){
         return false;
     }
     return true;

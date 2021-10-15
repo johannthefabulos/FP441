@@ -41,15 +41,15 @@ void eeyore::drawLeg(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 v
     wheelModelMat = glm::scale(wheelModelMat,glm::vec3(1,5,1));
 
     if (isFront){
-        wheelModelMat = glm::translate(wheelModelMat, this->wheelFBTranslation);
+        wheelModelMat = glm::translate(wheelModelMat, this->bodyWid);
     }else{
-        wheelModelMat = glm::translate(wheelModelMat, -this->wheelFBTranslation);
+        wheelModelMat = glm::translate(wheelModelMat, -this->bodyWid);
     }
     if (isRight){
-        wheelModelMat = glm::translate(wheelModelMat, this->wheelLRTranslation);
+        wheelModelMat = glm::translate(wheelModelMat, this->bodyLen);
         wheelModelMat = glm::rotate(wheelModelMat, wheelAngle, glm::vec3(0.5,0,0));
     }else{
-        wheelModelMat = glm::translate(wheelModelMat, -this->wheelLRTranslation);
+        wheelModelMat = glm::translate(wheelModelMat, -this->bodyLen);
         wheelModelMat = glm::rotate(wheelModelMat, -wheelAngle, glm::vec3(0.5,0,0));
     }
 
@@ -153,8 +153,8 @@ void eeyore::drawEar(bool left,glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 
 
 void eeyore::drawBody(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
 
-    GLfloat bodyWidth = (this->wheelLRTranslation.x * 2) + (this->wheelInnerRadius);
-    GLfloat bodyLength = (this->wheelFBTranslation.z * 2) + (this->wheelInnerRadius);
+    GLfloat bodyWidth = (this->bodyWid.x * 2) + (this->wheelInnerRadius);
+    GLfloat bodyLength = (this->bodyLen.z * 2) + (this->wheelInnerRadius);
     GLfloat bodyWidthScale = bodyWidth/this->wheelInnerRadius;
     GLfloat bodyLengthScale = bodyLength/this->wheelInnerRadius;
 
@@ -215,9 +215,10 @@ bool eeyore::testEeyoreShouldMove(GLfloat testMoveSpeed) {
 
     // Since the group extends from (-WORLD_SIDE_LENGTH, -WORLD_SIDE_LENGTH) to (WORLD_SIDE_LENGTH, WORLD_SIDE_LENGTH)
     //      we can use the absolute value
-    GLfloat absXPos = glm::abs(testWorldPos.x) + this->wheelFBTranslation.z;
-    GLfloat absZPos = glm::abs(testWorldPos.z) + this->wheelFBTranslation.z;
-    if (absXPos >= WORLD_SIDE_LENGTH || absZPos >= WORLD_SIDE_LENGTH){
+    GLfloat absXPos = ceil(glm::abs(testWorldPos.x) + this->bodyLen.z+2);
+    GLfloat absZPos = ceil(glm::abs(testWorldPos.z) + this->bodyLen.z+2);
+    GLfloat distanceFromCenter = sqrt(pow(absXPos,2)+pow(absZPos,2));
+    if (distanceFromCenter > WORLD_SIDE_LENGTH-5.5){
         return false;
     }
     return true;

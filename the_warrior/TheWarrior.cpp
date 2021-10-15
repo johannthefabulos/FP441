@@ -328,9 +328,11 @@ bool TheWarrior::testWarriorShouldMove(GLfloat testMoveSpeed) {
     // Since the ground extends from (-WORLD_SIDE_LENGTH, -WORLD_SIDE_LENGTH) to (WORLD_SIDE_LENGTH, WORLD_SIDE_LENGTH)
     //      we can use the absolute value
     // Using leg length since when that is fully extended that is the farthest sticking out part of the body
+
     GLfloat absXPos = ceil(glm::abs(testWorldPos.x) + this->legLength);
     GLfloat absZPos = ceil(glm::abs(testWorldPos.z) + this->legLength);
-    if (absXPos >= WORLD_SIDE_LENGTH || absZPos >= WORLD_SIDE_LENGTH){
+    GLfloat distanceFromCenter = sqrt(pow(absXPos,2)+pow(absZPos,2));
+    if (distanceFromCenter > WORLD_SIDE_LENGTH-5.5){
         return false;
     }
     return true;
