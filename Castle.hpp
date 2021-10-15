@@ -27,7 +27,7 @@ private:
     float ang;
     float z;
 
-    const glm::vec3 leafColor = {0, .5f, 0};
+    const glm::vec3 leafColor = {0, 0, 0};
     const glm::vec3 trunkColor = {0.7f, 0.75f, 0.71f};
 
     void drawMain(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);

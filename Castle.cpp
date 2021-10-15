@@ -27,12 +27,23 @@ void Castle::drawCastle(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
 }
 
 void Castle::drawMain(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
-
-
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->trunkColor[0]);
     this->computeAndSendMatUniforms(modelMtx, viewMtx, projMtx);
-
     CSCI441::drawSolidCube(5);
+
+    glm::mat4 doorMat = glm::rotate(modelMtx,0.0f,glm::vec3(0,0,1));
+    doorMat = glm::rotate(doorMat,float(M_PI/2),glm::vec3(0,1,0));
+    doorMat = glm::translate(doorMat,glm::vec3(0,0,-2.6));
+
+    glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->leafColor[0]);
+    this->computeAndSendMatUniforms(doorMat, viewMtx, projMtx);
+    CSCI441::drawSolidPartialDisk(0,1,10,10,0,180);
+
+    glm::mat4 doorWay = glm::translate(modelMtx,glm::vec3(-1.6,-1,0));
+    glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->leafColor[0]);
+    this->computeAndSendMatUniforms(doorWay, viewMtx, projMtx);
+    CSCI441::drawSolidCube(2);
+
 }
 
 void Castle::drawTop(bool isLeft, bool isTop, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
