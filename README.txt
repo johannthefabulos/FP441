@@ -1,4 +1,4 @@
-1. Matrix Magic / TheWarrior -- Ben Carlson // Eeyore--Connor Caldwell / JohnReimann --John Reimann
+1. Matrix Magic / TheWarrior -- Ben Carlson / Eeyore--Connor Caldwell / JohnReimann --John Reimann
 2. MP -- The Main Attraction
 3. This program is designed to create an arena of our Heroes and a car in an environment with custom lighting.
    The arena consist of a border of castles, with trees dispersed around. Our heroes have the ability to walk around the
