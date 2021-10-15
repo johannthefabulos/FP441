@@ -269,7 +269,7 @@ void MPEngine::_generateEnvironment(ModelShaderLocations locations) {
             }
         }
     }
-    for(float i = 0; i < 2*M_PI;i += M_PI/25){
+    for(float i = 0; i < 2*M_PI;i += M_PI/29){
         _castles.push_back(new Castle(locations, cos(i)*GRID_RADIUS, sin(i)*GRID_RADIUS,i));
 
     }

@@ -31,7 +31,7 @@ private:
     const glm::vec3 trunkColor = {0.7f, 0.75f, 0.71f};
 
     void drawMain(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
-    void drawTop(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
+    void drawTop(bool isLeft, bool isTop, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx);
 
 
     void computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const;

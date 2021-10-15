@@ -8,28 +8,45 @@
 Castle::Castle(ModelShaderLocations shaderLocations, float xPos, float zPos, float ang) {
     this->shaderLocations = shaderLocations;
 
-    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(xPos, 2.5, zPos));
+
     this-> x = xPos;
     this-> ang = ang;
     this-> z = zPos;
+
+    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(xPos, 2.5, zPos));
+    this->currentModelMatrix = glm::rotate(this->currentModelMatrix,-ang,glm::vec3(0,1,0));
 }
 
 void Castle::drawCastle(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
     glUseProgram(this->shaderLocations.shaderProgramHandle);
     this->drawMain(this->currentModelMatrix,viewMatrix,projMatrix);
+    this->drawTop(true,true,this->currentModelMatrix,viewMatrix,projMatrix);
+    this->drawTop(true,false,this->currentModelMatrix,viewMatrix,projMatrix);
+    this->drawTop(false,true,this->currentModelMatrix,viewMatrix,projMatrix);
+    this->drawTop(false,false,this->currentModelMatrix,viewMatrix,projMatrix);
 }
 
 void Castle::drawMain(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
-    glm::mat4 castleMtx = glm::rotate(modelMtx,-ang,glm::vec3(0,1,0));
+
 
     glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->trunkColor[0]);
-    this->computeAndSendMatUniforms(castleMtx, viewMtx, projMtx);
+    this->computeAndSendMatUniforms(modelMtx, viewMtx, projMtx);
 
     CSCI441::drawSolidCube(5);
 }
 
-void Castle::drawTop(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
-
+void Castle::drawTop(bool isLeft, bool isTop, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
+    int positionModifierX = 1, positionModifierZ = 1;
+    if(isLeft){
+        positionModifierX = -1;
+    }
+    if(isTop){
+        positionModifierZ = -1;
+    }
+    glm::mat4 drawTop = glm::translate(modelMtx,glm::vec3(positionModifierX*2,3,positionModifierZ*2));
+    glUniform3fv(this->shaderLocations.matColorUniformLocation, 1, &this->trunkColor[0]);
+    this->computeAndSendMatUniforms(drawTop, viewMtx, projMtx);
+    CSCI441::drawSolidCube(1);
 }
 
 void Castle::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const {
