@@ -19,8 +19,20 @@ eeyore::eeyore(ModelShaderLocations shaderLocations, GLfloat WORLD_SIDE_LENGTH) 
 }
 
 void eeyore::drawEeyore(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
+
     glUseProgram(this->shaderLocations.shaderProgramHandle);
+
+    currentModelMatrix = glm::scale(currentModelMatrix, glm::vec3(1,1,1));
+    this->computeAndSendMatUniforms(currentModelMatrix, viewMatrix, projMatrix);
+    //Testing values
+    CSCI441::drawSolidCube(2);
+    currentModelMatrix = glm::translate(currentModelMatrix, glm::vec3(2,0,0));
+    float theta = .2;
+    glm::rotate(this->currentModelMatrix, theta, glm::vec3(1, 0, 0));
+    this->computeAndSendMatUniforms(currentModelMatrix, viewMatrix, projMatrix);
+    CSCI441::drawSolidCube(2);
     //Front wheels
+    /*
     this->drawLeg(true, true, this->currentModelMatrix, viewMatrix, projMatrix);
     this->drawLeg(true, false, this->currentModelMatrix, viewMatrix, projMatrix);
     //Back wheels
@@ -33,6 +45,7 @@ void eeyore::drawEeyore(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
     this->drawEar(true,this->currentModelMatrix, viewMatrix, projMatrix);
     this->drawEar(false,this->currentModelMatrix, viewMatrix, projMatrix);
     this->drawBody(this->currentModelMatrix, viewMatrix, projMatrix);
+     */
 }
 
 void eeyore::drawLeg(bool isFront, bool isRight, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {

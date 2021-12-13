@@ -4,6 +4,8 @@
 
 #include <CSCI441/objects.hpp>
 #include <CSCI441/OpenGLUtils.hpp>
+#include <iostream>
+#include <vector>
 
 #ifndef M_PI
 #define M_PI 3.14159265
@@ -18,15 +20,15 @@ JohnReimann::JohnReimann(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint mode
 
     this->WORLD_SIDE_LENGTH = WORLD_SIDE_LENGTH;
 
-    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(-10, this->carYPosition, 10));
+    this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(-45, this->carYPosition, 45));
 }
 
-void JohnReimann::drawJohn_Reimann(glm::mat4 viewMatrix, glm::mat4 projMatrix) {
+void JohnReimann::drawJohn_Reimann(glm::mat4 viewMatrix, glm::mat4 projMatrix, std::vector<std::vector<float>> colls) {
     this->currentModelMatrix = glm::translate( this->currentModelMatrix, glm::vec3( .025*sin(animationAngle), 0, .025*cos(animationAngle)));
     drawLegs(this->currentModelMatrix,viewMatrix, projMatrix );
     drawHead(this->currentModelMatrix,viewMatrix,projMatrix );
     drawBody(this->currentModelMatrix,viewMatrix, projMatrix );
-
+    this->colls =colls;
     animationAngle+=.05f;
 }
 
@@ -111,7 +113,7 @@ void JohnReimann::updateCurrentPosition() {
 void JohnReimann::turnHero(GLfloat theta) {
     this->currentModelMatrix = glm::rotate(this->currentModelMatrix, theta, glm::vec3(0, 1, 0));
 }
-
+int holdup = 0;
 bool JohnReimann::testCarShouldMove(GLfloat testMoveSpeed) {
     glm::mat4 testModelMat = glm::translate(this->currentModelMatrix, glm::vec3(0, 0, testMoveSpeed));
     glm::vec3 testWorldPos = testModelMat * glm::vec4(0, 0, 0, 1);
@@ -121,10 +123,39 @@ bool JohnReimann::testCarShouldMove(GLfloat testMoveSpeed) {
     GLfloat absXPos = ceil(glm::abs(testWorldPos.x) + this->wheelFBTranslation.z);
     GLfloat absZPos = ceil(glm::abs(testWorldPos.z) + this->wheelFBTranslation.z);
     GLfloat distanceFromCenter = sqrt(pow(absXPos,2)+pow(absZPos,2));
-    if (distanceFromCenter > WORLD_SIDE_LENGTH-5.5){
-        return false;
+    int i = 0;
+
+    while(i < colls.size()) {
+        glm::vec3 currPosition = this->getCurrentPosition();
+        //std::cout << "i:" << i<< "colls"<<colls[i][1] << std::endl;
+        //std::cout << "x:" << currPosition.x << "y:" << currPosition.z << std::endl;
+        if (abs(testWorldPos.x - colls[i][0]) < 4 and abs(testWorldPos.z -colls[i][1]) < 4) {
+            return false;
+        }
+        else {
+            holdup++;
+        }
+        if (holdup > 100) {
+            holdup = 0;
+            //return true;
+        }
+        i++;
+
     }
+        /*
+        if ((currPosition.x-TOLERANCE1<(colls[i][0]+TOLERANCE) and currPosition.z - TOLERANCE1<(colls[i][1]+TOLERANCE) and currPosition.z+TOLERANCE1>(colls[i][1]-TOLERANCE)) or (currPosition.x+TOLERANCE1>(colls[i][0]-TOLERANCE) and currPosition.z - TOLERANCE1<(colls[i][1]+TOLERANCE) and currPosition.z+TOLERANCE1>(colls[i][1]-TOLERANCE))) {
+            //if (distanceFromCenter > WORLD_SIDE_LENGTH-5.5){
+
+            return false;
+            //}
+        }
+        else {
+            return true;
+        }
+    }
+         */
     return true;
+
 }
 
 void JohnReimann::updateWheelRotation(bool isMovingForward) {

@@ -2,7 +2,7 @@
 #define MP_JOHNRIEMANN_HPP
 
 #include <GL/glew.h>
-
+#include <vector>
 #include <glm/glm.hpp>
 #include "../HeroVirtual.hpp"
 
@@ -10,7 +10,7 @@ class JohnReimann : public virtual HeroVirtual{
 public:
     JohnReimann(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint modelMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH);
 
-    void drawJohn_Reimann(glm::mat4 viewMatrix, glm::mat4 projMatrix);
+    void drawJohn_Reimann(glm::mat4 viewMatrix, glm::mat4 projMatrix,std::vector<std::vector<float>> colls = {{}});
 
     glm::vec3 getCurrentPosition() override;
 
@@ -19,7 +19,7 @@ public:
     void turnHero(GLfloat theta) override;
 
     glm::mat4 getCurrentModelMat() override;
-
+    std::vector<std::vector<float>> colls;
     void leftClickAction() override{};
 
     glm::vec3 getFirstPersonCamPosition() override{

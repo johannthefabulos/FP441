@@ -10,15 +10,10 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Windows" AND MINGW )
     # if working on Windows but not in the lab
     # update the include directory location
     # update the lib directory location
-    if ($ENV{USERPROFILE} MATCHES "C:/Users/johan")
-        include_directories("C:/Users/johan/Desktop/CSCI441/include")
-        # update the lib directory location
-        target_link_directories(${PROJECT_NAME} PUBLIC "C:/Users/johan/Desktop/CSCI441/lib")
-    else()
-        include_directories("D:/CSCI441/include")
-        target_link_libraries(${PROJECT_NAME} opengl32 glfw3 glew32.dll gdi32)
-        target_link_directories(${PROJECT_NAME} PUBLIC "D:/CSCI441/lib")
-    endif()
+    include_directories("C:/Users/johan/Desktop/CSCI441/include")
+    # update the lib directory location
+    target_link_directories(${PROJECT_NAME} PUBLIC "C:/Users/johan/Desktop/CSCI441/lib")
+    target_link_libraries(${PROJECT_NAME} opengl32 glfw3 glew32.dll gdi32 stbimage)
 
     # OS X Installations
 elseif( APPLE AND ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
