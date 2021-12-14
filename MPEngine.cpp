@@ -7,6 +7,7 @@
 #include <ctime>
 #include <stdio.h>
 #include <iostream>
+#include <unistd.h>
 
 /// \desc Simple helper function to return a random number between 0.0f and 1.0f.
 GLfloat getRand() {
@@ -708,6 +709,7 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 }
 void MPEngine::eatGold(){
     glm::vec3 currentPosition = _JohnReimann->getCurrentPosition();
+    allPositions.push_back({currentPosition.x,currentPosition.z});
     this->pointLightProperties->lightColor = glm::vec3(0, 1, 0);
 
     this->pointLightProperties->lightPosition = glm::vec3(currentPosition.x, 1, currentPosition.z);
@@ -731,7 +733,26 @@ void MPEngine::eatGold(){
         }
     }
 }
+void MPEngine::updateWarrior() {
+    //std::cout<<goldEaten;
+    if (goldEaten >= 1) {
+            _warrior->setCurrentModelMat(
+                    _JohnReimann->getCurrentModelMat());
+            _warrior->moveHeroForward();
+    }
+    if (goldEaten >= 2) {
+        _warrior->leftClickAction();
+    }
+    if (goldEaten >= 3) {
+        _eeyore->setCurrentModelMat(
+                _JohnReimann->getCurrentModelMat());
+    }
+    if (goldEaten >= 4) {
+        _eeyore->setCurrentModelMat(
+                _JohnReimann->getCurrentModelMat());
+    }
 
+}
 void MPEngine::arcLength() {
     int numCurves = _bezierCurve.numCurves;
 
@@ -959,6 +980,7 @@ void MPEngine::_updateScene() {
         _particleSystemAngle -= 6.28f;
     }
     eatGold();
+    updateWarrior();
 }
 
 void MPEngine::run() {

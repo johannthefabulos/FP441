@@ -61,7 +61,9 @@ void TheWarrior::drawNeck(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projM
 
 
 }
-
+void TheWarrior::setPosition(glm::vec3 Position) {
+    glm::translate(this->currentModelMatrix,Position);
+}
 void TheWarrior::drawLeg(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
     GLfloat legCenterY = this->bodyCenterY - (this->bodyHeight / 2);
     GLfloat legOffset = isLeft ? this->legLeftOffset : -this->legLeftOffset;
@@ -244,7 +246,9 @@ void TheWarrior::drawEyes(bool isLeft, glm::mat4 modelMtx, glm::mat4 viewMtx, gl
     CSCI441::drawSolidDisk(0, this->innerEyeRadius, 20, 20);
 
 }
-
+void TheWarrior::setCurrentModelMat(glm::mat4 modelMatrix) {
+    this->currentModelMatrix = modelMatrix;
+}
 void TheWarrior::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const {
     // precompute the Model-View-Projection matrix on the CPU
     glm::mat4 mvpMtx = projMtx * viewMtx * modelMtx;
@@ -280,7 +284,10 @@ void TheWarrior::moveHeroForward() {
     this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(0, 0, this->movementSpeed));
     this->updateCurrentPosition();
 }
-
+void TheWarrior::setMoving() {
+    this->isMoving = true;
+    this->startMoving();
+}
 void TheWarrior::moveHeroBackward() {
 
     if (!this->testWarriorShouldMove(-this->movementSpeed)){
@@ -294,13 +301,13 @@ void TheWarrior::moveHeroBackward() {
 }
 
 void TheWarrior::stopMoving() {
-    if (!isMoving){
-        return;
-    }
+    //if (!isMoving){
+        //return;
+    //}
 
-    this->isMoving = false;
-    this->isCoolingDown = true;
-    this->movementTime = 0;
+    //this->isMoving = false;
+    //this->isCoolingDown = true;
+    //this->movementTime = 0;
 }
 
 void TheWarrior::turnHero(GLfloat theta) {
@@ -314,6 +321,7 @@ void TheWarrior::updateCurrentPosition() {
 
 glm::mat4 TheWarrior::getCurrentModelMat() {
     return this->currentModelMatrix;
+    this->updateCurrentPosition();
 }
 
 void TheWarrior::leftClickAction() {
@@ -334,9 +342,9 @@ bool TheWarrior::testWarriorShouldMove(GLfloat testMoveSpeed) {
     GLfloat absXPos = ceil(glm::abs(testWorldPos.x) + this->legLength);
     GLfloat absZPos = ceil(glm::abs(testWorldPos.z) + this->legLength);
     GLfloat distanceFromCenter = sqrt(pow(absXPos,2)+pow(absZPos,2));
-    if (distanceFromCenter > WORLD_SIDE_LENGTH-6){
-        return false;
-    }
+    //if (distanceFromCenter > WORLD_SIDE_LENGTH-6){
+        //return false;
+    //}
     return true;
 }
 

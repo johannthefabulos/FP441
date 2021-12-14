@@ -187,7 +187,9 @@ private:
     LightProperties* pointLightProperties;
     LightProperties* spotLightProperties;
     LightProperties* directLightProperties;
-
+    std::vector<std::vector<float>> allPositions;
+    void updateWarrior();
+    int counter1=0;
     //End Models
     /// \desc the size of the world (controls the ground size and locations of buildings)
     static constexpr GLfloat WORLD_SIZE = 55.0f;

@@ -15,7 +15,7 @@ public:
 
     glm::vec3 getCurrentPosition() override;
     glm::mat4 getCurrentModelMat() override;
-
+    void setCurrentModelMat(glm::mat4 modelMatrix);
     void moveHeroForward() override;
     void moveHeroBackward() override;
     void turnHero(GLfloat theta) override;

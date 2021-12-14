@@ -23,7 +23,9 @@ public:
     glm::vec3 getCurrentPosition() override;
     glm::mat4 getCurrentModelMat() override;
     GLint getFirstPersonCamZModifier() override { return -1;};
-
+    void setPosition(glm::vec3 Position);
+    void setMoving();
+    void setCurrentModelMat(glm::mat4 modelMatrix);
     void startMoving() override;
     void moveHeroForward() override;
     void moveHeroBackward() override;
