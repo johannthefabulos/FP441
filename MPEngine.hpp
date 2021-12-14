@@ -232,9 +232,13 @@ private:
         GLint vPos;
     } _billboardShaderProgramAttributes;
     ShaderUniformLocations shaderUniformLocations;
-
+    void deathCubeLogic();
+    bool death = false;
     ShaderAttributeLocations shaderAttributeLocations;
-
+    glm::vec3 color;
+    float currentRadius = 0.05;
+    float radiusIncrement = 0.0;
+    bool immortal = false;
     /// \desc precomputes the matrix uniforms CPU-side and then sends them
     /// to the GPU to be used in the shader for each vertex.  It is more efficient
     /// to calculate these once and then use the resultant product in the shader.
@@ -244,7 +248,8 @@ private:
     void _computeAndSendMatrixUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) const;
 
     HeroVirtual *getCurrentHero();
-
+    bool win = false;
+    bool jump = false;
     HeroType currentlySelectedHero = WARRIOR;
     static void _computeAndSendTransformationMatrices(CSCI441::ShaderProgram* shaderProgram,
                                                       glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix,

@@ -93,6 +93,18 @@ void MPEngine::handleKeyEvent(GLint key, GLint action) {
             case GLFW_KEY_K:
                 goldEaten -= 1;
                 break;
+            case GLFW_KEY_6:
+                color = glm::vec3(1, 0, 0);
+
+            case GLFW_KEY_7:
+                color = glm::vec3(0, 0, 1);
+
+            case GLFW_KEY_8:
+                color = glm::vec3(0, 1, 0);
+            case GLFW_KEY_SPACE:
+                if (jump) {
+                    _JohnReimann->setIncrment(1.0f);
+                }
 
             default: break; // suppress CLion warning
         }
@@ -641,8 +653,14 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
         );
         CSCI441::drawSolidSphere( 2.0f,50,50 );
     }
-
-
+    modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0, 2.1f, 0));
+    mvpMtx = projMtx * viewMtx * modelMatrix;
+    _textureShaderProgram->setProgramUniform(_textureShaderUniformLocations.mvpMatrix, mvpMtx);
+    CSCI441::setVertexAttributeLocations(_textureShaderAttributeLocations.vPos,
+                                         _textureShaderAttributeLocations.vNormal,
+                                         _textureShaderAttributeLocations.textCoord
+    );
+    CSCI441::drawSolidSphere( currentRadius+=radiusIncrement,50,50 );
 
     _billboardShaderProgram->useProgram();
 
@@ -707,10 +725,17 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
         shaderProgram->setProgramUniform(normalMtxLocation, normalMatrix);
     }
 }
+void MPEngine::deathCubeLogic(){
+    glm::vec3 currPos = _JohnReimann->getCurrentPosition();
+    float dist = sqrt(pow(currPos.x-0,2)+pow(currPos.z-0,2));
+    if (dist < currentRadius){
+        death = true;
+    }
+}
 void MPEngine::eatGold(){
     glm::vec3 currentPosition = _JohnReimann->getCurrentPosition();
     allPositions.push_back({currentPosition.x,currentPosition.z});
-    this->pointLightProperties->lightColor = glm::vec3(0, 1, 0);
+    this->pointLightProperties->lightColor = color;
 
     this->pointLightProperties->lightPosition = glm::vec3(currentPosition.x, 1, currentPosition.z);
 
@@ -748,8 +773,12 @@ void MPEngine::updateWarrior() {
                 _JohnReimann->getCurrentModelMat());
     }
     if (goldEaten >= 4) {
-        _eeyore->setCurrentModelMat(
-                _JohnReimann->getCurrentModelMat());
+        _eeyore->moveHeroForward();
+        jump = true;
+    }
+    if (goldEaten >= 5) {
+        _eeyore->moveHeroForward();
+        win = true;
     }
 
 }
@@ -935,7 +964,13 @@ void MPEngine::_updateScene() {
     glm::vec3 currPos = _JohnReimann->getCurrentPosition();
     if (currPos.y > 40){
         _JohnReimann->setIncrment(-2.0f);
-        comingDown = true;
+        if (win) {
+            comingDown = false;
+        }
+        else {
+            comingDown = true;
+        }
+
 
     }
     if (currPos.y <= 3.9 and comingDown) {
