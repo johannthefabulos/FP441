@@ -731,6 +731,9 @@ void MPEngine::deathCubeLogic(){
     if (dist < currentRadius){
         death = true;
     }
+    if (death and !immortal){
+        _JohnReimann->setIncrment(-1);
+    }
 }
 void MPEngine::eatGold(){
     glm::vec3 currentPosition = _JohnReimann->getCurrentPosition();
@@ -764,6 +767,7 @@ void MPEngine::updateWarrior() {
             _warrior->setCurrentModelMat(
                     _JohnReimann->getCurrentModelMat());
             _warrior->moveHeroForward();
+        radiusIncrement = .006;
     }
     if (goldEaten >= 2) {
         _warrior->leftClickAction();
@@ -771,10 +775,12 @@ void MPEngine::updateWarrior() {
     if (goldEaten >= 3) {
         _eeyore->setCurrentModelMat(
                 _JohnReimann->getCurrentModelMat());
+        immortal = true;
+        jump = true;
     }
     if (goldEaten >= 4) {
         _eeyore->moveHeroForward();
-        jump = true;
+
     }
     if (goldEaten >= 5) {
         _eeyore->moveHeroForward();
@@ -1016,6 +1022,7 @@ void MPEngine::_updateScene() {
     }
     eatGold();
     updateWarrior();
+    deathCubeLogic();
 }
 
 void MPEngine::run() {
