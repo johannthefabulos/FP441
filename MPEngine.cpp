@@ -20,7 +20,7 @@ GLfloat getRand() {
 MPEngine::MPEngine(int OPENGL_MAJOR_VERSION, int OPENGL_MINOR_VERSION,
                          int WINDOW_WIDTH, int WINDOW_HEIGHT, const char* WINDOW_TITLE)
          : CSCI441::OpenGLEngine(OPENGL_MAJOR_VERSION, OPENGL_MINOR_VERSION, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE),
-        NUM_SPRITES(75),
+        NUM_SPRITES(20),
         MAX_BOX_SIZE(10.0f) {
     for(auto& _key : _keys) _key = GL_FALSE;
 
@@ -83,6 +83,14 @@ void MPEngine::handleKeyEvent(GLint key, GLint action) {
                 break;
             case GLFW_KEY_H:
                 _bezierCurve.useNormal = !_bezierCurve.useNormal;
+                break;
+
+            // temporary: to test shader changing colors
+            case GLFW_KEY_I:
+                goldEaten += 1;
+                break;
+            case GLFW_KEY_K:
+                goldEaten -= 1;
                 break;
 
             default: break; // suppress CLion warning
@@ -223,6 +231,8 @@ void MPEngine::_setupShaders() {
     _billboardShaderProgramUniforms.mvMatrix            = _billboardShaderProgram->getUniformLocation( "mvMatrix");
     _billboardShaderProgramUniforms.projMatrix          = _billboardShaderProgram->getUniformLocation( "projMatrix");
     _billboardShaderProgramUniforms.image               = _billboardShaderProgram->getUniformLocation( "image");
+    _billboardShaderProgramUniforms.goldEaten               = _billboardShaderProgram->getUniformLocation( "goldEaten");
+
     // get attribute locations
     _billboardShaderProgramAttributes.vPos              = _billboardShaderProgram->getAttributeLocation( "vPos");
 
@@ -466,6 +476,9 @@ void MPEngine::_setupScene() {
 void MPEngine::_cleanupShaders() {
     fprintf( stdout, "[INFO]: ...deleting Shaders.\n" );
     delete _shaderProgram;
+    delete _textureShaderProgram;
+    delete _flatShaderProgram;
+    delete _billboardShaderProgram;
     delete pointLightProperties;
     delete spotLightProperties;
     delete directLightProperties;
@@ -499,32 +512,32 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
                                           _flatShaderProgramUniformLocations.mvpMatrix);
 
     // draw the curve control cage
-    if(_bezierCurve.drawPoints) {
-        glm::vec3 flatColor(1.0f, 1.0f, 0.0f);
-        _flatShaderProgram->setProgramUniform(_flatShaderProgramUniformLocations.color, flatColor);
-        glBindVertexArray(_vaos[VAO_ID::BEZIER_CAGE]);
-        glDrawArrays(GL_LINE_STRIP, 0, _numVAOPoints[VAO_ID::BEZIER_CAGE]);
-    }
-    //***************************************************************************
-    // draw the curve
-
-    // LOOKHERE #1 draw the curve itself
-    if(_bezierCurve.drawCage) {
-        glm::vec3 flatColor(0.0f, 0.0f, 1.0f);
-        _flatShaderProgram->setProgramUniform(_flatShaderProgramUniformLocations.color, flatColor);
-        glBindVertexArray(_vaos[VAO_ID::BEZIER_CURVE]);
-        glDrawArrays(GL_LINE_STRIP, 0, _numVAOPoints[VAO_ID::BEZIER_CURVE]);
-    }
-    if (_bezierCurve.drawPoints) {
-        glm::vec3 flatColor(0.0f, 1.0f, 0.0f);
-        _flatShaderProgram->setProgramUniform(_flatShaderProgramUniformLocations.color, flatColor);
-        //_shaderProgram->useProgram();
-        for (int i = 0; i < _bezierCurve.numControlPoints; i++) {
-            glm::mat4 modelMatrix = glm::translate(_warrior->getCurrentModelMat(), _bezierCurve.controlPoints[i]);
-            _computeAndSendMatrixUniforms(modelMatrix, viewMtx, projMtx);
-            CSCI441::drawSolidSphere(0.25f, 16, 16);
-        }
-    }
+//    if(_bezierCurve.drawPoints) {
+//        glm::vec3 flatColor(1.0f, 1.0f, 0.0f);
+//        _flatShaderProgram->setProgramUniform(_flatShaderProgramUniformLocations.color, flatColor);
+//        glBindVertexArray(_vaos[VAO_ID::BEZIER_CAGE]);
+//        glDrawArrays(GL_LINE_STRIP, 0, _numVAOPoints[VAO_ID::BEZIER_CAGE]);
+//    }
+//    //***************************************************************************
+//    // draw the curve
+//
+//    // LOOKHERE #1 draw the curve itself
+//    if(_bezierCurve.drawCage) {
+//        glm::vec3 flatColor(0.0f, 0.0f, 1.0f);
+//        _flatShaderProgram->setProgramUniform(_flatShaderProgramUniformLocations.color, flatColor);
+//        glBindVertexArray(_vaos[VAO_ID::BEZIER_CURVE]);
+//        glDrawArrays(GL_LINE_STRIP, 0, _numVAOPoints[VAO_ID::BEZIER_CURVE]);
+//    }
+//    if (_bezierCurve.drawPoints) {
+//        glm::vec3 flatColor(0.0f, 1.0f, 0.0f);
+//        _flatShaderProgram->setProgramUniform(_flatShaderProgramUniformLocations.color, flatColor);
+//        //_shaderProgram->useProgram();
+//        for (int i = 0; i < _bezierCurve.numControlPoints; i++) {
+//            glm::mat4 modelMatrix = glm::translate(_warrior->getCurrentModelMat(), _bezierCurve.controlPoints[i]);
+//            _computeAndSendMatrixUniforms(modelMatrix, viewMtx, projMtx);
+//            CSCI441::drawSolidSphere(0.25f, 16, 16);
+//        }
+//    }
 
     //// BEGIN DRAWING THE GROUND PLANE ////
     _shaderProgram->useProgram();
@@ -631,11 +644,16 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 
 
     _billboardShaderProgram->useProgram();
-    modelMatrix = glm::rotate(glm::mat4(1.0f), _particleSystemAngle, CSCI441::Y_AXIS);
+
+    modelMatrix = glm::translate(glm::mat4(1.0f), _warrior->getCurrentPosition());
+    modelMatrix = glm::scale(modelMatrix, glm::vec3(0.5));
+    modelMatrix = glm::rotate(modelMatrix, _particleSystemAngle, CSCI441::Y_AXIS);
     glm::mat4 mvMatrix = viewMtx * modelMatrix;
 
     _billboardShaderProgram->setProgramUniform( _billboardShaderProgramUniforms.mvMatrix, mvMatrix );
     _billboardShaderProgram->setProgramUniform( _billboardShaderProgramUniforms.projMatrix, projMtx );
+    _billboardShaderProgram->setProgramUniform( _billboardShaderProgramUniforms.goldEaten, goldEaten );
+
 
     glBindVertexArray( _vaos[VAO_ID::PARTICLE_SYSTEM] );
     glBindTexture(GL_TEXTURE_2D, _texHandles[TEXTURE_ID::PARTICLE_SYSTEM_TEX]);
@@ -989,7 +1007,7 @@ void MPEngine::_setupTextures() {
     // TODO #09
     _texHandles[TEXTURE_ID::METAL] = _loadAndRegisterTexture("assets/textures/gold.png" );
     _texHandles[TEXTURE_ID::SKY] = _loadAndRegisterTexture("assets/textures/skybox.png" );
-    _texHandles[TEXTURE_ID::PARTICLE_SYSTEM_TEX] = _loadAndRegisterTexture("assets/textures/snowflake.png");
+    _texHandles[TEXTURE_ID::PARTICLE_SYSTEM_TEX] = _loadAndRegisterTexture("assets/textures/spark.png");
 }
 GLuint MPEngine::_loadAndRegisterTexture(const char* FILENAME) {
     // our handle to the GPU

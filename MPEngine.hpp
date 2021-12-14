@@ -75,7 +75,7 @@ private:
         // TODO #10
         GLint textCoord;
     } _textureShaderAttributeLocations;
-    static constexpr GLuint NUM_TEXTURES = 2;
+    static constexpr GLuint NUM_TEXTURES = 3;
     void _setupTextures() final;
     /// \desc used to index through our texture array to give named access
     enum TEXTURE_ID {
@@ -221,6 +221,8 @@ private:
         GLint projMatrix;
         /// \desc the texture to apply
         GLint image;
+
+        GLint goldEaten;
     } _billboardShaderProgramUniforms;
     /// \desc stores the locations of all of our shader attributes
     struct BillboardShaderProgramAttributes {
