@@ -183,7 +183,7 @@ private:
     eeyore* _eeyore;
     JohnReimann* _JohnReimann;
     TheWarrior* _warrior;
-
+    bool comingDown= false;
     LightProperties* pointLightProperties;
     LightProperties* spotLightProperties;
     LightProperties* directLightProperties;

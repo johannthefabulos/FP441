@@ -627,9 +627,6 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
         );
         CSCI441::drawSolidSphere( 2.0f,50,50 );
     }
-    glm::mat4 orbMatrix = glm::translate(orbMatrix,  this->pointLightProperties->lightPosition);
-    _computeAndSendMatrixUniforms(orbMatrix, viewMtx, projMtx);
-    CSCI441::drawSolidSphere(50,50,50);
 
 
 
@@ -706,9 +703,11 @@ void MPEngine::eatGold(){
 
     this->spotLightProperties->sendUniforms();
     this->directLightProperties->sendUniforms();
+
     for (int i = 0; i < goldLocs.size();i++) {
         //std::cout << goldLocs.size();
         if (abs(currentPosition.x - goldLocs[i][0]) < 1 and abs(currentPosition.z - goldLocs[i][1]) < 1) {
+            _JohnReimann->setIncrment(1);
             goldEaten++;
             goldLocs[i] = {-1000,-1000};
         }
@@ -892,7 +891,21 @@ void MPEngine::_loadControlPointsFromFile(const char* FILENAME, GLuint *numBezie
     // close the file
     fclose(file);
 }
+
 void MPEngine::_updateScene() {
+    glm::vec3 currPos = _JohnReimann->getCurrentPosition();
+    if (currPos.y > 40){
+        _JohnReimann->setIncrment(-2.0f);
+        comingDown = true;
+
+    }
+    if (currPos.y <= 3.9 and comingDown) {
+        glm::mat4 tempModelMtx = _JohnReimann->getCurrentModelMat();
+        glm::translate(tempModelMtx,glm::vec3(currPos.x,-1,currPos.z));
+        _JohnReimann->setCurrentModelMat(tempModelMtx);
+        _JohnReimann->setIncrment(0.0f);
+        comingDown = false;
+    }
     _bezierCurve.currPosition += 0.005f;
     if (_bezierCurve.currPosition > _bezierCurve.numCurves) {
         _bezierCurve.currPosition = 0;

@@ -11,14 +11,15 @@ public:
     JohnReimann(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint modelMatUniformLoc, GLint normalMatUniformLoc, GLint matColorUniformLoc, GLfloat WORLD_SIDE_LENGTH);
 
     void drawJohn_Reimann(glm::mat4 viewMatrix, glm::mat4 projMatrix,std::vector<std::vector<float>> colls = {{}});
-
+    float increment=0.0f;
     glm::vec3 getCurrentPosition() override;
-
+    void setIncrment(GLfloat);
     void moveHeroForward() override;
     void moveHeroBackward() override;
     void turnHero(GLfloat theta) override;
 
     glm::mat4 getCurrentModelMat() override;
+    void setCurrentModelMat(glm::mat4 modelMatrix);
     std::vector<std::vector<float>> colls;
     void leftClickAction() override{};
 

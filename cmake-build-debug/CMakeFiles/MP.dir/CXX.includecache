@@ -70,20 +70,6 @@ fstream
 string
 -
 
-../include/CSCI441/SimpleShader.hpp
-GL/glew.h
--
-glm/glm.hpp
--
-string
--
-vector
--
-objects.hpp
-../include/CSCI441/objects.hpp
-ShaderUtils.hpp
-../include/CSCI441/ShaderUtils.hpp
-
 ../include/CSCI441/objects.hpp
 GL/glew.h
 -
@@ -942,14 +928,6 @@ C:/Users/johan/Desktop/CSCI441/include/glm/gtc/constants.inl
 
 C:/Users/johan/Desktop/CSCI441/include/glm/gtc/constants.inl
 
-C:/Users/johan/Desktop/CSCI441/include/glm/gtc/matrix_access.hpp
-../detail/setup.hpp
-C:/Users/johan/Desktop/CSCI441/include/glm/detail/setup.hpp
-matrix_access.inl
-C:/Users/johan/Desktop/CSCI441/include/glm/gtc/matrix_access.inl
-
-C:/Users/johan/Desktop/CSCI441/include/glm/gtc/matrix_access.inl
-
 C:/Users/johan/Desktop/CSCI441/include/glm/gtc/matrix_transform.hpp
 ../mat4x4.hpp
 C:/Users/johan/Desktop/CSCI441/include/glm/mat4x4.hpp
@@ -1276,16 +1254,6 @@ intrin.h
 arm_neon.h
 -
 
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/Eeyore/eeyore.cpp
-eeyore.hpp
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/Eeyore/eeyore.hpp
-glm/gtc/matrix_transform.hpp
--
-CSCI441/objects.hpp
--
-CSCI441/OpenGLUtils.hpp
--
-
 C:/Users/johan/Desktop/John_Reimann_A4/FP441/Eeyore/eeyore.hpp
 GL/glew.h
 -
@@ -1362,12 +1330,6 @@ CSCI441/FreeCam.hpp
 
 C:/Users/johan/Desktop/John_Reimann_A4/FP441/ShaderLocations.hpp
 
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/environment/Castle.cpp
-Castle.hpp
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/environment/Castle.hpp
-CSCI441/SimpleShader.hpp
--
-
 C:/Users/johan/Desktop/John_Reimann_A4/FP441/environment/Castle.hpp
 GL/glew.h
 -
@@ -1379,14 +1341,6 @@ glm/gtc/matrix_transform.hpp
 C:/Users/johan/Desktop/John_Reimann_A4/FP441/ShaderLocations.hpp
 ../HeroVirtual.hpp
 C:/Users/johan/Desktop/John_Reimann_A4/FP441/HeroVirtual.hpp
-
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/environment/Tree.cpp
-Tree.hpp
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/environment/Tree.hpp
-../ShaderLocations.hpp
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/ShaderLocations.hpp
-CSCI441/SimpleShader.hpp
--
 
 C:/Users/johan/Desktop/John_Reimann_A4/FP441/environment/Tree.hpp
 GL/glew.h
@@ -1406,16 +1360,6 @@ GLFW/glfw3.h
 vector
 -
 
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/hero_cameras/HeroCameras.cpp
-HeroCameras.hpp
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/hero_cameras/HeroCameras.hpp
-algorithm
--
-iostream
--
-glm/gtc/matrix_access.hpp
--
-
 C:/Users/johan/Desktop/John_Reimann_A4/FP441/hero_cameras/HeroCameras.hpp
 CSCI441/Camera.hpp
 -
@@ -1430,20 +1374,6 @@ C:/Users/johan/Desktop/John_Reimann_A4/FP441/HeroVirtual.hpp
 CameraType.hpp
 C:/Users/johan/Desktop/John_Reimann_A4/FP441/hero_cameras/CameraType.hpp
 
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/john_Reimann/JohnReimann.cpp
-JohnReimann.hpp
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/john_Reimann/JohnReimann.hpp
-glm/gtc/matrix_transform.hpp
--
-CSCI441/objects.hpp
--
-CSCI441/OpenGLUtils.hpp
--
-iostream
--
-vector
--
-
 C:/Users/johan/Desktop/John_Reimann_A4/FP441/john_Reimann/JohnReimann.hpp
 GL/glew.h
 -
@@ -1453,24 +1383,6 @@ glm/glm.hpp
 -
 ../HeroVirtual.hpp
 C:/Users/johan/Desktop/John_Reimann_A4/FP441/HeroVirtual.hpp
-
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/main.cpp
-MPEngine.hpp
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/MPEngine.hpp
-stb_image.h
--
-
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/the_warrior/TheWarrior.cpp
-TheWarrior.hpp
-C:/Users/johan/Desktop/John_Reimann_A4/FP441/the_warrior/TheWarrior.hpp
-CSCI441/SimpleShader.hpp
--
-glm/gtc/matrix_access.hpp
--
-stdio.h
--
-cmath
--
 
 C:/Users/johan/Desktop/John_Reimann_A4/FP441/the_warrior/TheWarrior.hpp
 GL/glew.h

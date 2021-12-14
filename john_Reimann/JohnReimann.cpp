@@ -22,9 +22,12 @@ JohnReimann::JohnReimann(GLuint shaderHandle, GLint mvpMatUniformLoc, GLint mode
 
     this->currentModelMatrix = glm::translate(this->currentModelMatrix, glm::vec3(-45, this->carYPosition, 45));
 }
-
+void JohnReimann::setIncrment(GLfloat newIncrement) {
+    this->increment = newIncrement;
+}
 void JohnReimann::drawJohn_Reimann(glm::mat4 viewMatrix, glm::mat4 projMatrix, std::vector<std::vector<float>> colls) {
-    this->currentModelMatrix = glm::translate( this->currentModelMatrix, glm::vec3( .025*sin(animationAngle), 0, .025*cos(animationAngle)));
+    this->currentModelMatrix = glm::translate( this->currentModelMatrix, glm::vec3( .025f*sin(animationAngle), increment, 0.025f*cos(animationAngle)));
+
     drawLegs(this->currentModelMatrix,viewMatrix, projMatrix );
     drawHead(this->currentModelMatrix,viewMatrix,projMatrix );
     drawBody(this->currentModelMatrix,viewMatrix, projMatrix );
@@ -44,7 +47,6 @@ void JohnReimann::drawLegs(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 proj
     this->computeAndSendMatUniforms(modelMtx, viewMtx, projMtx);
     glUniform3fv(this->materialColorUniformLocation, 1, &_colorRed[0]);
     CSCI441::drawSolidCube(1);
-
 }
 
 void JohnReimann::computeAndSendMatUniforms(glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx) {
@@ -174,4 +176,7 @@ void JohnReimann::updateWheelRotation(bool isMovingForward) {
 
 glm::mat4 JohnReimann::getCurrentModelMat() {
     return this->currentModelMatrix;
+}
+void JohnReimann::setCurrentModelMat(glm::mat4 modelMatrix) {
+    this->currentModelMatrix = modelMatrix;
 }
