@@ -637,6 +637,7 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     CSCI441::drawSolidCubeTextured( 750.0f );
     glBindTexture(GL_TEXTURE_2D, _texHandles[TEXTURE_ID::METAL]);
     float smallestDist = 1000000001;
+    //loop to go through and find the closest coin and draw each coin at the locations pre-recorded
     for (int i=0; i<goldLocs.size();i++) {
         glm::vec3 currPosition = _JohnReimann->getCurrentPosition();
         float dist = sqrt(pow(currPosition.x-goldLocs[i][0],2)+pow(currPosition.z-goldLocs[i][1],2));
@@ -651,6 +652,7 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
                                              _textureShaderAttributeLocations.vNormal,
                                              _textureShaderAttributeLocations.textCoord
         );
+        //draw the actual coin
         CSCI441::drawSolidSphere( 2.0f,50,50 );
     }
     modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0, 2.1f, 0));
@@ -660,6 +662,7 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
                                          _textureShaderAttributeLocations.vNormal,
                                          _textureShaderAttributeLocations.textCoord
     );
+    //draw the death ball and we can set radius Increment after we eat one nugget
     CSCI441::drawSolidSphere( currentRadius+=radiusIncrement,50,50 );
 
     _billboardShaderProgram->useProgram();
@@ -676,7 +679,7 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
 
     glBindVertexArray( _vaos[VAO_ID::PARTICLE_SYSTEM] );
     glBindTexture(GL_TEXTURE_2D, _texHandles[TEXTURE_ID::PARTICLE_SYSTEM_TEX]);
-
+    //draw the lab 12 sprites though we have modified it greatly
     // TODO #1 compute distances
     glm::vec3 normalizedViewVector = glm::normalize(this->cameras->getPrimaryCamera()->getLookAtPoint() - this->cameras->getPrimaryCamera()->getPosition());
     for (int i = 0; i < NUM_SPRITES; i++){
@@ -735,6 +738,7 @@ void MPEngine::deathCubeLogic(){
         _JohnReimann->setIncrment(-1);
     }
 }
+//function to set light locations and check if we have eaten a nugget
 void MPEngine::eatGold(){
     glm::vec3 currentPosition = _JohnReimann->getCurrentPosition();
     allPositions.push_back({currentPosition.x,currentPosition.z});
@@ -761,6 +765,7 @@ void MPEngine::eatGold(){
         }
     }
 }
+//function to determine special properties for different coin amounts
 void MPEngine::updateWarrior() {
     //std::cout<<goldEaten;
     if (goldEaten >= 1) {
@@ -788,6 +793,7 @@ void MPEngine::updateWarrior() {
     }
 
 }
+//arc length parameterization
 void MPEngine::arcLength() {
     int numCurves = _bezierCurve.numCurves;
 
@@ -843,6 +849,7 @@ void MPEngine::arcLength() {
     }
 
 }
+//draw object to go in the bezier curve
 void MPEngine::drawChair( glm::mat4 modelMtx, glm::mat4 viewMtx, glm::mat4 projMtx ) {
     modelMtx = glm::translate( modelMtx, glm::vec3( cos(animationAngle), 0, sin(animationAngle) ));
     //modelMtx = glm::translate( modelMtx, glm::vec3( translateX, 0, translateY));
@@ -1067,6 +1074,7 @@ void MPEngine::run() {
         glfwPollEvents();				                // check for any events and signal to redraw screen
     }
 }
+//all our textures
 void MPEngine::_setupTextures() {
     // TODO #09
     _texHandles[TEXTURE_ID::METAL] = _loadAndRegisterTexture("assets/textures/gold.png" );
