@@ -116,6 +116,20 @@ private:
         /// \desc the color to apply location
         GLint color;
     } _flatShaderProgramUniformLocations;
+
+    CSCI441::ShaderProgram* _randomShaderProgram = nullptr;
+    struct RandomShaderProgramUniformLocations {
+        /// \desc precomputed MVP matrix location
+        GLint mvpMatrix;
+        /// \desc the color to apply location
+        GLint color;
+    } _randomShaderProgramUniformLocations;
+    struct RandomShaderProgramAttributes {
+        /// \desc the vertex position
+        GLint vPos;
+        GLint vNormal;
+    } _randomShaderProgramAttributeLocations;
+
     /// \desc VAO for our objects
     GLuint _vaos[NUM_VAOS];
     /// \desc VBO for our objects
