@@ -251,6 +251,14 @@ void MPEngine::_setupShaders() {
 
     // set static uniforms
     _billboardShaderProgram->setProgramUniform( _billboardShaderProgramUniforms.image, 0 );
+
+    // random noise shader
+    _randomShaderProgram = new CSCI441::ShaderProgram( "shaders/randomShader.v.glsl", "shaders/randomShader.f.glsl" );
+    _randomShaderProgramUniformLocations.mvpMatrix             = _randomShaderProgram->getUniformLocation("mvpMatrix");
+    _randomShaderProgramUniformLocations.color                 = _randomShaderProgram->getUniformLocation("color");
+
+    _randomShaderProgramAttributeLocations.vPos              = _randomShaderProgram->getAttributeLocation( "vPos");
+    _randomShaderProgramAttributeLocations.vNormal              = _randomShaderProgram->getAttributeLocation( "vNormal");
 }
 
 void MPEngine::_setupBuffers() {
@@ -635,7 +643,11 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
     );
     glBindTexture(GL_TEXTURE_2D, _texHandles[TEXTURE_ID::SKY]);
     CSCI441::drawSolidCubeTextured( 750.0f );
-    glBindTexture(GL_TEXTURE_2D, _texHandles[TEXTURE_ID::METAL]);
+
+    _randomShaderProgram->useProgram();
+    glm::vec3 goldColor(1, 0.807, 0.078);
+    _randomShaderProgram->setProgramUniform(_randomShaderProgramUniformLocations.color, goldColor);
+
     float smallestDist = 1000000001;
     //loop to go through and find the closest coin and draw each coin at the locations pre-recorded
     for (int i=0; i<goldLocs.size();i++) {
@@ -647,14 +659,15 @@ void MPEngine::_renderScene(glm::mat4 viewMtx, glm::mat4 projMtx) {
         }
         modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(goldLocs[i][0], 2.1f, goldLocs[i][1]));
         glm::mat4 mvpMtx = projMtx * viewMtx * modelMatrix;
-        _textureShaderProgram->setProgramUniform(_textureShaderUniformLocations.mvpMatrix, mvpMtx);
-        CSCI441::setVertexAttributeLocations(_textureShaderAttributeLocations.vPos,
-                                             _textureShaderAttributeLocations.vNormal,
-                                             _textureShaderAttributeLocations.textCoord
-        );
-        //draw the actual coin
-        CSCI441::drawSolidSphere( 2.0f,50,50 );
+
+        _randomShaderProgram->setProgramUniform(_randomShaderProgramUniformLocations.mvpMatrix, mvpMtx);
+        CSCI441::setVertexAttributeLocations(_randomShaderProgramAttributeLocations.vPos,
+                                             _randomShaderProgramAttributeLocations.vNormal
+                                             );
+        CSCI441::drawSolidSphere( 2.0f,25,25 );
     }
+    _textureShaderProgram->useProgram();
+    glBindTexture(GL_TEXTURE_2D, _texHandles[TEXTURE_ID::METAL]);
     modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0, 2.1f, 0));
     mvpMtx = projMtx * viewMtx * modelMatrix;
     _textureShaderProgram->setProgramUniform(_textureShaderUniformLocations.mvpMatrix, mvpMtx);
